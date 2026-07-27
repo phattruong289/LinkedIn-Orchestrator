@@ -8,8 +8,11 @@ capability there; don't add auto-posting to Wil's profile without explicitly rev
 from a scheduled Routine, and to skip its interactive confirmation when `LINKEDIN_AUTOPOST_CONFIRM=PUBLISH` is set
 in the environment. This is safe specifically because `LINKEDIN_PERSON_URN` for this script is always Quang's own
 personal LinkedIn account, never Wil's — setting that env var in a given run's environment is itself the human
-authorization for that run. This exception is scoped to this one script and this one account only; it does not
-extend to `daily-post`, any agent, or any path that could reach Wil's profile.
+authorization for that run. The text it posts may come from Notion ("Post Log" or "Job Tickets") as well as
+manually-typed text — sourcing from Notion does not change the requirement below; what makes this safe is the
+*destination account*, not where the text came from. This exception is scoped to this one script and this one
+destination account only; it does not extend to any path that posts to Wil's profile, regardless of content
+source.
 
 **No invented facts.** Every claim, quote, or stat in a post must trace to a source: Notion's "Past Posts" or
 "Reference Resources" databases, `resources/bww-transcripts/`, `resources/company-docs/case-facts.md`, or a live
