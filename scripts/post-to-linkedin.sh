@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
-# Manual, one-off LinkedIn post via the Posts API — Phase 2+ experiment only.
+# LinkedIn post via the Posts API — Phase 2+ experiment only, scoped to Quang's own personal account.
 #
-# This is NOT wired into the daily-post pipeline and never runs automatically. It exists so Quang can manually
-# test the posting path on his own LinkedIn account (see .env — LINKEDIN_PERSON_URN belongs to Quang, not Wil).
-# Every invocation requires the caller to have already confirmed the exact text with a human before running this.
+# This is NOT wired into the daily-post pipeline and never touches Wil's profile (see .env / the environment —
+# LINKEDIN_PERSON_URN belongs to Quang, not Wil). It can run unattended (e.g. from a scheduled Routine) only when
+# LINKEDIN_AUTOPOST_CONFIRM=PUBLISH is explicitly set in that run's environment, per the scoped exception in
+# .claude/rules/guardrails.md — setting that var is itself the human authorization. Without it, every invocation
+# stops for an interactive PUBLISH confirmation.
 #
 # Usage:
 #   ./scripts/post-to-linkedin.sh "post text here"
@@ -54,10 +56,18 @@ echo "About to POST as $LINKEDIN_PERSON_URN. Preview:"
 echo "---"
 echo "$TEXT"
 echo "---"
-read -r -p "Type PUBLISH to confirm, anything else to abort: " CONFIRM
-if [ "$CONFIRM" != "PUBLISH" ]; then
-  echo "Aborted."
-  exit 1
+
+# Unattended runs (e.g. a scheduled Routine) can't answer an interactive prompt. Setting
+# LINKEDIN_AUTOPOST_CONFIRM=PUBLISH in that run's own environment IS the human authorization for that run — see
+# the "Scoped exception" note in .claude/rules/guardrails.md. Scoped to this script and Quang's own account only.
+if [ "${LINKEDIN_AUTOPOST_CONFIRM:-}" = "PUBLISH" ]; then
+  echo "LINKEDIN_AUTOPOST_CONFIRM=PUBLISH set — skipping interactive prompt."
+else
+  read -r -p "Type PUBLISH to confirm, anything else to abort: " CONFIRM
+  if [ "$CONFIRM" != "PUBLISH" ]; then
+    echo "Aborted."
+    exit 1
+  fi
 fi
 
 HTTP_CODE=$(curl -s -o /tmp/li-post-response.json -w "%{http_code}" \

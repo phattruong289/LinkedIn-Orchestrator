@@ -1,8 +1,15 @@
 # Guardrails (non-negotiable, applies to every agent in this pipeline)
 
-**Human gate.** No auto-posting, ever. The pipeline stops at a Slack draft for Wil to review and manually post.
-Phase 1 has no LinkedIn API integration at all, so this is trivially true today — keep it true when Phase 2/3 add
-posting capability; don't add auto-posting without explicitly revisiting this file.
+**Human gate.** No auto-posting, ever, for the `daily-post` pipeline or Wil's profile. Phase 1 has no LinkedIn API
+integration at all for that pipeline, so this is trivially true today — keep it true when Phase 2/3 add posting
+capability there; don't add auto-posting to Wil's profile without explicitly revisiting this file.
+
+**Scoped exception — `scripts/post-to-linkedin.sh`.** This one script is authorized to run unattended, including
+from a scheduled Routine, and to skip its interactive confirmation when `LINKEDIN_AUTOPOST_CONFIRM=PUBLISH` is set
+in the environment. This is safe specifically because `LINKEDIN_PERSON_URN` for this script is always Quang's own
+personal LinkedIn account, never Wil's — setting that env var in a given run's environment is itself the human
+authorization for that run. This exception is scoped to this one script and this one account only; it does not
+extend to `daily-post`, any agent, or any path that could reach Wil's profile.
 
 **No invented facts.** Every claim, quote, or stat in a post must trace to a source: Notion's "Past Posts" or
 "Reference Resources" databases, `resources/bww-transcripts/`, `resources/company-docs/case-facts.md`, or a live
@@ -49,8 +56,7 @@ needs git write access to complete.
 **No near-duplicate posts.** Recurring topics and repeated mentions of the same theme are fine — but a post must
 never land ~80% the same in substance (same core argument + same key facts/case-study) as something posted in the
 last ~30 days. Checked twice: `strategist-writer` at ideation (tag overlap as a cheap filter, then an actual
-argument/fact comparison against Notion "Post Log"'s (`collection://edc91fd0-7523-407c-82d2-df69f4be616d`) `Core
-Argument`/`Key Facts Cited` columns), and `producer-qa` again independently as the last check before a human sees
+argument/fact comparison against Notion "Post Log"'s (`collection://edc91fd0-7523-407c-82d2-df69f4be616d`) `Core Argument`/`Key Facts Cited` columns), and `producer-qa` again independently as the last check before a human sees
 it. This depends on `log-outcome` actually being run after every real post so each row's `Status` reflects what
 actually happened — a Post Log with no `posted` rows yet means this check has nothing real to compare against.
 
