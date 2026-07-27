@@ -58,3 +58,9 @@ actually happened — a Post Log with no `posted` rows yet means this check has 
 carousels, no video. `text+single-graphic` is a documented Phase 1 capability (`art-director` agent exists) but is
 currently paused by explicit instruction; don't dispatch `art-director` or propose graphic-format ideas until that
 pause is lifted. One post per calendar day. Don't infer otherwise from context — these are hardcoded.
+
+**`scripts/post-to-linkedin.sh` is a standalone technical experiment, not part of the pipeline.** It exists so
+Quang can manually test the LinkedIn Posts API against his own personal account (`LINKEDIN_PERSON_URN` in `.env`
+is his, never Wil's). Nothing in `daily-post`, `librarian`, `strategist-writer`, or `producer-qa` calls it — the
+"no auto-posting, ever" rule for Wil's actual pipeline is unchanged. The script itself still requires a typed
+`PUBLISH` confirmation per run; it does not turn into automated posting on its own.
