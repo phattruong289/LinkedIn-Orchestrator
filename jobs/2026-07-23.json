@@ -1,0 +1,75 @@
+{
+  "date": "2026-07-23",
+  "profile": "wil-personal",
+  "format_target": "text-only",
+  "status": "draft_ready",
+  "run_log": [
+    {"ts": "2026-07-23T00:00:00Z", "event": "manager_start", "note": "text-only pipeline, voice guide now based on 10 real posts, output to Notion Post Log DB (collection://edc91fd0-7523-407c-82d2-df69f4be616d) instead of Slack"},
+    {"ts": "2026-07-23T00:10:00Z", "event": "librarian_done", "note": "resource pool no longer thin - 10 real past posts + case-facts + fresh external news (Roblox brand-deal revenue share Jan 2027)"},
+    {"ts": "2026-07-23T00:15:00Z", "event": "strategist_ideation_done", "note": "posted-log.json still empty - repeat_risk unverified, not confirmed clean; strategist flagged idea #3 as same-topic-alternate to #1, not a distinct 4th angle"},
+    {"ts": "2026-07-23T00:16:00Z", "event": "manager_picked_idea", "note": "picked idea_candidates[0] - Roblox brand-deal revenue cut vs owned infrastructure"},
+    {"ts": "2026-07-23T00:25:00Z", "event": "strategist_writer_copy_done", "note": "voice_confidence: high, grounded in 10 real posts"},
+    {"ts": "2026-07-23T00:26:00Z", "event": "manager_skip_art_director", "note": "format_target is text-only, art-director paused - stages.visual = null"},
+    {"ts": "2026-07-23T00:35:00Z", "event": "producer_qa_done", "qa_status": "pass", "note": "all claims traced; 2 external facts + Latham quote are medium-confidence secondary sources, stated as flat fact - flagged not hedged; posted-log.json empty so repeat_risk unverified against real history"},
+    {"ts": "2026-07-23T00:40:00Z", "event": "manager_wrote_notion", "note": "written to Notion Post Log DB instead of Slack - Slack still not authorized"}
+  ],
+  "stages": {
+    "research": {
+      "facts": [
+        {"claim": "PLAY3 deploys the brand's own AI-powered characters directly inside its own Roblox experience - not brokered through a third-party creator/studio marketplace. Live on Roblox today; Discord, Minecraft, Zepeto planned next.", "source": "resources/company-docs/case-facts.md", "confidence": "high"},
+        {"claim": "Super League campaign: 678K interactions, +560% daily-interactions growth, +68% DAU growth, 5 creators built into live AI-powered agents, interactions surged 5-10x in final weeks. Never referenced in any of Wil's 10 personal past posts.", "source": "resources/company-docs/case-facts.md", "confidence": "high"},
+        {"claim": "Roblox will begin taking a revenue cut of in-platform brand/sponsorship deals starting January 2027, on top of the 30% it already takes from item sales. Staged rollout: April 2026 beta labeling tools, May 2026 mandatory deal registration + asset moderation, August 2026 reporting tools beta, January 2027 revenue share activates.", "source": "https://www.emarketer.com/content/what-advertisers-need-know-about-roblox-s-evolving-ad-business ; https://kidscreen.com/2026/03/23/roblox-plans-to-start-taking-a-cut-on-brand-deals/", "confidence": "medium"},
+        {"claim": "Creator-studio intermediaries already retain 80-90% of brand spend on Roblox campaigns; direct creator-brand deals pay 3-4x more than studio-brokered ones. Roblox VP Stephanie Latham frames the new platform cut as fixing a 'race to the bottom' in brand pricing, not a revenue grab.", "source": "https://digiday.com/media/top-roblox-creators-dont-view-brand-deals-as-a-significant-revenue-stream/ ; https://gamesbeat.com/roblox-moves-to-take-a-cut-of-all-brand-integrations-on-its-platform/", "confidence": "medium"},
+        {"claim": "Wil has already told the Diesel/Renzo Rosso story twice in his own past posts (06, 10) - a third telling without a new hook would read as repetitive.", "source": "resources/past-posts/06-diesel-six-figures.md, resources/past-posts/10-diesel-signing-renzo-rosso.md", "confidence": "high"}
+      ],
+      "quotes": [
+        {"quote": "The impression is dead. The conversation is the new currency.", "attribution": "Wil Lee", "source": "resources/past-posts/06-diesel-six-figures.md", "confidence": "high"},
+        {"quote": "This really is not about revenue at all. It's about evolving our responsibility to our users, creators and brands.", "attribution": "Stephanie Latham, VP at Roblox", "source": "https://gamesbeat.com/roblox-moves-to-take-a-cut-of-all-brand-integrations-on-its-platform/", "confidence": "medium"}
+      ],
+      "stats": [
+        {"stat": "678K interactions / +560% daily-interactions growth / +68% DAU growth / 5-10x interaction surge in final weeks", "context": "Super League case study - untold in Wil's personal feed so far", "source": "resources/company-docs/case-facts.md"},
+        {"stat": "Creator-studios retain 80-90% of brand spend; Roblox now adds its own cut on top starting Jan 2027", "context": "Roblox brand-deal economics getting squeezed at multiple layers", "source": "https://digiday.com/media/top-roblox-creators-dont-view-brand-deals-as-a-significant-revenue-stream/"}
+      ],
+      "candidate_angles": [
+        "STRONG, not a repeat of 7/22 - Roblox just started taxing the middleman (Jan 2027 brand-deal revenue cut, on top of the 30% item-sale cut and the 80-90% studios already skim) - proves why owning your infrastructure beats renting a creator's audience. Echoes Wil's own recurring thesis directly.",
+        "MEDIUM-STRONG - Super League numbers (678K interactions, +560% growth) - real, sourced, zero repeat risk, never told in Wil's feed. Needs founder-reflection framing, not a brag sheet.",
+        "NOT RECOMMENDED - re-running Diesel/Renzo Rosso, already told twice."
+      ],
+      "resource_pool_status": {
+        "own_content": "ok - 10 real voice-validated past posts now ground the voice guide",
+        "company_docs": "ok - 3 case studies, Super League unused in personal feed",
+        "external": "ok - verified via direct fetch (eMarketer, Kidscreen, GamesBeat, Digiday)"
+      }
+    },
+    "idea_candidates": [
+      {"hook": "In January 2027, Roblox starts taking a cut of your brand deal too.", "angle": "Creator-studio middlemen already skim 80-90% of brand spend, Roblox already takes 30% on item sales, and now adds a cut of brand deals too - punchline: this is why PLAY3 built owned infrastructure instead of renting a platform's audience.", "audience": "Brand/marketing decision-makers evaluating Roblox-native campaigns", "format": "text-only", "topic_tags": ["roblox-economics", "owned-infrastructure", "brand-deals", "platform-risk", "industry-commentary"], "repeat_risk": false},
+      {"hook": "5 creators. 678,000 interactions. A story I haven't told on this feed yet.", "angle": "Super League case study reframed as founder reflection, not a brag sheet.", "audience": "Brands weighing whether Roblox campaigns move real engagement", "format": "text-only", "topic_tags": ["case-study", "super-league", "roblox-metrics", "win", "creator-ai-agents"], "repeat_risk": false},
+      {"hook": "April 2026. May 2026. August 2026. January 2027. Four dates every brand on Roblox should have circled.", "angle": "Timeline/education treatment of the same Roblox rollout as idea 1 - flagged by strategist as an alternate framing of the same topic, not a genuinely distinct 4th angle.", "audience": "Roblox-native brand marketers and agencies", "format": "text-only", "topic_tags": ["roblox-economics", "platform-timeline", "brand-deals", "education", "owned-infrastructure"], "repeat_risk": false}
+    ],
+    "deferred_to_phase2": ["Super League stats as a stat-card graphic once art-director unpaused.", "Roblox rollout timeline as a carousel once carousel format unlocked."],
+    "idea_chosen": {"hook": "In January 2027, Roblox starts taking a cut of your brand deal too.", "angle": "Creator-studio middlemen already skim 80-90% of brand spend, Roblox already takes 30% on item sales, and now adds a cut of brand deals too - punchline: this is why PLAY3 built owned infrastructure instead of renting a platform's audience.", "audience": "Brand/marketing decision-makers evaluating Roblox-native campaigns", "format": "text-only", "topic_tags": ["roblox-economics", "owned-infrastructure", "brand-deals", "platform-risk", "industry-commentary"], "repeat_risk": false},
+    "copy": {
+      "body": "In January 2027, Roblox starts taking a cut of your brand deal too.\n\nNot just item sales anymore. Roblox already keeps 30% of every virtual item you sell in-platform — and now it wants a piece of your brand deal on top of that.\n\nHere's the rollout, already in motion: beta labeling tools in April 2026, mandatory deal registration and asset moderation by May 2026, reporting tools in beta by August 2026, and the revenue share activates in January 2027.\n\nMeanwhile, the creator-studio middlemen brands already pay to run these campaigns keep 80-90% of the spend. Read that again. Direct creator deals already pay 3-4x more than studio-brokered ones — and that's before the platform's new cut kicks in.\n\nRoblox's VP frames it as responsibility, not revenue: \"This really is not about revenue at all. It's about evolving our responsibility to our users, creators and brands.\" Maybe. But brands are about to get taxed twice on infrastructure they never owned in the first place.\n\nThis is exactly why we built PLAY3.ai the way we did. We don't broker a creator's audience through a studio — we deploy the brand's own AI-powered characters directly inside our own Roblox experience. Live there today. Discord, Minecraft, Zepeto next.\n\nNo middleman skim. No platform cut waiting for you in January. If you're planning a 2027 Roblox campaign on someone else's studio and someone else's fee stack — lets talk.",
+      "revision_note": "Line breaks reduced per Wil's direct feedback (2026-07-23) - original draft matched the raw staccato pattern from the 10 sample posts too literally; consolidated into short paragraphs, kept only a few standalone emphasis lines. Bold formatting considered and dropped - LinkedIn doesn't render markdown on paste, so it would only help inside Notion, not the actual post; kept plain throughout.",
+      "hook_variants": [
+        "In January 2027, Roblox starts taking a cut of your brand deal too.",
+        "Roblox already takes 30% of your item sales. Studios already take 80-90% of your brand deal. In January 2027, Roblox adds its own cut on top of that too."
+      ],
+      "no_hashtags": true,
+      "voice_confidence": "high - grounded in 10 real posts, mirrors past-posts/03 and /05 contrarian industry-commentary shape"
+    },
+    "visual": null,
+    "qa_report": {
+      "claims_checked": ["30% item-sale cut - traces", "Jan 2027 revenue cut + staged rollout - traces verbatim", "80-90% skim / 3-4x premium - traces verbatim", "Latham quote - traces, attributed generically as Roblox's VP", "PLAY3 owned-infrastructure description - traces, high confidence"],
+      "brand_check": "N/A (no visual) - pass, no invented PLAY3 capability claims",
+      "dimension_check": "N/A (no visual, text-only)",
+      "voice_check": "pass - matches 10-post-validated guide, no-hashtags rule followed"
+    },
+    "qa_status": "pass",
+    "qa_flags_for_human": [
+      "Roblox rollout dates/percentages and the VP quote rest on medium-confidence secondary trade-press sources (eMarketer, Kidscreen, Digiday, GamesBeat), not a primary Roblox announcement - copy states them as flat fact, not hedged",
+      "posted-log.json is empty - repeat_risk:false on this idea is unverified against real posting history, not confirmed clean",
+      "suggested_post_time is an operational default (weekday ~8:30-9:30am), not backed by any engagement-time data in resources/"
+    ]
+  }
+}

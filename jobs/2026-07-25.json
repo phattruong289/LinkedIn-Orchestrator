@@ -1,0 +1,79 @@
+{
+  "date": "2026-07-25",
+  "profile": "wil-personal",
+  "format_target": "text-only",
+  "status": "draft_ready",
+  "run_log": [
+    {"ts": "2026-07-25T00:00:00Z", "event": "manager_start", "note": "test run applying the new house post formula (Notion Reference Resources) - draft only, NOT posting to real LinkedIn"},
+    {"ts": "2026-07-25T00:12:00Z", "event": "librarian_done", "note": "resource pool healthy, fresh unused angle found (Roblox Build AI game-creation, July 16 2026), no repeat with 07-22/23/24"},
+    {"ts": "2026-07-25T00:20:00Z", "event": "strategist_ideation_done", "note": "first run applying mission tags (Attract/Nurture/Position/Convert); idea 4 confirmed repeat_risk true vs 07-22, idea 3 flagged caution (needs real facts to confirm no overlap with 07-24)"},
+    {"ts": "2026-07-25T00:21:00Z", "event": "manager_picked_idea", "note": "picked idea_candidates[0] - Roblox Build AI commoditizes the easy layer (Attract mission)"},
+    {"ts": "2026-07-25T00:30:00Z", "event": "strategist_writer_copy_done", "note": "first end-to-end draft using the new house post formula; banned-word pass ran clean, no fixes needed; body is 1496 chars (verified via Manager python count), within 1300-1900 target"},
+    {"ts": "2026-07-25T00:31:00Z", "event": "manager_skip_art_director", "note": "text-only, art-director paused"},
+    {"ts": "2026-07-25T00:40:00Z", "event": "producer_qa_done", "qa_status": "pass", "note": "format_check (new step) ran clean - no banned words, no external links, 1496 chars within band. Duplicate_check independently re-verified against 07-22/23/24, confirmed clean. Flagged: GDC stat single medium-confidence source; NZ-only alpha qualifier omitted from copy; posted-log.json still empty."},
+    {"ts": "2026-07-25T00:45:00Z", "event": "manager_wrote_notion", "note": "written to Notion Post Log DB as draft_ready - explicit user instruction: test the formula, do NOT post to real LinkedIn"}
+  ],
+  "stages": {
+    "research": {
+      "facts": [
+        {"claim": "PLAY3 sells Player-Generated Content: players make AI videos starring their own avatar in a brand's Roblox experience, post to TikTok/YouTube for points/prizes. Positioning: 'Stop renting reach. Start owning it.'", "source": "case-facts.md; Notion Reference Resources", "confidence": "high"},
+        {"claim": "In Wil's own past post: brands 'can't just turn on a presence in Roblox like they do with Instagram ads' - every activation requires months of custom work, which he calls unsustainable; he calls this 'the infrastructure moment.'", "source": "Notion Past Posts - '10 lessons after getting scammed by a 14-year-old on Roblox'", "confidence": "high"},
+        {"claim": "On July 16, 2026, Roblox announced 'Build' - an AI-powered mobile feature that generates a playable Roblox game from a text prompt, no coding required. Public alpha testing begins July 28, 2026 (New Zealand only). Roblox now has 132M daily active users.", "source": "https://about.roblox.com/newsroom/2026/07/build-without-limits-on-roblox ; https://techcrunch.com/2026/07/16/roblox-launches-an-ai-powered-game-creation-feature-in-its-mobile-app/", "confidence": "high"},
+        {"claim": "A GDC survey found 52% of game-industry professionals believe generative AI is having a negative impact on the industry.", "source": "https://techcrunch.com/2026/07/16/roblox-launches-an-ai-powered-game-creation-feature-in-its-mobile-app/", "confidence": "medium"}
+      ],
+      "quotes": [
+        {"quote": "The tools don't exist yet. Brands can't just \"turn on\" a presence in Roblox like they do with Instagram ads. Every activation requires months of custom work. That's not sustainable. This is the infrastructure moment.", "attribution": "Wil Lee", "source": "Notion Past Posts", "confidence": "high"}
+      ],
+      "stats": [
+        {"stat": "Roblox 'Build': AI-generated games from text prompts, public alpha starts July 28 2026; 132M DAU platform-wide", "context": "Fresh external news, unused in any prior ticket", "source": "https://about.roblox.com/newsroom/2026/07/build-without-limits-on-roblox"}
+      ],
+      "candidate_angles": [
+        "STRONG, fresh, zero overlap with 07-22/23/24 - Roblox's 'Build' AI game-creation tool commoditizes the easy layer (a basic world), but that raises the bar for standing out, not lowers it - the real gap (a brand presence that talks back, remembers players, produces measurable intent data) just got MORE valuable. Pairs Wil's own unused 'infrastructure moment' quote with genuine fresh news.",
+        "MEDIUM - founder origin story ('multi-billion dollar arbitrage'), fully unused, but needs a new frame not a near-verbatim repost.",
+        "MEDIUM, needs distinct frame - community-as-durable-asset stats, thematically close to 07-24's conversation-intelligence argument.",
+        "NOT RECOMMENDED - 88% Roblox+Fortnite concentration stat, too close to 07-22's core argument."
+      ],
+      "resource_pool_status": {
+        "own_content": "ok - Notion Past Posts reachable, 4 of 10 posts still genuinely unused as a chosen angle",
+        "company_docs": "ok - Notion Reference Resources reachable, includes new Post Formula entry",
+        "external": "ok - verified via direct fetch (Roblox newsroom, TechCrunch)"
+      }
+    },
+    "idea_candidates": [
+      {"hook": "On July 16, Roblox launched 'Build' - an AI tool that turns a text prompt into a playable game, no code required. Public alpha opens July 28.", "mission": "Attract", "angle": "AI commoditizing basic world-building doesn't lower the bar for brand relevance in Roblox, it raises it - the differentiator was never 'can you build a world,' it's whether the presence talks back, remembers players, produces intent data.", "audience": "Brand marketers/CMOs and agencies evaluating Roblox", "format": "text-only", "topic_tags": ["roblox-build-ai", "ai-game-creation", "infrastructure-moment", "commoditization", "brand-differentiation", "industry-commentary"], "repeat_risk": false},
+      {"hook": "I once spotted a multi-billion dollar arbitrage. I had no idea what to do with it.", "mission": "Attract", "angle": "Founder origin story, Pain-Pursuit-Payoff. Needs sourced specifics before writing - not yet in this ticket's research.", "audience": "Founders/operators", "format": "text-only", "topic_tags": ["founder-origin-story", "arbitrage-opportunity", "founder-journey"], "repeat_risk": false, "note": "not chosen today - data incomplete for Step B"},
+      {"hook": "(placeholder, needs real numbers)", "mission": "Position", "angle": "Community as durable asset vs rented reach.", "audience": "Brand marketers weighing paid reach vs owned-community", "format": "text-only", "topic_tags": ["community-durability", "owned-audience", "conversation-intelligence"], "repeat_risk": "caution - shares conversation-intelligence tag with 07-24, cannot confirm no fact-overlap without real source stats attached", "note": "not chosen today - repeat risk unconfirmed"},
+      {"hook": "(not drafted)", "mission": "Attract", "angle": "88% Roblox+Fortnite concentration stat.", "audience": "Brand marketers/CMOs", "format": "text-only", "topic_tags": ["roblox-fortnite-concentration", "virtual-worlds-trend"], "repeat_risk": true, "collision_note": "same core stat and argument as jobs/2026-07-22.json"}
+    ],
+    "idea_chosen": {"hook": "On July 16, Roblox launched 'Build' - an AI tool that turns a text prompt into a playable game, no code required. Public alpha opens July 28.", "mission": "Attract", "angle": "AI commoditizing basic world-building doesn't lower the bar for brand relevance in Roblox, it raises it - the differentiator was never 'can you build a world,' it's whether the presence talks back, remembers players, produces intent data.", "audience": "Brand marketers/CMOs and agencies evaluating Roblox", "format": "text-only", "topic_tags": ["roblox-build-ai", "ai-game-creation", "infrastructure-moment", "commoditization", "brand-differentiation", "industry-commentary"], "repeat_risk": false},
+    "copy": {
+      "mission": "Attract",
+      "hook_bank_pattern_used": "Time-anchor",
+      "body": "On July 16, Roblox launched Build — an AI tool that turns a text prompt into a playable game. No code required. Public alpha opens July 28.\n\nThat's not a small feature. Roblox has 132M daily active users, and Build just handed every one of them the ability to spin up a world without touching a single line of code. The 'can you build something in Roblox' question is basically solved.\n\nCue the panic. A recent GDC survey found 52% of game-industry professionals think generative AI is bad for the industry. I get the anxiety. But I think a lot of people are worried about the wrong thing.\n\nCommoditizing world-building doesn't lower the bar for brands showing up in Roblox. It raises it. When anyone can generate a decent-looking space in minutes, 'we built a world' stops being a differentiator — it becomes table stakes, like having a website.\n\nI've said this before, and it's more true now than when I said it: 'The tools don't exist yet. Brands can't just turn on a presence in Roblox like they do with Instagram ads. Every activation requires months of custom work. That's not sustainable. This is the infrastructure moment.'\n\nBuild doesn't fix that. It automates the shell, not the substance. The real gap was never 'does the world exist' — it's whether the presence talks back, remembers who's standing in it, and produces something a marketer can actually act on. Build makes more worlds. It doesn't make any of them remember your name.\n\nStop renting reach. Start owning it.\n\nLet's talk.",
+      "hook_variants": [
+        "On July 16, Roblox launched Build — an AI tool that turns a text prompt into a playable game. No code required. Public alpha opens July 28.",
+        "132M people log into Roblox every day. As of July 16, every one of them can generate a playable game from a single text prompt. No code required."
+      ],
+      "no_hashtags": true,
+      "char_count": 1496,
+      "banned_word_pass": "clean - no fixes needed",
+      "external_links_in_body": "none",
+      "voice_confidence": "high"
+    },
+    "visual": null,
+    "qa_report": {
+      "claims_checked": ["Roblox Build announcement + July 28 alpha - traces", "132M DAU - traces", "GDC 52% survey - traces, medium confidence, paraphrased not distorted", "'infrastructure moment' Wil quote - traces near-verbatim", "'Stop renting reach, start owning it' - traces"],
+      "brand_check": "N/A (no visual) - pass",
+      "dimension_check": "N/A (text-only)",
+      "voice_check": "pass - matches voice guide, no placeholder caveat needed",
+      "duplicate_check": "pass - independently re-verified against 07-22/23/24, no argument or fact overlap; correctly confirmed idea_candidates[3] (88% stat) collides with 07-22 and was correctly not chosen",
+      "format_check": "pass - no banned words/phrases, no external links in body, 1496 chars within 1300-1900 target band"
+    },
+    "qa_status": "pass",
+    "qa_flags_for_human": [
+      "GDC 52%-negative-impact stat rests on a single medium-confidence trade-press source (TechCrunch), stated as flat fact",
+      "Copy says 'Public alpha opens July 28' without noting the research pack's New Zealand-only qualifier - true but incomplete",
+      "posted-log.json still empty - duplicate_check compared directly against recent tickets, not real posting history"
+    ]
+  }
+}

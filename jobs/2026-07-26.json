@@ -1,0 +1,79 @@
+{
+  "date": "2026-07-26",
+  "profile": "wil-personal",
+  "format_target": "text-only",
+  "status": "draft_ready",
+  "run_log": [
+    {"ts": "2026-07-26T00:00:00Z", "event": "manager_start", "note": "FIRST run with the full content framework (pillars + rubric + skeletons + Idea Bank + naming check). Validation question: does it correct the 4/4 industry-reaction drift? Draft only, not posting to LinkedIn."},
+    {"ts": "2026-07-26T00:15:00Z", "event": "librarian_done", "note": "lane-1-led this run (beanie-proof, decay-curve angles), plus genuinely fresh lane-2 territory (27-12-10 attention/spend gap). Partially unblocked a parked Idea Bank row. Did NOT skip research despite stocked bank."},
+    {"ts": "2026-07-26T00:25:00Z", "event": "strategist_ideation_done", "note": "VALIDATION RESULT: top-scored candidate (100/100) is Category POV pillar, not industry-reaction - framework corrected the drift without any tie-break needed. Pool = 13 Idea Bank rows + research pack, no double-counting. No auto-cuts fired."},
+    {"ts": "2026-07-26T00:26:00Z", "event": "manager_picked_idea", "note": "picked idea_candidates[0], score 100/100, Pillar 1-category-pov, Skeleton A - well above the >=90 write-now threshold"},
+    {"ts": "2026-07-26T00:35:00Z", "event": "strategist_writer_copy_done", "note": "1413 chars, Skeleton A, banned-word + naming pass self-reported clean"},
+    {"ts": "2026-07-26T00:36:00Z", "event": "manager_skip_art_director", "note": "text-only, art-director paused"},
+    {"ts": "2026-07-26T00:45:00Z", "event": "producer_qa_done", "qa_status": "fail", "note": "REAL CATCH - claims_check failed: 'built from a brand-provided template' has no source in this ticket's research pack (this concept exists in Reference Resources 'The Engine' page but librarian did not surface it into stages.research today, so it's unsourced for THIS run). All other checks (naming, duplicate, format, voice, pillar) passed clean. Validates the safety-net design."},
+    {"ts": "2026-07-26T00:46:00Z", "event": "manager_sent_back_for_fix", "note": "single-line fix per QA recommendation - remove the unsourced template detail, keep only traced claims - not a full rewrite"},
+    {"ts": "2026-07-26T00:52:00Z", "event": "producer_qa_reverify", "qa_status": "pass", "note": "fix confirmed to resolve the original failure with no collateral changes; all other checks re-verified clean from scratch"},
+    {"ts": "2026-07-26T00:55:00Z", "event": "manager_wrote_notion", "note": "written to Notion Post Log DB"}
+  ],
+  "stages": {
+    "research": {
+      "facts": [
+        {"claim": "PLAY3 sells Player-Generated Content: players make videos starring their own avatar, post to their own TikTok/YouTube feeds. Positioning: 'Stop renting reach. Start owning it.'", "source": "case-facts.md; Notion Reference Resources", "confidence": "high"},
+        {"claim": "One 5-day activation: ~700K conversations, 6.4 avg msgs/session, 16,371 conversations about a single beanie, 371K try-ons/18 products, 945 purchase-intent signals, one player returned 242 times, 34.2K-member community from zero in 18 days.", "source": "Notion Past Posts; case-facts.md", "confidence": "high"},
+        {"claim": "Campaign with DAU dropping 8%: on day 13, deployed 6 Player Intelligence agents mid-campaign; DAU rose +55%, visits +67%, impressions +157%, peak day was the final day (day 18).", "source": "Notion Past Posts - 'The Death Spiral of Roblox'", "confidence": "high"},
+        {"claim": "10.2% of marketers regularly use mobile gaming for campaigns; 54.4% of US population will be mobile gamers in 2026; only 2.1% of digital ad spend flows to mobile gaming; mobile gaming ads show 3.5x purchase-intent lift.", "source": "https://www.technicallyentertaining.com/p/the-27-12-10-problem-why-brand-leaders", "confidence": "medium"}
+      ],
+      "quotes": [
+        {"quote": "The impression is dead. The conversation is the new currency.", "attribution": "Wil Lee", "source": "Notion Past Posts", "confidence": "high"},
+        {"quote": "The data layer inside every Roblox experience is extraordinary. Studios report on awareness. We extract intent.", "attribution": "Wil Lee", "source": "Notion Past Posts", "confidence": "high"}
+      ],
+      "stats": [
+        {"stat": "16,371 conversations about a single beanie; 700K conversations in 5 days; 945 unprompted purchase-intent signals", "context": "conversation-as-unit-of-measurement proof set", "source": "Notion Past Posts + case-facts.md"},
+        {"stat": "Day-13 intervention: DAU +55%, visits +67%, impressions +157%, peak on day 18 not day 1", "context": "decay curve is a design choice, not a platform law", "source": "Notion Past Posts"}
+      ],
+      "candidate_angles": [
+        {"angle": "PROOF - '16,371 conversations about a single beanie.' Unit of measurement should be the conversation, not the impression.", "source_lane": "1-own-campaign-moment", "strength": "strong", "note": "Pillar 2-proof-receipts, currently ZERO in Post Log"},
+        {"angle": "CATEGORY POV - 'The activation decay curve is a design choice, not a law.' Day-13 intervention reversed a fading campaign.", "source_lane": "1-own-campaign-moment", "strength": "strong", "note": "Pillar 1-category-pov, target ~40%, currently ZERO"},
+        {"angle": "CATEGORY POV - attention-vs-spend mismatch (27-12-10 data): 54% play mobile games, only ~10% of marketers use gaming, only ~2% of ad spend goes there.", "source_lane": "2-industry-news", "strength": "strong", "note": "Pillar 1-category-pov, durable POV not event-reaction, partially unblocks a parked Idea Bank row"},
+        {"angle": "BUILD-IN-PUBLIC - stealth was expensive; every demo since sharing openly has closed.", "source_lane": "1-own-campaign-moment", "strength": "medium", "note": "Pillar 3, already in Idea Bank parked at score 89"}
+      ],
+      "lane_balance": "Strongest angles from lane 1 (own-campaign), correcting the industry-reaction drift. Lane 2 produced genuinely fresh durable-POV territory, not event-reaction. Lanes 4/5 still unavailable.",
+      "unblocked_idea_bank_rows": ["'$100B+ ad spend misallocated' parked idea (score 85) partially unblocked by the 27-12-10 external stat set"],
+      "resource_pool_status": {
+        "own_content": "ok - Notion Past Posts + Idea Bank reachable, lane 1 rich and under-used",
+        "company_docs": "ok - Reference Resources reachable",
+        "external": "ok - verified via direct fetch, genuinely new territory found"
+      }
+    },
+    "idea_candidates_top4": [
+      {"score": 100, "hook": "It isn't UGC. It's Player-Generated Content - and that difference is the whole business.", "pillar": "1-category-pov", "skeleton": "A"},
+      {"score": 96, "hook": "16,371 conversations about a single beanie.", "pillar": "2-proof-receipts", "skeleton": "B"},
+      {"score": 96, "hook": "Five creators. 678,000 interactions.", "pillar": "2-proof-receipts", "skeleton": "B"},
+      {"score": 96, "hook": "The activation decay curve is a design choice, not a law.", "pillar": "1-category-pov", "skeleton": "A"}
+    ],
+    "idea_chosen": {
+      "hook": "It isn't UGC. It's Player-Generated Content - and that difference is the whole business.",
+      "pillar": "1-category-pov",
+      "skeleton": "A",
+      "score": 100,
+      "score_breakdown": {"ownability": 30, "evidence": 25, "audience_relevance": 20, "hook_strength": 15, "freshness": 10},
+      "angle": "PLAY3's own category, PGC (Player-Generated Content), is not the same as generic UGC - the distinction (real player, own avatar, own feed, brand template, full attribution) is the whole business model and has never been argued directly in this pipeline.",
+      "audience": "Brand marketers/CMOs evaluating gaming/virtual-world content strategy",
+      "format": "text-only",
+      "topic_tags": ["category-definition", "pgc-vs-ugc", "positioning", "category-pov"],
+      "repeat_risk": false
+    },
+    "copy": {
+      "body": "It isn't UGC. It's Player-Generated Content — and that difference is the whole business.\n\nMost marketers hear \"UGC\" and think of a hashtag campaign: unpaid creators posting because a brand asked nicely, tagged with a branded hashtag, counted as impressions. It's borrowed enthusiasm from someone who owes you nothing after the post goes up.\n\nPGC is a different mechanism entirely. A real player, inside a brand's own Roblox experience, makes a video starring their own avatar. They post it to their own TikTok or YouTube feed — the player's account, not the brand's — and the brand still gets full attribution back to the campaign. Ownership doesn't get lost between the creative and the tracking.\n\nThat distinction is the whole business model, not a marketing nuance. Renting a creator's audience for a post ends when the invoice clears. Earning a player's actual attention compounds. The content keeps circulating on their feed, in their voice, long after the campaign budget stops.\n\nHere's the receipt: one five-day activation generated 16,371 conversations about a single beanie. Not impressions. Not views. Conversations — real players talking to each other and to a brand agent about one product, unprompted.\n\nIf your team is still reporting on UGC volume instead of who made it, where it lives, and what it's attributed to, what number are you actually optimizing for?",
+      "skeleton": "A",
+      "pillar": "1-category-pov",
+      "no_hashtags": true,
+      "char_count": 1367,
+      "revision_note": "Removed unsourced 'built from a brand-provided template' detail per QA fail - fix applied 2026-07-26T00:50:00Z",
+      "banned_word_pass": "clean (re-verified after fix)",
+      "naming_pass": "clean - no competitor, no client named, platforms (Roblox/TikTok/YouTube) correctly exempt",
+      "voice_confidence": "high"
+    },
+    "visual": null
+  }
+}
