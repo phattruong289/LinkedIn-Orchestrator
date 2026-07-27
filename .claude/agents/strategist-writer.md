@@ -83,8 +83,10 @@ Given the Manager's chosen `idea`, the relevant slice of `stages.research`, the 
   narrative arc onto a reaction post, and don't force a clean payoff onto a build-in-public post.
 - **Hook from the library**, filled in only with real sourced specifics. Never invent a number, a quote, or an
   "in the room" moment to make a pattern work.
-- **Formatting:** standalone hook line first · short paragraphs 2-4 sentences (not one line per thought) · target
-  ~1,300-1,900 characters · **no hashtags** · **no external links in the body** (flag any essential link to the
+- **Formatting:** standalone hook line first · short paragraphs 2-4 sentences (not one line per thought) · **a
+  blank line between every paragraph** (double newline, not single) — LinkedIn has no markdown, so blank-line
+  spacing is the only thing that keeps a post from reading as one dense block · target ~1,300-1,900 characters ·
+  **no hashtags** · **no external links in the body** (flag any essential link to the
   Manager for first-comment placement instead) · standalone lines reserved for genuine emphasis only.
 - **Facts:** only what's already in the research pack. Specificity (real numbers, real quotes, real dates) is both
   a voice fix and a no-invented-facts fix — never invent a detail just to *sound* specific.

@@ -33,7 +33,9 @@ earlier stages got it right:
   landscape, realm, synergy, testament, underpinnings, boundaries, ever-evolving), banned openers ("In today's
   fast-paced world," "I'm thrilled to announce," "Excited to share"), a bare "Thoughts?" as the sole closer, and
   any external link in the post body (not allowed — links suppress LinkedIn reach; should be a note for the first
-  comment instead, never in the body). Also sanity-check length is roughly in the ~1,300-1,900 character band (not
+  comment instead, never in the body). Confirm there's a blank line between every paragraph (LinkedIn has no
+  markdown, so this is the only thing that keeps it from reading as one dense block) — a missing blank line is a
+  `fail`, fix is mechanical. Also sanity-check length is roughly in the ~1,300-1,900 character band (not
   a hard fail if it's off, but flag it). Any banned word/phrase or in-body link found is a `fail` — name exactly
   what and where, don't silently strip it yourself.
 - **Naming check (hard fail, non-negotiable — see `.claude/rules/guardrails.md`):**
