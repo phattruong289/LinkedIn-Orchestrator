@@ -21,6 +21,11 @@ if [ -f .env ]; then
 fi
 : "${LINKEDIN_ACCESS_TOKEN:?Not set. Provide via .env or the environment — see script header.}"
 : "${LINKEDIN_PERSON_URN:?Not set. Provide via .env or the environment — see script header.}"
+
+# Some Windows setups alias `python3` to a Microsoft Store stub that fails at runtime rather than being absent —
+# `command -v` alone can't detect that, so actually try running it.
+PYBIN=python3
+if ! "$PYBIN" -c "" >/dev/null 2>&1; then PYBIN=python; fi
 : "${LINKEDIN_API_VERSION:?Not set. Provide via .env or the environment — see script header.}"
 
 if [ -n "${1:-}" ]; then
@@ -34,7 +39,7 @@ if [ -z "$TEXT" ]; then
   exit 1
 fi
 
-PAYLOAD=$(python3 -c '
+PAYLOAD=$("$PYBIN" -c '
 import json, sys
 text = sys.stdin.read()
 person_urn = sys.argv[1]

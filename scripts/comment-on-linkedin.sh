@@ -20,6 +20,11 @@ fi
 : "${LINKEDIN_PERSON_URN:?Not set. Provide via .env or the environment.}"
 : "${LINKEDIN_API_VERSION:?Not set. Provide via .env or the environment.}"
 
+# Some Windows setups alias `python3` to a Microsoft Store stub that fails at runtime rather than being absent —
+# `command -v` alone can't detect that, so actually try running it.
+PYBIN=python3
+if ! "$PYBIN" -c "" >/dev/null 2>&1; then PYBIN=python; fi
+
 if [ -z "${1:-}" ]; then
   echo "Usage: $0 <target-post-urn> [comment text]" >&2
   echo 'Example target URN: urn:li:share:7123456789012345678' >&2
@@ -37,14 +42,14 @@ if [ -z "$TEXT" ]; then
   exit 1
 fi
 
-PAYLOAD=$(python3 -c '
+PAYLOAD=$("$PYBIN" -c '
 import json, sys
 actor, text = sys.argv[1], sys.argv[2]
 print(json.dumps({"actor": actor, "message": {"text": text}}))
 ' "$LINKEDIN_PERSON_URN" "$TEXT")
 
 # LinkedIn requires the object URN URL-encoded as the path segment.
-ENCODED_URN=$(python3 -c "import urllib.parse, sys; print(urllib.parse.quote(sys.argv[1], safe=''))" "$OBJECT_URN")
+ENCODED_URN=$("$PYBIN" -c "import urllib.parse, sys; print(urllib.parse.quote(sys.argv[1], safe=''))" "$OBJECT_URN")
 
 echo "About to comment as $LINKEDIN_PERSON_URN on $OBJECT_URN. Preview:"
 echo "---"
