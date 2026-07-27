@@ -24,8 +24,11 @@ A multi-agent pipeline that drafts ~1 LinkedIn post/day for Wil Lee (CEO of PLAY
 - `.claude/skills/idea-harvest/` — the weekly ritual that stocks the Idea Bank so the daily run never starts blank.
 - `.claude/skills/log-outcome/` — run manually after Wil acts on a draft, to close the loop.
 - `resources/` — local files only: voice guides, brand kit, case facts. Everything else moved to Notion.
-- `jobs/YYYY-MM-DD.json` — one job ticket per day; this is the pipeline's actual state, not the conversation.
-- `posted-log.json` — local mirror of finalized topics for the repeat check.
+- Pipeline runtime state lives entirely in Notion "Job Tickets" (one page per day — see table below) and Notion
+  "Post Log" (the repeat-check source). There is no local job-ticket file or `posted-log.json` — this was
+  deliberately moved off git (2026-07-27) so a daily run needs Notion access only, never a GitHub write grant.
+  `jobs/*.json` and `posted-log.json` still present in this repo predate the move and are kept only as frozen
+  historical test records; nothing reads or writes them anymore.
 
 ## The five Notion databases (on the shared `TESTING` page, under `# LinkedIn`)
 
@@ -38,6 +41,7 @@ Split by **purpose**, so both humans and agents know exactly where a thing belon
 | **Idea Bank** | **WHAT WE'LL WRITE NEXT** — scored idea pipeline (`fresh`/`parked`/`used`/`cut`) | `collection://9592e8bf-2758-4a95-9f8f-63400feb71a3` |
 | **Post Log** | **WHAT WE WROTE** — one row per daily draft, with `Pillar`/`Skeleton Used`/`Idea Score` for mix tracking | `collection://edc91fd0-7523-407c-82d2-df69f4be616d` |
 | **Past Posts** | **HOW WIL SOUNDS** — his 10 real past posts, the voice ground truth | `collection://5e65485f-b56e-42c1-9456-662a44e6656c` |
+| **Job Tickets** | **RUNTIME PIPELINE STATE** — one page per daily run (research pack, idea candidates, copy, QA report, run_log). Replaces local `jobs/*.json` (2026-07-27) so a daily run never needs git write access | `collection://d135687d-c675-4541-a22b-21170343b397` |
 
 Rule of thumb for where new material goes: a *fact or source* → Reference Resources. A *method or rule* → Content
 Playbook. A *thing we might write about* → Idea Bank.

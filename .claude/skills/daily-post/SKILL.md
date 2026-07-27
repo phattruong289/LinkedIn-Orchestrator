@@ -13,24 +13,44 @@ gate. Read `.claude/rules/guardrails.md` first.
 always `text-only` **for now** (`text+single-graphic`/`art-director` are paused — see `.claude/rules/guardrails.md`);
 one post per calendar day; never auto-post.
 
+## State model
+
+**All pipeline runtime state lives in Notion "Job Tickets"** (`collection://d135687d-c675-4541-a22b-21170343b397`)
+— one page per calendar day. There is no local job-ticket file. This is deliberate: it means a daily run needs
+Notion access only, never git write access, which is what actually blocked the first real Routine run on
+2026-07-27 (the GitHub App installed on that environment had no `Contents: write` permission). A page's `Status`
+property (`started|failed|qa_failed|draft_ready|posted_to_slack|closed`) is the source of truth for idempotency;
+the page body holds a single JSON code block shaped `{"run_log": [...], "stages": {...}}` that every step below
+reads and rewrites via `notion-update-page`'s `update_content` (target just that code block, don't replace the
+whole page each time).
+
+**Cross-environment tool ID note:** the Notion connector ID differs between local sessions
+(`mcp__9787b242-3013-4204-91ee-022fa3fa29e5__notion-*`) and cloud Routines (`mcp__Notion__notion-*`) even though
+both point at the same "REDACTED Studios" workspace. Try whichever is already loaded; if it comes back as an
+unrecognized tool, `ToolSearch` for `"notion"` and retry with whatever it finds.
+
 ## Steps
 
-1. **Resolve today's ticket** at `jobs/YYYY-MM-DD.json` (local date):
-   - Doesn't exist → create `{date, profile: "wil-personal", format_target: null, status: "started", run_log: [], stages: {}}`.
-   - Exists with `status` already `posted_to_slack`, `qa_failed`, `failed`, or `closed` → **stop**, report "today's
-     post is already handled, see the ticket" (idempotency guard against a double-fire or accidental re-run).
-   - Exists mid-pipeline (a stage errored last run) → **resume from the first incomplete stage**, don't restart.
-2. Append a `run_log` entry (`{ts, event: "manager_start"}`).
-3. **Dispatch `librarian`** (Agent tool). Write its output to `stages.research`. If it reports the resource pool is
-   too thin for any decent angle → set `status: "failed"`, log why, **stop and report** — don't force a weak post.
+1. **Resolve today's ticket** — query Job Tickets for a page with today's `Date` (local date):
+   - No page for today → create one: `Name` = today's date (`YYYY-MM-DD`), `Status: started`, `Profile:
+     wil-personal`, `Format Target` left unset, body seeded with `{"run_log": [], "stages": {}}`.
+   - Page exists with `Status` already `posted_to_slack`, `qa_failed`, `failed`, or `closed` → **stop**, report
+     "today's post is already handled, see the ticket" (idempotency guard against a double-fire or accidental
+     re-run).
+   - Page exists mid-pipeline (`Status: started`, a stage errored last run) → **resume from the first incomplete
+     stage** found in the body JSON, don't restart.
+2. Append a `run_log` entry (`{ts, event: "manager_start"}`) to the body JSON.
+3. **Dispatch `librarian`** (Agent tool). Write its output to `stages.research` in the body JSON. If it reports the
+   resource pool is too thin for any decent angle → set the page's `Status` property to `failed`, log why in
+   `run_log`, **stop and report** — don't force a weak post.
 4. **Dispatch `strategist-writer`, Step A (ideation)**, telling it explicitly that `text+single-graphic` is paused
    this run — it should only propose `text-only` ideas. Get `idea_candidates` (each scored, with a `pillar` and
    `skeleton`). **You (the Manager) pick:**
    - Prefer the highest-scoring idea that isn't `repeat_risk: true`.
    - **Scoring thresholds are a real gate, not decoration.** If the top candidate scores <70, don't write it —
-     set `status: "failed"`, note that nothing cleared the bar, and recommend running `idea-harvest`. If the top
-     candidate is 70-89, you may proceed, but record in the ticket that it was written below the ≥90 "write now"
-     threshold, so the human reviewer knows.
+     set the page's `Status` property to `failed`, note that nothing cleared the bar, and recommend running
+     `idea-harvest`. If the top candidate is 70-89, you may proceed, but record in the ticket that it was written
+     below the ≥90 "write now" threshold, so the human reviewer knows.
    - Break near-ties (within ~10 points) in favour of the under-served pillar the Strategist reported.
    - Write `stages.idea_chosen` (including `pillar`, `skeleton`, `score`, `score_breakdown`); `format_target` is
      always `"text-only"` for now.
@@ -44,8 +64,8 @@ one post per calendar day; never auto-post.
    even if an idea's research would support a graphic; that capability comes back later by explicit instruction.
 7. **Dispatch `producer-qa`** with everything gathered so far. Write `stages.draft`, `stages.qa_report`,
    `stages.qa_status`.
-   - `qa_status: "fail"` → set ticket `status: "qa_failed"`. **Do not proceed to Slack.** Still send a short Slack
-     notice ("today's draft failed QA — <reason> — needs manual attention"). Stop.
+   - `qa_status: "fail"` → set the page's `Status` property to `qa_failed`. **Do not proceed to Slack.** Still send
+     a short Slack notice ("today's draft failed QA — <reason> — needs manual attention"). Stop.
 8. **On `qa_status: "pass"` — deliver the draft for human review.**
    - **Always write a row to Notion "Post Log"** (`collection://edc91fd0-7523-407c-82d2-df69f4be616d`):
      `Name`, `Date`, `Profile`, `Format`, `Status: draft_ready`, `Pillar`, `Skeleton Used`, `Idea Score`,
@@ -60,12 +80,13 @@ one post per calendar day; never auto-post.
    - Either way, **carry the caveats through**: any voice-confidence, repeat-risk, below-threshold-score, or
      medium-confidence-source flag from earlier stages goes into the delivered draft, not just the ticket. A
      caveat that dies between the ticket and the human is a caveat that did nothing.
-   - Set `status: "draft_ready"` (or `"posted_to_slack"` if Slack delivery succeeded), append to `run_log`.
+   - Set the page's `Status` property to `draft_ready` (or `posted_to_slack` if Slack delivery succeeded), append
+     to `run_log` in the body JSON.
 9. **Stop.** Do not wait for a Slack reply — a single invocation can't block for human input. Closing the loop
    (recording what Wil actually did) is the separate `log-outcome` skill, run manually after he acts.
 
 ## Failure handling
 
 Any stage error (not a QA fail — an actual exception/tool failure): log it into `run_log` with the stage name and
-error, set ticket `status: "failed"`, stop, and report clearly what broke and at which stage — don't retry silently
-or paper over a broken stage.
+error, set the page's `Status` property to `failed`, stop, and report clearly what broke and at which stage —
+don't retry silently or paper over a broken stage.

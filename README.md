@@ -18,11 +18,12 @@ turning graphics back on. Until then, `daily-post` never dispatches `art-directo
 
 ## Running manually
 
-Ask Claude to run the `daily-post` skill. It creates/resumes today's `jobs/YYYY-MM-DD.json`, runs the pipeline
-stages in order, and posts a Slack message when a draft passes QA.
+Ask Claude to run the `daily-post` skill. It creates/resumes today's page in Notion "Job Tickets", runs the
+pipeline stages in order, and posts a Slack message when a draft passes QA. All runtime state lives in Notion —
+the skill needs no local file and no git write access to complete a run (see `CLAUDE.md`'s Notion database table).
 
-After you act on a Slack draft (post it, tweak it, or kill it), run the `log-outcome` skill so
-`posted-log.json` grows and future ideation avoids repeating today's topic.
+After you act on a Slack draft (post it, tweak it, or kill it), run the `log-outcome` skill so the Notion "Post
+Log" row's `Status` reflects what happened and future ideation avoids repeating today's topic.
 
 ## Turning on a daily schedule — two different mechanisms, pick the right one
 
@@ -41,9 +42,12 @@ There are two real options, with very different reliability:
 **Recommended path:**
 
 1. Run `daily-post` manually a few times first and confirm the output quality/Slack flow works.
-2. Verify working-directory/file-access behavior once, either via a one-time Local Scheduled Task (fully
-   self-contained prompt: "cd to this project folder, confirm `.claude/agents/` has 4 files, write
-   `jobs/_scheduler-probe.json` with `{"ok": true}`, then stop") or via a one-off Routine — check it actually ran
-   with the right working directory and could write the file.
+2. Verify working-directory/repo-access behavior once, either via a one-time Local Scheduled Task (fully
+   self-contained prompt: "cd to this project folder, confirm `.claude/agents/` has 4 files, then stop") or via a
+   one-off Routine — check it actually ran with the right working directory and could reach the repo.
 3. Set up the **recurring daily trigger as a Routine**, not a Local Scheduled Task, so it survives the machine
-   being off/asleep.
+   being off/asleep. A Routine needs: the repo connected as its cloud environment's source (Settings →
+   Environment → Repository), and Notion added as a connector (`claude.ai/customize/connectors`) with access to
+   the "REDACTED Studios" workspace. **It does not need GitHub write (`Contents: write`) access to run
+   `daily-post`** — all pipeline state now lives in Notion (see `CLAUDE.md`). Write access is only needed if you
+   want the Routine to also commit code changes to the pipeline itself, which is a separate, occasional use case.

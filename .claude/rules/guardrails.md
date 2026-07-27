@@ -41,15 +41,18 @@ in a first-comment note, not the post text).
 run. Case-study-specific assets (e.g. `brand-assets/case-studies/susu/`) are only used when the post is actually
 about that case study.
 
-**Traceability.** Every job ticket (`jobs/YYYY-MM-DD.json`) keeps a `run_log` of what ran and when, and every fact
-in the research pack keeps its source. This is what makes the pipeline auditable later.
+**Traceability.** Every job ticket (Notion "Job Tickets", `collection://d135687d-c675-4541-a22b-21170343b397`)
+keeps a `run_log` of what ran and when, and every fact in the research pack keeps its source. This is what makes
+the pipeline auditable later — and, since it lives in Notion rather than a local file, means a daily run never
+needs git write access to complete.
 
 **No near-duplicate posts.** Recurring topics and repeated mentions of the same theme are fine — but a post must
 never land ~80% the same in substance (same core argument + same key facts/case-study) as something posted in the
 last ~30 days. Checked twice: `strategist-writer` at ideation (tag overlap as a cheap filter, then an actual
-argument/fact comparison against `posted-log.json`'s `core_argument`/`key_facts_cited`), and `producer-qa` again
-independently as the last check before a human sees it. This depends on `log-outcome` actually being run after
-every real post — an empty `posted-log.json` means this check has nothing to compare against yet.
+argument/fact comparison against Notion "Post Log"'s (`collection://edc91fd0-7523-407c-82d2-df69f4be616d`) `Core
+Argument`/`Key Facts Cited` columns), and `producer-qa` again independently as the last check before a human sees
+it. This depends on `log-outcome` actually being run after every real post so each row's `Status` reflects what
+actually happened — a Post Log with no `posted` rows yet means this check has nothing real to compare against.
 
 **Phase 1 scope lock.** Profile: Wil's personal only (no company page). Format: **text-only only, for now** — no
 carousels, no video. `text+single-graphic` is a documented Phase 1 capability (`art-director` agent exists) but is
