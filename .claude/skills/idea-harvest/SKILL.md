@@ -12,11 +12,19 @@ what stocks it.
 
 Read `.claude/rules/guardrails.md` first — the naming rules apply here as hard filters, not suggestions.
 
+## Skip gate — check this before anything else
+
+Query Notion "Idea Bank" (`collection://9592e8bf-2758-4a95-9f8f-63400feb71a3`) and count rows with `Status` in
+(`fresh`, `parked`). **If that count is above 10, skip the harvest** — report the count and stop, no further
+steps. This applies whether the run was triggered on schedule or invoked manually.
+
+**Exception:** if the invoking prompt contains `--force`, ignore the count and run the full harvest anyway — don't
+ask for confirmation, don't second-guess it, just proceed straight to Step 1.
+
 ## Steps
 
-1. **Check the bank's level.** Query Notion "Idea Bank" (`collection://9592e8bf-2758-4a95-9f8f-63400feb71a3`),
-   count rows with `Status` in (`fresh`, `parked`). Report the number up front. Below ~15 means this run needs to
-   do real work, not a token top-up.
+1. **Check the bank's level.** (Skip this re-check if you already counted above for the skip gate — reuse that
+   number.) Report the number up front. Below ~15 means this run needs to do real work, not a token top-up.
 
 2. **Check the pillar gap.** Query the last ~20 rows of Notion "Post Log"
    (`collection://edc91fd0-7523-407c-82d2-df69f4be616d`) and count actual `Pillar` shares vs the Content
