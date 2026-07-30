@@ -1,6 +1,6 @@
 ---
 name: daily-post
-description: Manager/Orchestrator for PLAY3's LinkedIn pipeline. Runs librarian, then strategist-writer, then producer-qa, in order, text-only format (art-director/graphics paused for now) — then delivers the finished draft for human approve/tweak/kill. Writes in PLAY3's company voice by default; pass --wil_style to draft for Wil's personal profile instead. Invoke manually, or via a scheduled task, once daily.
+description: Manager/Orchestrator for PLAY3's LinkedIn pipeline. Runs librarian, then strategist-writer, then producer-qa, in order, text, optionally with a rendered slide carousel — then delivers the finished draft for human approve/tweak/kill. Writes in PLAY3's company voice by default; pass --wil_style to draft for Wil's personal profile instead. Invoke manually, or via a scheduled task, once daily.
 ---
 
 # Daily post — the Manager
@@ -10,10 +10,10 @@ an LLM "agent" persona — your job is to run the stages in order, keep the job 
 gate. Read `.claude/rules/guardrails.md` first.
 
 **Scope, hardcoded — do not infer otherwise from context:** profile is `play3-company` by default, or
-`wil-personal` when the run's prompt contains `--wil_style`; format is always `text-only` **for now**
-(`text+single-graphic`/`art-director` are paused — see `.claude/rules/guardrails.md`); one post per calendar day;
-never auto-post. Pass `--wil_style` through to `strategist-writer` when present, and record the resolved profile on
-the ticket.
+`wil-personal` when the run's prompt contains `--wil_style`; format is text, optionally with a rendered slide
+carousel; no video; **no generated imagery** (see `.claude/rules/guardrails.md`); one post per calendar day; never
+auto-post. Pass `--wil_style` through to `strategist-writer` when present, and record the resolved profile on the
+ticket.
 
 ## State model
 
@@ -45,8 +45,7 @@ unrecognized tool, `ToolSearch` for `"notion"` and retry with whatever it finds.
 3. **Dispatch `librarian`** (Agent tool). Write its output to `stages.research` in the body JSON. If it reports the
    resource pool is too thin for any decent angle → set the page's `Status` property to `failed`, log why in
    `run_log`, **stop and report** — don't force a weak post.
-4. **Dispatch `strategist-writer`, Step A (ideation)**, telling it explicitly that `text+single-graphic` is paused
-   this run — it should only propose `text-only` ideas — and which profile/voice this run is for. Get `idea_candidates` (each scored, with a `pillar` and
+4. **Dispatch `strategist-writer`, Step A (ideation)**, telling it which profile/voice this run is for. Get `idea_candidates` (each scored, with a `pillar` and
    `skeleton`). **You (the Manager) pick:**
    - Prefer the highest-scoring idea that isn't `repeat_risk: true`.
    - **Scoring thresholds are a real gate, not decoration.** If the top candidate scores <70, don't write it —
@@ -62,8 +61,10 @@ unrecognized tool, `ToolSearch` for `"notion"` and retry with whatever it finds.
    - If the chosen idea came *from* the Idea Bank, update that row to `Status: used` with `Used On` = today.
 5. **Dispatch `strategist-writer`, Step B (copywriting)** with the chosen idea, its pillar, and the matching
    skeleton. Write `stages.copy`.
-6. **Skip `art-director` entirely** and set `stages.visual: null` — it's paused (see step 4). Don't dispatch it
-   even if an idea's research would support a graphic; that capability comes back later by explicit instruction.
+6. **Build the visual, if the post has one.** Invoke the `slide-deck` skill with the finished copy and its research
+   pack; write the returned slide list and output paths to `stages.visual`. If the post doesn't warrant a deck, or
+   the skill reports it couldn't build one, set `stages.visual: null` and say why — a text-only post is a complete
+   post, not a degraded one.
 7. **Dispatch `producer-qa`** with everything gathered so far. Write `stages.draft`, `stages.qa_report`,
    `stages.qa_status`.
    - `qa_status: "fail"` → set the page's `Status` property to `qa_failed`. **Do not proceed to Slack.** Still send

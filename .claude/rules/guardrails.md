@@ -88,10 +88,15 @@ it. This depends on `log-outcome` actually being run after every real post so ea
 actually happened — a Post Log with no `posted` rows yet means this check has nothing real to compare against.
 
 **Scope lock.** Profile: PLAY3 company page by default; `--wil_style` switches that run to Wil's personal profile.
-Format: **text-only only, for now** — no carousels, no video. `text+single-graphic` is a built capability
-(`art-director` agent exists) but is currently paused by explicit instruction; don't dispatch `art-director` or
-propose graphic-format ideas until that pause is lifted. One post per calendar day. Don't infer otherwise from
-context — these are hardcoded.
+Format: text, optionally with a rendered slide carousel — see the `slide-deck` skill. No video. One post per
+calendar day. Don't infer otherwise from context — these are hardcoded.
+
+**No generated imagery, anywhere.** Slides are rendered from the HTML/CSS templates in `visuals/`, which means
+exact type, the real logo file, and figures that match the copy. Image generation was removed on 2026-07-30 after
+producing the wrong canvas size and an approximated wordmark. If a slide needs a real screenshot — a game capture,
+an analytics dashboard — and none has been supplied, **drop that slide.** Never substitute a mockup, a generated
+image, a stand-in chart, or a description of the missing capture: a fabricated dashboard is a fabricated statistic
+that happens to be rendered, and the no-invented-facts rule covers images exactly as it covers text.
 
 **`scripts/post-to-linkedin.sh` is a standalone technical experiment, not part of the pipeline.** It exists so
 Quang can manually test the LinkedIn Posts API against his own personal account (`LINKEDIN_PERSON_URN` in `.env`

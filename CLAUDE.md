@@ -8,8 +8,9 @@ A multi-agent pipeline that drafts ~1 LinkedIn post/day for PLAY3, ending at a h
 - **Profile / voice:** PLAY3's company page by default. Pass **`--wil_style`** to draft for Wil Lee's personal
   profile instead; that run reads `resources/voice-guide-wil-personal.md` in place of the company guide. Both
   guides are validated against real published posts, and the two voices never mix.
-- **Format:** text-only, for now. `text+single-graphic` is built (`art-director` agent) but currently **paused** —
-  don't dispatch it until told otherwise. No carousels, no video.
+- **Format:** text, optionally with a rendered slide carousel (`slide-deck` skill → `visuals/`). No video.
+  **No generated imagery** — slides come from HTML/CSS templates, and a slide needing a screenshot that wasn't
+  supplied gets dropped rather than faked.
 - **Posting:** the `daily-post` pipeline never auto-posts; it stops at a draft for human review and manual
   copy-paste. (`scripts/post-to-linkedin.sh` is a separate, scoped experiment — see the guardrails.)
 - **Cadence:** one job ticket per calendar day.
@@ -20,8 +21,9 @@ A multi-agent pipeline that drafts ~1 LinkedIn post/day for PLAY3, ending at a h
   separation, **naming rules**, brand lock, traceability, no near-duplicates). Read this before touching any agent
   or skill file.
 - `.claude/agents/` — the specialist subagents: `librarian` (research across 6 source lanes),
-  `strategist-writer` (scoring + pillar balance + copy), `producer-qa` (final check). `art-director` (visual)
-  exists but is currently **paused** — text-only posts for now.
+  `strategist-writer` (scoring + pillar balance + copy), `producer-qa` (final check).
+- `.claude/skills/slide-deck/` — builds the visual carousel that ships with a post; renders via `visuals/`.
+- `visuals/` — the slide design system: HTML/CSS templates, vendored fonts, and the headless-Chrome renderer.
 - `.claude/skills/daily-post/` — the Manager: runs the agents in order, owns the job ticket, delivers the draft.
 - `.claude/skills/idea-harvest/` — the weekly ritual that stocks the Idea Bank so the daily run never starts blank.
 - `.claude/skills/log-outcome/` — run manually after Wil acts on a draft, to close the loop.

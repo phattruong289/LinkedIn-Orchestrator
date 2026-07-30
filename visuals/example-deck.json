@@ -1,0 +1,50 @@
+{
+  "slug": "animal-troll-tower",
+  "seed": 20260730,
+  "footer": "Play3 | Goal Driven AI agents for interactive worlds",
+  "slides": [
+    {
+      "type": "cover",
+      "font": "mono",
+      "chip": "CASE STUDY",
+      "headline": "Two Agents.\nOne Live Game.\nZero Downtime.",
+      "accent": ["Two", "Zero"]
+    },
+    {
+      "type": "list",
+      "headline": "What We Wanted To Prove",
+      "accent": ["Prove"],
+      "items": [
+        "Make the game feel more alive and “sticky”",
+        "Increase spending without ruining the vibe",
+        "Learn what players want in real time"
+      ]
+    },
+    {
+      "type": "metrics",
+      "headline": "Players Actually Talked Back",
+      "accent": ["Talked Back"],
+      "metrics": [
+        { "value": "73,247", "label": "Unique Players Engaged" },
+        { "value": "115,424", "label": "Total Interactions" },
+        { "value": "1.58", "label": "Interactions Per Player" }
+      ],
+      "chart": [4, 5, 4, 6, 9, 14, 22, 31, 44, 39, 43, 36, 28, 21, 16, 12, 10, 11, 9]
+    },
+    {
+      "type": "compare",
+      "headline": "Monetization Followed Engagement",
+      "accent": ["Followed"],
+      "caption": "Daily revenue grew from",
+      "sticker": "~1,980% Growth!",
+      "from": { "value": "2,500", "label": "Robux/Day", "note": "Late July" },
+      "to": { "value": "52,000", "label": "Robux/Day", "note": "Aug 2nd Peak" }
+    },
+    {
+      "type": "cta",
+      "headline": "One Integration.\nEvery Metric Goes Up.",
+      "payoff": "We're Onboarding\nStudio Partners.",
+      "button": "Message Us"
+    }
+  ]
+}

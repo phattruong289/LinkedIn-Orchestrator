@@ -1,0 +1,234 @@
+<!doctype html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* One template, five slide types, switched on SPEC.type. Kept in a single file so
+     the shared furniture (background, logo, swipe cue, footer) exists once and every
+     type inherits the same treatment automatically. */
+
+  /* diffuse centre lift — light behind the text, not a card with an edge */
+  .lift { position: absolute; left: 96px; right: 96px; top: 50%; transform: translateY(-50%); padding: 70px 30px; }
+  .lift::before {
+    content: ""; position: absolute; inset: -30px -10px; border-radius: 40px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,.075) 0%, rgba(255,255,255,.04) 45%, transparent 78%);
+    filter: blur(14px);
+  }
+
+  h1 { margin: 0; text-align: center; color: var(--text); }
+  h1.mono    { font: 700 76px/1.34 "P3Mono", monospace; letter-spacing: -.01em; }
+  h1.display { font: 700 88px/1.1 "P3Display", sans-serif; text-transform: uppercase; }
+
+  /* headline pinned to the top, used by the body slide types */
+  h2.top {
+    position: absolute; top: 132px; left: 70px; right: 70px; margin: 0;
+    text-align: center; color: var(--text);
+    font: 700 72px/1.12 "P3Display", sans-serif; text-transform: uppercase;
+  }
+
+  .sub { margin: 30px 0 0; text-align: center; font: 700 30px/1.5 "P3Mono", monospace; color: var(--text); }
+  .chipwrap { text-align: center; margin: 0 0 34px; }
+  .sparkle { position: absolute; }
+  .sparkle svg { display: block; }
+
+  /* ---- numbered list ---------------------------------------------------- */
+  .cards { position: absolute; left: 118px; right: 118px; top: 330px; }
+  /* chamfered corners, as in the source decks. Two layers rather than a border,
+     because clip-path cuts a CSS border off at the chamfers and leaves the card
+     looking torn — the outer layer *is* the border. */
+  .card {
+    position: relative; margin-bottom: 30px; padding: 2px;
+    background: rgba(173, 255, 0, .55);
+    clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
+  }
+  .card > .inner {
+    display: flex; align-items: center; gap: 44px; padding: 38px 44px;
+    background: #131c04;
+    clip-path: polygon(0 0, calc(100% - 29px) 0, 100% 29px, 100% 100%, 29px 100%, 0 calc(100% - 29px));
+  }
+  .card .n { font: 700 82px/1 "P3Mono", monospace; color: #fff; opacity: .92; min-width: 130px; }
+  .card .t { font: 400 34px/1.32 "Segoe UI", sans-serif; color: rgba(255,255,255,.92); }
+
+  /* ---- metric stack ------------------------------------------------------ */
+  .metrics {
+    position: absolute; left: 76px; right: 76px; top: 330px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 52px 56px; text-align: center;
+  }
+  .metrics .m .v { font: 900 88px/1 "P3Figure", sans-serif; color: var(--accent); letter-spacing: -.02em; }
+  .metrics .m .l { margin-top: 12px; font: 700 30px/1.25 "Segoe UI", sans-serif; color: #fff; }
+  .metrics .m.wide { grid-column: 1 / -1; }
+  /* the chart is a floor, not a feature — it should read as a horizon line */
+  .chart { position: absolute; left: 0; right: 0; bottom: 0; height: 150px; opacity: .85; }
+  .chart svg { display: block; width: 100%; height: 100%; }
+  /* lift the swipe cue clear of the chart when one is present */
+  .swipe.raised { bottom: 196px; }
+
+  /* ---- before → after ---------------------------------------------------- */
+  /* sits lower than the other body types because there's no screenshot beneath it —
+     the source deck put a dashboard capture here, which we omit rather than fake */
+  .compare {
+    position: absolute; left: 90px; right: 90px; top: 440px;
+    border: 1.5px solid rgba(255,255,255,.5); border-radius: 22px; padding: 54px 30px 48px;
+  }
+  .compare .cap {
+    position: absolute; top: -19px; left: 50%; transform: translateX(-50%);
+    background: #000; padding: 0 22px; font: 400 30px/1 "Segoe UI", sans-serif; color: #fff; white-space: nowrap;
+  }
+  .compare .row { display: flex; align-items: center; justify-content: center; gap: 40px; }
+  .compare .side { flex: 1; text-align: center; }
+  .compare .side .v { font: 900 98px/1 "P3Figure", sans-serif; color: var(--accent); }
+  .compare .side .l { margin-top: 10px; font: 700 32px/1.2 "Segoe UI", sans-serif; color: #fff; }
+  .compare .side .n { margin-top: 4px; font: italic 400 27px/1.2 "Segoe UI", sans-serif; color: rgba(255,255,255,.8); }
+  .compare .gt { font: 900 62px/1 "P3Figure", sans-serif; color: #fff; }
+  .sticker {
+    position: absolute; right: 46px; top: 300px; transform: rotate(-7deg);
+    background: var(--sticker); color: #fff; padding: 18px 30px; border-radius: 14px;
+    font: 700 34px/1 "Segoe UI", sans-serif; white-space: nowrap;
+  }
+
+  /* ---- cta --------------------------------------------------------------- */
+  /* CTA carries two stacked headlines, so it runs a size down to stay on two lines each */
+  h1.cta { font-size: 66px; }
+  .bolt { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%) rotate(14deg); width: 620px; opacity: .11; }
+  .btn {
+    position: absolute; left: 50%; bottom: 178px; transform: translateX(-50%);
+    display: inline-flex; align-items: center; gap: 14px;
+    background: var(--accent); color: #000; padding: 26px 46px; border-radius: 16px;
+    font: 700 36px/1 "P3Mono", monospace; white-space: nowrap;
+  }
+  .cursor { position: absolute; left: 50%; bottom: 150px; margin-left: 118px; width: 40px; }
+</style>
+
+<div class="slide" id="slide">
+  <div class="stars"></div>
+  <div class="bokeh"></div>
+  <div class="glow" id="glow" hidden></div>
+  <img class="bolt" id="bolt" src="play3-bolt.svg" alt="" hidden>
+
+  <img class="logo" id="logo" src="play3-logo.svg" alt="">
+
+  <div class="sparkle" id="sparkleL" hidden style="left:52px;top:34px">
+    <svg width="58" height="58" viewBox="0 0 100 100"><path d="M50 0 L55.5 44.5 L100 50 L55.5 55.5 L50 100 L44.5 55.5 L0 50 L44.5 44.5 Z" fill="#fff" opacity=".92"/></svg>
+  </div>
+  <div class="sparkle" id="sparkleR" hidden style="right:52px;top:34px">
+    <svg width="58" height="58" viewBox="0 0 100 100"><path d="M50 0 L55.5 44.5 L100 50 L55.5 55.5 L50 100 L44.5 55.5 L0 50 L44.5 44.5 Z" fill="#fff" opacity=".92"/></svg>
+  </div>
+
+  <div id="body"></div>
+
+  <div class="swipe" id="swipe" hidden>
+    <svg viewBox="0 0 150 14">
+      <path d="M0 7 H138" stroke="#adff00" stroke-width="2" fill="none"/>
+      <path d="M132 1.5 L142 7 L132 12.5" stroke="#adff00" stroke-width="2" fill="none"/>
+    </svg>
+  </div>
+
+  <div class="footer" id="footer" hidden></div>
+</div>
+
+<script src="starfield.js"></script>
+<script src="spec.js"></script>
+<script>
+const S = window.SPEC || { type: "cover", headline: "No spec loaded", seed: 1 };
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+
+// green marks what matters — accent words are matched on word boundaries so a
+// partial match doesn't colour a longer word
+function paint(text, words) {
+  let out = esc(text);
+  for (const w of words || []) {
+    out = out.replace(new RegExp(`\\b${esc(w).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "g"),
+                      `<span class="a">${esc(w)}</span>`);
+  }
+  return out.replace(/\n/g, "<br>");
+}
+
+// simple polyline chart from a series of numbers, normalised to the box
+function chart(series) {
+  const w = 1080, h = 230, pad = 14;
+  const max = Math.max(...series), min = Math.min(...series);
+  const span = max - min || 1;
+  const pts = series.map((v, i) => {
+    const x = (i / (series.length - 1)) * w;
+    const y = h - pad - ((v - min) / span) * (h - pad * 2);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  });
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <polygon points="0,${h} ${pts.join(" ")} ${w},${h}" fill="rgba(173,255,0,.16)"/>
+    <polyline points="${pts.join(" ")}" fill="none" stroke="#adff00" stroke-width="3"/>
+  </svg>`;
+}
+
+const body = $("body");
+
+switch (S.type) {
+  case "cover": {
+    $("sparkleL").hidden = false;
+    $("sparkleR").hidden = false;
+    body.innerHTML = `<div class="lift">
+      ${S.chip ? `<div class="chipwrap"><span class="chip">${esc(S.chip)}</span></div>` : ""}
+      <h1 class="${S.font === "display" ? "display" : "mono"}">${paint(S.headline, S.accent)}</h1>
+      ${S.subtitle ? `<p class="sub">${paint(S.subtitle, S.accent)}</p>` : ""}
+    </div>`;
+    break;
+  }
+
+  case "list": {
+    $("logo").hidden = true;
+    body.innerHTML = `<h2 class="top">${paint(S.headline, S.accent)}</h2>
+      <div class="cards">${(S.items || []).map((t, i) =>
+        `<div class="card"><div class="inner"><div class="n">${String(i + 1).padStart(2, "0")}</div><div class="t">${esc(t)}</div></div></div>`
+      ).join("")}</div>`;
+    break;
+  }
+
+  case "metrics": {
+    $("logo").hidden = true;
+    $("glow").hidden = false;
+    const ms = S.metrics || [];
+    const odd = ms.length % 2 === 1;
+    body.innerHTML = `<h2 class="top">${paint(S.headline, S.accent)}</h2>
+      <div class="metrics">${ms.map((m, i) =>
+        `<div class="m ${odd && i === ms.length - 1 ? "wide" : ""}">
+           <div class="v">${esc(m.value)}</div><div class="l">${esc(m.label)}</div></div>`
+      ).join("")}</div>
+      ${S.chart ? `<div class="chart">${chart(S.chart)}</div>` : ""}`;
+    if (S.chart) $("swipe").classList.add("raised");
+    break;
+  }
+
+  case "compare": {
+    $("logo").hidden = true;
+    body.innerHTML = `<h2 class="top">${paint(S.headline, S.accent)}</h2>
+      ${S.sticker ? `<div class="sticker">${esc(S.sticker)}</div>` : ""}
+      <div class="compare">
+        ${S.caption ? `<div class="cap">${esc(S.caption)}</div>` : ""}
+        <div class="row">
+          <div class="side"><div class="v">${esc(S.from.value)}</div><div class="l">${esc(S.from.label)}</div>
+            ${S.from.note ? `<div class="n">(${esc(S.from.note)})</div>` : ""}</div>
+          <div class="gt">&gt;</div>
+          <div class="side"><div class="v">${esc(S.to.value)}</div><div class="l">${esc(S.to.label)}</div>
+            ${S.to.note ? `<div class="n">(${esc(S.to.note)})</div>` : ""}</div>
+        </div>
+      </div>`;
+    break;
+  }
+
+  case "cta": {
+    $("bolt").hidden = false;
+    body.innerHTML = `<div class="lift">
+      <h1 class="mono cta">${paint(S.headline, S.accent)}</h1>
+      ${S.payoff ? `<h1 class="mono cta a halo" style="margin-top:26px">${esc(S.payoff).replace(/\n/g, "<br>")}</h1>` : ""}
+    </div>
+    ${S.button ? `<div class="btn">${esc(S.button)}</div>
+      <svg class="cursor" viewBox="0 0 24 24" fill="#fff"><path d="M4 2 L4 20 L9 15 L12 22 L15 20.5 L12 14 L19 14 Z"/></svg>` : ""}`;
+    break;
+  }
+}
+
+// swipe cue on every slide except the last; CTA never carries one
+if (S.swipe && S.type !== "cta") $("swipe").hidden = false;
+if (S.footer) { $("footer").textContent = S.footer; $("footer").hidden = false; }
+
+PLAY3_starfield($("slide"), S.seed || 1);
+</script>

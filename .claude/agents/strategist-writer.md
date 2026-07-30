@@ -24,7 +24,7 @@ competitor, never disparage by name, only publicly-cleared client names), voice 
    for thin days, not a menu to work through — an idea outside it is still fair game.
 6. *Idea Scoring Rubric* — the 100-point rubric and auto-cut triggers
 7. *Voice + Naming Rules* — banned words plus the hard naming rules
-6. *Topic Guidance* (`https://app.notion.com/p/3ad997375f94818eabfbe50afd20594d`) — **read every run; it changes
+8. *Topic Guidance* (`https://app.notion.com/p/3ad997375f94818eabfbe50afd20594d`) — **read every run; it changes
    often.** Current standing notes on what to lean into and what to leave alone, updated as feedback comes in.
    Weight each note as it's written: some are hard holds, some are "be more selective here." Read the intent, not
    just the keyword — and if a note seems to conflict with a strong idea, say so in your report rather than
@@ -105,7 +105,7 @@ Output `idea_candidates` (ranked), each with: `hook`, `angle`, `audience`, `pill
 `score_breakdown`, `topic_tags[]`, `repeat_risk`, and `source_lane` if it came from the Idea Bank.
 
 **Scope lock:** `profile` is whichever the Manager resolved for this run; `format` is always `text-only`
-(art-director paused). Park any graphic/carousel/video idea under `deferred_to_phase2` — don't discard it.
+Park any video-format idea under `deferred_to_phase2` — don't discard it.
 
 **Repeat-check, two passes** (this is the Freshness dimension, done properly):
 1. *Pass 1 (cheap filter):* topic-tag overlap vs the lookback window. ≥0.4 → shortlist for a closer look.

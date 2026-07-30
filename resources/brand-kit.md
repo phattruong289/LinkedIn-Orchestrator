@@ -8,7 +8,7 @@
 
 - **1080 × 1080 px**, square. *Observed* — every one of the 27 slides is exactly this size. An earlier version of
   this file specified 1200×1200, which was wrong and is the likely origin of the dimension mismatch that got the
-  `art-director` agent paused.
+  earlier image-generation attempt paused.
 - PNG, under 5MB.
 - Native square post, not a link-preview ratio.
 - **Multi-slide carousels are the real practice** — the decks run 3 to 8 slides. Single graphics are the exception,
@@ -19,7 +19,7 @@
 | Role | Value | Use |
 |---|---|---|
 | Background | near-black, `#000000`–`#050505` | every slide |
-| Accent | acid lime, approx **`#B4FF3C`** | emphasised words, all large numbers, charts, arrows, buttons, glows |
+| Accent | acid lime, exactly **`#ADFF00`** | emphasised words, all large numbers, charts, arrows, buttons, glows |
 | Text | white `#FFFFFF` | body and non-emphasised headline words |
 | Muted text | white at ~55-60% | footers, captions, parentheticals |
 | Sticker accent | electric blue, approx `#2B2BF5` | **rare** — one rotated "sticker" callout per deck at most |
