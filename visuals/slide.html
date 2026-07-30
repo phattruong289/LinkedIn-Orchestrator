@@ -56,6 +56,9 @@
   .metrics .m .v { font: 900 88px/1 "P3Figure", sans-serif; color: var(--accent); letter-spacing: -.02em; }
   .metrics .m .l { margin-top: 12px; font: 700 30px/1.25 "Segoe UI", sans-serif; color: #fff; }
   .metrics .m.wide { grid-column: 1 / -1; }
+  /* without a chart there's no floor to sit on, so centre the block instead of
+     leaving the lower half empty — charts need real series data and often won't exist */
+  .metrics.nochart { top: 58%; transform: translateY(-50%); }
   /* the chart is a floor, not a feature — it should read as a horizon line */
   .chart { position: absolute; left: 0; right: 0; bottom: 0; height: 150px; opacity: .85; }
   .chart svg { display: block; width: 100%; height: 100%; }
@@ -188,7 +191,7 @@ switch (S.type) {
     const ms = S.metrics || [];
     const odd = ms.length % 2 === 1;
     body.innerHTML = `<h2 class="top">${paint(S.headline, S.accent)}</h2>
-      <div class="metrics">${ms.map((m, i) =>
+      <div class="metrics${S.chart ? "" : " nochart"}">${ms.map((m, i) =>
         `<div class="m ${odd && i === ms.length - 1 ? "wide" : ""}">
            <div class="v">${esc(m.value)}</div><div class="l">${esc(m.label)}</div></div>`
       ).join("")}</div>
