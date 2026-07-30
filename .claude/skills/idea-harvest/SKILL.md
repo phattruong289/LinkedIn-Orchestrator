@@ -28,7 +28,7 @@ ask for confirmation, don't second-guess it, just proceed straight to Step 1.
 
 2. **Check the pillar gap.** Query the last ~20 rows of Notion "Post Log"
    (`collection://edc91fd0-7523-407c-82d2-df69f4be616d`) and count actual `Pillar` shares vs the Content
-   Playbook's targets (currently ~40/25/10/20/5 — read them from the Playbook rather than assuming, they get
+   Playbook's targets (currently ~30/25/10/20/15 — read them from the Playbook rather than assuming, they get
    revised). **Harvest deliberately against the gap** — if Category POV is
    under-served, go looking for POV ideas specifically rather than taking whatever the news happens to offer.
 

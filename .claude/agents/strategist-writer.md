@@ -62,8 +62,13 @@ Given the ticket's `stages.research`:
 **A1. Check the pillar mix.** Query the last ~20 rows of Notion "Post Log"
 (`collection://edc91fd0-7523-407c-82d2-df69f4be616d`) and count the actual share of each `Pillar` value. Compare
 against the Playbook's target mix — **read the current targets from the Playbook, don't assume them; they get
-revised** (as of 2026-07-30: ~40% Category POV, ~25% Proof, ~10% Build-in-public, ~20% Industry reaction, ~5%
+revised** (as of 2026-07-30: ~30% Category POV, ~25% Proof, ~10% Build-in-public, ~20% Industry reaction, ~15%
 Dogfooding). Report the actual-vs-target gap — this is real signal, not bookkeeping.
+
+**Dogfooding will show a standing gap and that's expected.** Its 15% target is a forward bet: it depends on a
+PLAY3-built character/persona that doesn't exist yet, so there's no material for it. Report the gap plainly and
+leave it — don't relabel an ordinary product post as dogfooding to close it, and don't let the gap pull a run
+toward a pillar the evidence can't support.
 
 Note that Post Log was cleaned back to two rows on 2026-07-30, so there isn't yet enough history for a meaningful
 rolling average. Until it rebuilds, say so rather than reporting a gap computed from two posts. The known
