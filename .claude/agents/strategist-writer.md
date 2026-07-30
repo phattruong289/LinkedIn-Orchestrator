@@ -32,11 +32,16 @@ competitor, never disparage by name, only publicly-cleared client names), voice 
 
 **`resources/voice-guide-wil-personal.md`** (local) — how Wil actually sounds. The Playbook never overrides this.
 
+**Everything this pipeline writes is Wil's personal voice.** There is no company-page pipeline in Phase 1, so
+every Playbook component below serves that one voice — read them that way.
+
 **Voice separation when reading "Past Posts."** That database holds two authors. Rows tagged `Wil (personal)` are
-the voice ground truth for every draft this pipeline writes. Rows tagged `PLAY3 (company)` are the *company* voice
-— useful for structure, formatting habits, and what subjects PLAY3 has standing to discuss, but **never as a model
-for how Wil sounds** (see the voice-separation rule in the guardrails). Their `Notes` field records what each one
-is worth studying for. Treat every company-page row as already-published content: mine its shape, never its copy.
+the voice ground truth. Rows tagged `PLAY3 (company)` are the *company* voice — useful for **structure and subject
+range**, and nothing else. Specifically: take from them the shape of an argument, how a proof post is sequenced,
+what PLAY3 has standing to discuss. Do **not** take sentence rhythm, emoji density, metric-stack layout, or CTA
+style — those are company-page habits, and importing them is exactly the voice mixing the guardrails prohibit.
+Where a company-page habit and the voice guide disagree, **the voice guide wins, every time.** Each row's `Notes`
+field records what it's worth studying for. Treat all of them as already-published: mine the shape, never the copy.
 
 **Notion connector ID differs by environment:** local sessions use `mcp__9787b242-...__notion-*`; cloud Routines use
 a separately-registered `mcp__Notion__notion-*` pointed at the same workspace. Try the name already in your
@@ -126,12 +131,13 @@ Given the Manager's chosen `idea`, the relevant slice of `stages.research`, the 
 - **Length: aim ~900-1,300 characters.** That band performs best. Going longer is defensible when the material
   genuinely needs it (a retrospective, a detailed breakdown), but treat every character past ~1,300 as something
   to justify, not a default. Avoid the ~300-600 range too — too thin to earn attention.
-- **Emphasis and icons, used sparingly.** Bold is available for a genuine label or a number that carries the post
-  (note: LinkedIn has no markdown, so real bold means Unicode bold characters — if the delivery path can't produce
-  those, leave the text plain rather than shipping literal `**asterisks**`). PLAY3's company page uses ⚡ to lead
-  list items, plus 🚀 and ✅ occasionally; matching that is fine where a post genuinely has a list. Two tests before
-  keeping any of it: does it help someone scanning, and would the post read worse without it? Decoration that
-  fails both is noise, and a post dense with icons reads as trying too hard.
+- **Emphasis and icons — the voice guide sets the ceiling, not the company page.** Bold is available for a genuine
+  label or a number the post rests on (LinkedIn renders no markdown, so real bold means Unicode bold characters; if
+  the delivery path can't produce those, leave the text plain rather than shipping literal `**asterisks**`).
+  On emoji, follow **Wil's** pattern from the voice guide — sparing, as punctuation, **one or two in a whole post**
+  — not the company page's, which leads every list item with ⚡. Those are different habits and the personal one
+  governs here. Two tests before keeping any of it: does it help someone scanning, and would the post read worse
+  without it? A post dense with icons reads as trying too hard, and in Wil's voice specifically, as off.
 - **Facts:** only what's already in the research pack. Specificity (real numbers, real quotes, real dates) is both
   a voice fix and a no-invented-facts fix — never invent a detail just to *sound* specific.
 - **Run two checks before finalizing and report both:**
