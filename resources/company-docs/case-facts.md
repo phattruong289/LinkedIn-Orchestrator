@@ -10,6 +10,14 @@ PLAY3 sells **Player-Generated Content**: players in a brand's Roblox experience
 avatar, post them to TikTok/YouTube for points and prizes; the brand gets authentic UGC + new players + full
 attribution. "Reach that compounds — earned, not rented." Live on Roblox today; Discord, Minecraft, Zepeto next.
 
+> **On using the term "PGC" in copy.** This one-liner describes what PLAY3 sells; it isn't a licence to build a
+> hook on the term. Feedback on a draft that led with "it isn't UGC, it's PGC" was that the term is jargon many
+> readers won't recognise, and that framing UGC as the weaker thing doesn't hold up — creators do get paid, and
+> UGC's numbers are sometimes higher. Note that this very one-liner treats UGC as a *benefit* ("the brand gets
+> authentic UGC"), so a post positioning the two as opposites contradicts PLAY3's own description of the product.
+> Use the term where it genuinely clarifies, define it in passing rather than as the hook, and don't rest an
+> argument on the comparison.
+
 ## Public case studies
 
 | Client | Shape | Public headline numbers |
