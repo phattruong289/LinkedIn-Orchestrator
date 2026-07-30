@@ -60,7 +60,8 @@ also just reads as inauthentic, which costs more than the goodwill it buys.
 published material — currently Diesel/OTB, Vinamilk/SUSU, Super League, plus the play3.ai logo wall (Samsung,
 American Eagle, Canon, Casetify, Pudgy Penguins, VeeFriends, Time Studios, Nelvana). Anything heard in a call,
 seen in a pipeline, or found in an internal doc is **not** cleared — describe it generically ("a household-name
-fashion brand") or don't use it. When in doubt: don't name, ask Wil.
+fashion brand") or don't use it. When in doubt: don't name it — describe it generically and flag the call in the QA
+report so whoever reviews the draft can decide.
 
 **Content Playbook, not a voice override.** Notion's **Content Playbook** database
 (`collection://94187f4f-93aa-44c7-bbec-81c092b53fda`) holds the method in 5 components: content pillars + target

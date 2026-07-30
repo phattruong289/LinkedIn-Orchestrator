@@ -92,10 +92,9 @@ the **specificity rule** — the exact number, never a rounded one — and **`#P
 doesn't drift into the wrong register. It isn't a checklist to satisfy, and a post that departs from a row for a
 good reason is fine — the hard line is register (who's speaking), not any single mechanic.
 
-## Open questions
+## Loose ends
 
-- Posting cadence and approval path for the company page are undefined — Phase 1's pipeline only drafts for Wil's
-  personal profile, so nothing currently writes in this voice. This guide exists so that when something does, it
-  starts from the real thing rather than a guess.
-- Whether the company page wants the ⚡-per-line density kept as-is or tightened; it's consistent across the 9
-  samples, so it's recorded as-is rather than second-guessed.
+- **This is now the default voice** — the pipeline writes for the company page unless a run carries `--wil_style`.
+  Delivery still stops at a draft for review; nothing auto-posts.
+- **The ⚡-per-line density is recorded as observed**, since it's consistent across all 9 samples. It's a tendency,
+  not a quota — a post with no list doesn't need one.

@@ -14,9 +14,9 @@
   14-year-old on Roblox." · "The Death Spiral of Roblox (or not?)" · "Brands are spending six figures in Roblox and
   can't answer one question:" · "Not every day you pitch a $2B fashion empire." The self-deprecating variant is
   distinctive and works — he'll lead with the thing that cost him something.
-- **Short paragraphs, 2-4 sentences.** The raw samples break after nearly every sentence; Wil confirmed
-  (2026-07-23) that reads more staccato than he wants written *for* him. Draft in short paragraphs instead, and
-  save a fully standalone line for genuine emphasis.
+- **Short paragraphs, 2-4 sentences.** The raw samples break after nearly every sentence, but that reads more
+  staccato than is wanted in copy written *for* this voice — a deliberate departure from the samples, settled
+  2026-07-23. Draft in short paragraphs instead, and save a fully standalone line for genuine emphasis.
 - **`→` for metric lines, `-` or numbers for lists.** Not `⚡` — that's the company page's bullet, and it's the
   fastest way to make a draft read like the wrong account.
 - **`---` dividers** to separate acts in a long post. Used in the pivot-story and lessons posts.
@@ -97,12 +97,14 @@ Both voices share the negation-triplet device, the specificity rule, and `#PLAY3
 doesn't drift into the wrong register. It isn't a checklist to satisfy, and a post that departs from a row for a
 good reason is fine — the hard line is register (who's speaking), not any single mechanic.
 
-## Open questions
+## Loose ends
 
-- **Who is Cass Chan, and should drafts include that sign-off?** Appears as a co-sign on 2 posts and is named as a
-  co-pitcher in a third ("Cass Chan and I pitched PLAY3.ai"). Confirm whether to keep it, and when.
-- **He names other companies more freely than the guardrails assume** — Disney's Fortnite spend, Nike's world, a
-  Netflix deal, Samsung and Canon as clients, and one outright compliment to a developer-analytics company. None
-  are direct PLAY3 competitors, so this is consistent with the revised naming rules, but it's worth confirming
-  where he personally draws the line before a draft leans on it.
-- Whether there are posts more recent than these 10 — they may not reflect the current phase of the company.
+- **The "Cass Chan" co-sign.** Appears on 2 of the 10 posts, and named as a co-pitcher in a third. Default:
+  **don't add it** — a co-sign attributes the post to someone else as well, which isn't a call to make
+  automatically. Add it only when a draft is explicitly asked to carry it.
+- **These posts name outside companies fairly freely** — Disney's Fortnite spend, Nike's world, a Netflix deal,
+  Samsung and Canon as clients, one outright compliment to a developer-analytics company. None are direct PLAY3
+  competitors, so it's consistent with the naming rules as written. Treat it as precedent that market context is
+  allowed here, not as licence to go further than the rules.
+- **The samples may not be current.** They reflect the phase of the company when they were written; if the
+  positioning has moved on, the *voice* observations still hold but the subject matter may read dated.

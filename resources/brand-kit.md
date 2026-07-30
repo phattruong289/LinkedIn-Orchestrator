@@ -1,22 +1,88 @@
 # Brand kit
 
-## Core PLAY3 assets — use for any general post
-`brand-assets/core/`: `play3-logo.svg`/`.png`, `play3-logo-black.svg`, `favicon.svg`, `play3-icon-512.png`.
+> **Derived 2026-07-30 from 5 real PLAY3 carousel decks** (27 slides, exported as PDFs). Before this, the palette
+> and typography were recorded as unknown — the decks answer both. Anything below marked *observed* comes from
+> those slides; anything marked *open* still doesn't have an answer.
 
-> No PLAY3-specific brand font was found anywhere in the codebase — only generic web fonts used in unrelated video
-> templates (Anton/Baloo2/Montserrat/NotoSans). **Do not treat those as "the" PLAY3 brand font.** Until Wil confirms
-> one, use a clean, neutral sans-serif and flag this as unresolved in the QA report.
+## Format spec
 
-## Case-study-only assets — never use for a general post
-`brand-assets/case-studies/susu/`: Vinamilk/SUSU `brand-lockup.png` + VNM custom fonts. These belong to the
-Vinamilk/SUSU campaign specifically. Only pull them in when the post's content is actually about that case study
-(see `company-docs/case-facts.md`).
+- **1080 × 1080 px**, square. *Observed* — every one of the 27 slides is exactly this size. An earlier version of
+  this file specified 1200×1200, which was wrong and is the likely origin of the dimension mismatch that got the
+  `art-director` agent paused.
+- PNG, under 5MB.
+- Native square post, not a link-preview ratio.
+- **Multi-slide carousels are the real practice** — the decks run 3 to 8 slides. Single graphics are the exception,
+  not the norm.
 
-## Image spec (Phase 1 default)
-- 1200×1200 px, PNG, under 5MB.
-- Native square image post (not a link-preview format like 1200×627 — this isn't a link post).
-- Logo present and legible; no stretched/distorted brand marks.
+## Palette (observed)
 
-## What's still open
-- Canonical brand color palette — not found anywhere; needs Wil's input.
-- Canonical brand font — see note above.
+| Role | Value | Use |
+|---|---|---|
+| Background | near-black, `#000000`–`#050505` | every slide |
+| Accent | acid lime, approx **`#B4FF3C`** | emphasised words, all large numbers, charts, arrows, buttons, glows |
+| Text | white `#FFFFFF` | body and non-emphasised headline words |
+| Muted text | white at ~55-60% | footers, captions, parentheticals |
+| Sticker accent | electric blue, approx `#2B2BF5` | **rare** — one rotated "sticker" callout per deck at most |
+
+The accent does a lot of work and its discipline is part of the look: **green marks the thing that matters** — the
+number, the one word in the headline that carries the argument, the CTA. Everything else stays white. A slide with
+green on more than a couple of elements loses the effect.
+
+## Typography (observed, families unidentified)
+
+Two families, used for different jobs:
+
+- **Wide geometric sans, heavy weight** — headlines and the very large metric numbers. Squarish, slightly
+  condensed-feeling caps with wide letterforms.
+- **Monospace** — subtitles, CTA headlines, numerals inside cards, small labels. This is what gives the decks their
+  technical feel and it's a deliberate contrast against the sans.
+
+**Open:** the exact typefaces aren't identified. Until they are, use the closest available match and note the
+substitution in the QA report rather than guessing silently. Do not use Anton/Baloo2/Montserrat/NotoSans as "the"
+brand font — those appear only in unrelated video templates elsewhere and are not PLAY3's.
+
+## Slide vocabulary (observed)
+
+Five recurring types. A deck picks from these rather than inventing layouts.
+
+1. **Cover** — logo top-centre · optional pill chip label ("CASE STUDY") · large headline mixing white and green
+   words · monospace subtitle · optional in-game screenshot in a rounded panel · green swipe arrow bottom-centre ·
+   small italic muted footer tagline.
+2. **Numbered list** — headline with one green word · `01`/`02`/`03` cards on dark translucent green panels with
+   **chamfered corners** and a thin green border · outlined monospace numerals · white body text · circular icon
+   badge · progress indicator in the bottom corners.
+3. **Metric stack** — several very large green numbers with white labels beneath · radial green glow behind ·
+   a green line chart with fill along the bottom.
+4. **Before → after** — bracketed container · two large green figures separated by `>` · white labels with italic
+   parentheticals · a rotated blue sticker badge for the headline percentage · hand-drawn green curved arrow ·
+   a real dashboard screenshot in a rounded panel.
+5. **CTA** — logo · oversized lightning-bolt watermark set diagonally · monospace headline · payoff line in green
+   with a glow · green pill button with black label and a white cursor arrow.
+
+## Motifs (observed)
+
+Four-pointed sparkle stars · starfield background (fine white dots plus a few soft bokeh glows) · oversized
+lightning bolt as watermark · radial green glow · chamfered card corners · hand-drawn arrows · rotated sticker
+badges · pill-shaped chips and buttons · year chips (`2026`) in top corners on some covers · character/avatar
+renders bleeding in from the edges.
+
+Real screenshots — game capture, analytics dashboards — are embedded in rounded panels with a subtle border, and
+they carry a lot of the credibility. **They can't be generated; they have to be supplied.**
+
+## Assets on hand
+
+`brand-assets/core/`: `play3-logo.svg` / `.png`, `play3-logo-black.svg`, `favicon.svg`, `play3-icon-512.png`.
+
+The wordmark appears as `PLAY3ᴬᴵ` with a green lightning bolt as the leading glyph, and it must be composited from
+these files — never approximated or redrawn.
+
+**Case-study-only:** `brand-assets/case-studies/susu/` (Vinamilk/SUSU lockup + VNM fonts). Only for posts actually
+about that campaign — see `company-docs/case-facts.md`.
+
+## Still open
+
+- **The two typefaces**, as above.
+- **Character/avatar art** appears on some covers (including a yellow blocky figure carrying the lightning-bolt
+  mark, which reads as a PLAY3 mascot). Not in `brand-assets/`; source unknown.
+- **Chart styling** is consistent in spirit but the decks show both hand-styled charts and raw dashboard
+  screenshots. No rule yet for which to use when.
