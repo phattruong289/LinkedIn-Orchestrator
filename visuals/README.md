@@ -4,8 +4,13 @@ Renders PLAY3 carousel slides as 1080×1080 PNGs from HTML/CSS templates. Design
 come from `resources/brand-kit.md`, which was derived from real PLAY3 decks.
 
 ```bash
-bash visuals/render.sh cover.html slide-test.png
+node visuals/render.mjs visuals/example-deck.json out/          # numbered PNGs
+node visuals/render.mjs visuals/example-deck.json out/ --pdf    # PNGs + one PDF
 ```
+
+`--pdf` adds a single file with one 1080×1080 page per slide. **Text stays vector**, so it's crisp at any zoom and
+smaller than the equivalent PNGs — and it's one file to hand over rather than five. It also matches how PLAY3
+already exchanges decks; the source decks this system was derived from arrived as PDFs.
 
 ## Why HTML/CSS rather than image generation
 
@@ -23,8 +28,10 @@ slide rather than a new interpretation of it.
 |---|---|
 | `base.css` | Design tokens and shared furniture — background layers, logo, chips, swipe cue, accent treatment |
 | `starfield.js` | Seeded starfield generator. Same seed → same background, so a copy edit doesn't reshuffle the stars |
-| `cover.html` | Cover slide template |
-| `render.sh` | Headless Chrome → PNG. Finds Chrome or Edge automatically |
+| `slide.html` | All five slide types. Renders one slide (`window.SPEC`) for PNG capture, or a whole deck (`window.DECK`) stacked one-per-page for PDF — same builder either way, so a slide can't look different depending on which output it came from |
+| `render.mjs` | Deck JSON → numbered PNGs, plus a PDF with `--pdf`. Finds Chrome or Edge automatically |
+| `render.sh` | Single-template shortcut, kept for quick one-off renders |
+| `example-deck.json` | A complete five-slide deck, one of each type |
 | `fonts/` | Vendored so a render needs no network |
 | `play3-logo.svg` | Copy of the core asset, kept alongside the templates so the render has no path dependency outside this folder |
 
@@ -48,9 +55,23 @@ Each template carries a `SPEC` object near the bottom — this is the shape `str
 **On the accent:** green marks the thing that matters — the figure, or the single word the argument turns on.
 Spreading it across several words is the fastest way to lose the look.
 
-## Not yet built
+## Getting a deck into Notion
 
-The other four slide types in the vocabulary: numbered list, metric stack, before→after, CTA.
+The deck **spec** goes to Notion as text on every run — that's the durable artifact, and the renderer reproduces
+the images from it exactly (the starfield is seeded). The rendered files are a separate question, because
+`notion-create-attachment` only accepts text content or a **public HTTPS URL that doesn't redirect**; local binary
+files need the Notion File Upload API, which isn't wired up.
+
+Two routes that do work, neither of them currently automated:
+
+- **Serve the file over HTTPS and pass `source_url`.** `raw.githubusercontent.com` was checked and returns 200
+  with zero redirects, so committing a render into the repo makes it attachable. The trade: this repo is public
+  and the output is binary, so it means publishing the deck early and adding binary churn to history. Fine for
+  slides that are about to be posted publicly anyway; a deliberate choice, not a default.
+- **Attach by hand.** Render locally, drag the PDF onto the Notion page. One file, and the obvious answer while
+  the pipeline still stops at a human review.
+
+Prefer the PDF for either — one file instead of five, vector text, and no quality loss.
 
 ## Known gaps
 

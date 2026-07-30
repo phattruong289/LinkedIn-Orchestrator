@@ -28,9 +28,11 @@ function findChrome() {
   throw new Error("No Chrome or Edge found. Set CHROME to a browser binary.");
 }
 
-const [specPath, outDirArg] = process.argv.slice(2);
+const args = process.argv.slice(2).filter((a) => a !== "--pdf");
+const WANT_PDF = process.argv.includes("--pdf");
+const [specPath, outDirArg] = args;
 if (!specPath) {
-  console.error("usage: node visoals/render.mjs <deck.json> [outDir]".replace("visoals", "visuals"));
+  console.error("usage: node visuals/render.mjs <deck.json> [outDir] [--pdf]");
   process.exit(1);
 }
 
@@ -80,6 +82,31 @@ for (let i = 0; i < slides.length; i++) {
   if (!existsSync(out)) throw new Error(`Slide ${i + 1} produced no output`);
   written.push(out);
   console.log(`  ${String(i + 1).padStart(2, "0")}  ${slide.type.padEnd(8)}  ${out}`);
+}
+
+// A single PDF, one 1080x1080 page per slide. Worth having for two reasons: it's how
+// PLAY3 already exchanges decks, and it's one file to hand over instead of five.
+if (WANT_PDF) {
+  const full = slides.map((s, i) => ({
+    ...s,
+    seed: baseSeed + i * 977,
+    swipe: s.swipe ?? (i < slides.length - 1),
+    footer: s.footer ?? (i === 0 ? deck.footer : undefined),
+  }));
+  writeFileSync(specJs, `window.DECK = ${JSON.stringify(full, null, 2)};\n`, "utf8");
+
+  const pdf = join(outDir, `${slug}.pdf`);
+  execFileSync(chrome, [
+    "--headless=new",
+    "--disable-gpu",
+    "--no-pdf-header-footer",
+    "--virtual-time-budget=4000",
+    `--print-to-pdf=${pdf}`,
+    `file:///${template.replace(/\\/g, "/")}`,
+  ], { stdio: ["ignore", "ignore", "ignore"] });
+
+  if (!existsSync(pdf)) throw new Error("PDF render produced no output");
+  console.log(`  --  pdf       ${pdf}`);
 }
 
 // leave no stale spec behind that a later manual render would silently pick up

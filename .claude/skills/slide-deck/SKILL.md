@@ -58,9 +58,11 @@ Read `resources/brand-kit.md` first — it holds the design system, the slide vo
 
 5. **Render:**
    ```bash
-   node visuals/render.mjs <deck.json> out/
+   node visuals/render.mjs <deck.json> out/ --pdf
    ```
-   Numbered PNGs, `<slug>-01.png` onward, in deck order. Needs a local Chrome or Edge; no install, no network.
+   Numbered PNGs (`<slug>-01.png` onward, in deck order) plus a single `<slug>.pdf` — one 1080×1080 page per
+   slide, text kept vector. Prefer the PDF when handing the deck to a person: one file, crisp at any zoom, and the
+   format PLAY3 already uses for decks. Needs a local Chrome or Edge; no install, no network.
 
 6. **Look at what you rendered.** Read the PNGs back and check each one:
    - Text fits, nothing clipped at an edge or colliding with the swipe cue
@@ -80,10 +82,11 @@ Read `resources/brand-kit.md` first — it holds the design system, the slide vo
    the spec and nothing is lost; keep only the images and the deck can't be corrected. This is also why a run in a
    cloud sandbox has to write the spec out: that filesystem is discarded when the run ends.
 
-   **The PNGs can't currently go into Notion.** `notion-create-attachment` takes text content or a public HTTPS
-   URL; local binary files need the separate Notion File Upload API, which isn't wired up. Don't work around this
-   by describing the slides in prose as though that were equivalent — record the spec, note where the PNGs were
-   written, and leave it there.
+   **The rendered files can't currently be attached automatically.** `notion-create-attachment` takes text content
+   or a public HTTPS URL that doesn't redirect; local binary files need the separate Notion File Upload API, which
+   isn't wired up. Two routes work but neither is automated — serving the file over HTTPS and passing `source_url`,
+   or attaching the PDF by hand. See `visuals/README.md`. Don't work around the gap by describing the slides in
+   prose as though that were equivalent: record the spec, note where the files were written, and leave it there.
 
 8. **Report:** slide count, type per slide, output paths, where the spec was saved, and anything dropped along with
    why — a missing screenshot, a figure that wasn't in the copy. If a slide was dropped, say so plainly rather than

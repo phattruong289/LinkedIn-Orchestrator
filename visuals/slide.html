@@ -99,56 +99,68 @@
     font: 700 36px/1 "P3Mono", monospace; white-space: nowrap;
   }
   .cursor { position: absolute; left: 50%; bottom: 150px; margin-left: 118px; width: 40px; }
+
+  /* Deck mode: every slide becomes its own square page so print-to-PDF yields
+     one 1080x1080 page per slide with no margin and no header/footer. */
+  @page { size: 1080px 1080px; margin: 0; }
+  /* Deck mode's layout overrides are applied inline by the script rather than through a
+     body class. The single-slide page is a fixed 1080 box with overflow hidden on both
+     <html> and <body>, and both have to be released or everything after slide one is
+     clipped away — which is how this first produced a one-page PDF. */
 </style>
 
-<div class="slide" id="slide">
+<template id="tpl"><div class="slide">
   <div class="stars"></div>
   <div class="bokeh"></div>
-  <div class="glow" id="glow" hidden></div>
-  <img class="bolt" id="bolt" src="play3-bolt.svg" alt="" hidden>
+  <div class="glow" data-r="glow" hidden></div>
+  <img class="bolt" data-r="bolt" src="play3-bolt.svg" alt="" hidden>
 
-  <img class="logo" id="logo" src="play3-logo.svg" alt="">
+  <img class="logo" data-r="logo" src="play3-logo.svg" alt="">
 
-  <div class="sparkle" id="sparkleL" hidden style="left:52px;top:34px">
+  <div class="sparkle" data-r="sparkleL" hidden style="left:52px;top:34px">
     <svg width="58" height="58" viewBox="0 0 100 100"><path d="M50 0 L55.5 44.5 L100 50 L55.5 55.5 L50 100 L44.5 55.5 L0 50 L44.5 44.5 Z" fill="#fff" opacity=".92"/></svg>
   </div>
-  <div class="sparkle" id="sparkleR" hidden style="right:52px;top:34px">
+  <div class="sparkle" data-r="sparkleR" hidden style="right:52px;top:34px">
     <svg width="58" height="58" viewBox="0 0 100 100"><path d="M50 0 L55.5 44.5 L100 50 L55.5 55.5 L50 100 L44.5 55.5 L0 50 L44.5 44.5 Z" fill="#fff" opacity=".92"/></svg>
   </div>
 
-  <div id="body"></div>
+  <div data-r="body"></div>
 
-  <div class="swipe" id="swipe" hidden>
+  <div class="swipe" data-r="swipe" hidden>
     <svg viewBox="0 0 150 14">
       <path d="M0 7 H138" stroke="#adff00" stroke-width="2" fill="none"/>
       <path d="M132 1.5 L142 7 L132 12.5" stroke="#adff00" stroke-width="2" fill="none"/>
     </svg>
   </div>
 
-  <div class="footer" id="footer" hidden></div>
-</div>
+  <div class="footer" data-r="footer" hidden></div>
+</div></template>
+<div id="stage"></div>
+
 
 <script src="starfield.js"></script>
 <script src="spec.js"></script>
 <script>
-const S = window.SPEC || { type: "cover", headline: "No spec loaded", seed: 1 };
-const $ = (id) => document.getElementById(id);
+// Renders one slide (window.SPEC) for PNG capture, or a whole deck (window.DECK)
+// stacked one-per-page for print-to-PDF. Same builder either way, so a slide can
+// never look different depending on which output it came from.
+
 const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
 
-// green marks what matters — accent words are matched on word boundaries so a
-// partial match doesn't colour a longer word
+// green marks what matters — accent words match on word boundaries so a partial
+// match doesn't colour a longer word
 function paint(text, words) {
   let out = esc(text);
   for (const w of words || []) {
-    out = out.replace(new RegExp(`\\b${esc(w).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "g"),
-                      `<span class="a">${esc(w)}</span>`);
+    const safe = String(w).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    out = out.replace(new RegExp("\\b" + safe + "\\b", "g"), '<span class="a">' + esc(w) + "</span>");
   }
   return out.replace(/\n/g, "<br>");
 }
 
-// simple polyline chart from a series of numbers, normalised to the box
+// polyline chart from a real series, normalised to the box
 function chart(series) {
-  const w = 1080, h = 230, pad = 14;
+  const w = 1080, h = 150, pad = 12;
   const max = Math.max(...series), min = Math.min(...series);
   const span = max - min || 1;
   const pts = series.map((v, i) => {
@@ -162,76 +174,99 @@ function chart(series) {
   </svg>`;
 }
 
-const body = $("body");
+function buildSlide(S) {
+  const el = document.getElementById("tpl").content.firstElementChild.cloneNode(true);
+  const r = (n) => el.querySelector(`[data-r="${n}"]`);
+  const body = r("body");
 
-switch (S.type) {
-  case "cover": {
-    $("sparkleL").hidden = false;
-    $("sparkleR").hidden = false;
-    body.innerHTML = `<div class="lift">
-      ${S.chip ? `<div class="chipwrap"><span class="chip">${esc(S.chip)}</span></div>` : ""}
-      <h1 class="${S.font === "display" ? "display" : "mono"}">${paint(S.headline, S.accent)}</h1>
-      ${S.subtitle ? `<p class="sub">${paint(S.subtitle, S.accent)}</p>` : ""}
-    </div>`;
-    break;
-  }
-
-  case "list": {
-    $("logo").hidden = true;
-    body.innerHTML = `<h2 class="top">${paint(S.headline, S.accent)}</h2>
-      <div class="cards">${(S.items || []).map((t, i) =>
-        `<div class="card"><div class="inner"><div class="n">${String(i + 1).padStart(2, "0")}</div><div class="t">${esc(t)}</div></div></div>`
-      ).join("")}</div>`;
-    break;
-  }
-
-  case "metrics": {
-    $("logo").hidden = true;
-    $("glow").hidden = false;
-    const ms = S.metrics || [];
-    const odd = ms.length % 2 === 1;
-    body.innerHTML = `<h2 class="top">${paint(S.headline, S.accent)}</h2>
-      <div class="metrics${S.chart ? "" : " nochart"}">${ms.map((m, i) =>
-        `<div class="m ${odd && i === ms.length - 1 ? "wide" : ""}">
-           <div class="v">${esc(m.value)}</div><div class="l">${esc(m.label)}</div></div>`
-      ).join("")}</div>
-      ${S.chart ? `<div class="chart">${chart(S.chart)}</div>` : ""}`;
-    if (S.chart) $("swipe").classList.add("raised");
-    break;
-  }
-
-  case "compare": {
-    $("logo").hidden = true;
-    body.innerHTML = `<h2 class="top">${paint(S.headline, S.accent)}</h2>
-      ${S.sticker ? `<div class="sticker">${esc(S.sticker)}</div>` : ""}
-      <div class="compare">
-        ${S.caption ? `<div class="cap">${esc(S.caption)}</div>` : ""}
-        <div class="row">
-          <div class="side"><div class="v">${esc(S.from.value)}</div><div class="l">${esc(S.from.label)}</div>
-            ${S.from.note ? `<div class="n">(${esc(S.from.note)})</div>` : ""}</div>
-          <div class="gt">&gt;</div>
-          <div class="side"><div class="v">${esc(S.to.value)}</div><div class="l">${esc(S.to.label)}</div>
-            ${S.to.note ? `<div class="n">(${esc(S.to.note)})</div>` : ""}</div>
-        </div>
+  switch (S.type) {
+    case "cover":
+      r("sparkleL").hidden = false;
+      r("sparkleR").hidden = false;
+      body.innerHTML = `<div class="lift">
+        ${S.chip ? `<div class="chipwrap"><span class="chip">${esc(S.chip)}</span></div>` : ""}
+        <h1 class="${S.font === "display" ? "display" : "mono"}">${paint(S.headline, S.accent)}</h1>
+        ${S.subtitle ? `<p class="sub">${paint(S.subtitle, S.accent)}</p>` : ""}
       </div>`;
-    break;
+      break;
+
+    case "list":
+      r("logo").hidden = true;
+      body.innerHTML = `<h2 class="top">${paint(S.headline, S.accent)}</h2>
+        <div class="cards">${(S.items || []).map((t, i) =>
+          `<div class="card"><div class="inner"><div class="n">${String(i + 1).padStart(2, "0")}</div><div class="t">${esc(t)}</div></div></div>`
+        ).join("")}</div>`;
+      break;
+
+    case "metrics": {
+      r("logo").hidden = true;
+      r("glow").hidden = false;
+      const ms = S.metrics || [];
+      const odd = ms.length % 2 === 1;
+      body.innerHTML = `<h2 class="top">${paint(S.headline, S.accent)}</h2>
+        <div class="metrics${S.chart ? "" : " nochart"}">${ms.map((m, i) =>
+          `<div class="m ${odd && i === ms.length - 1 ? "wide" : ""}">
+             <div class="v">${esc(m.value)}</div><div class="l">${esc(m.label)}</div></div>`
+        ).join("")}</div>
+        ${S.chart ? `<div class="chart">${chart(S.chart)}</div>` : ""}`;
+      if (S.chart) r("swipe").classList.add("raised");
+      break;
+    }
+
+    case "compare":
+      r("logo").hidden = true;
+      body.innerHTML = `<h2 class="top">${paint(S.headline, S.accent)}</h2>
+        ${S.sticker ? `<div class="sticker">${esc(S.sticker)}</div>` : ""}
+        <div class="compare">
+          ${S.caption ? `<div class="cap">${esc(S.caption)}</div>` : ""}
+          <div class="row">
+            <div class="side"><div class="v">${esc(S.from.value)}</div><div class="l">${esc(S.from.label)}</div>
+              ${S.from.note ? `<div class="n">(${esc(S.from.note)})</div>` : ""}</div>
+            <div class="gt">&gt;</div>
+            <div class="side"><div class="v">${esc(S.to.value)}</div><div class="l">${esc(S.to.label)}</div>
+              ${S.to.note ? `<div class="n">(${esc(S.to.note)})</div>` : ""}</div>
+          </div>
+        </div>`;
+      break;
+
+    case "cta":
+      r("bolt").hidden = false;
+      body.innerHTML = `<div class="lift">
+        <h1 class="mono cta">${paint(S.headline, S.accent)}</h1>
+        ${S.payoff ? `<h1 class="mono cta a halo" style="margin-top:26px">${esc(S.payoff).replace(/\n/g, "<br>")}</h1>` : ""}
+      </div>
+      ${S.button ? `<div class="btn">${esc(S.button)}</div>
+        <svg class="cursor" viewBox="0 0 24 24" fill="#fff"><path d="M4 2 L4 20 L9 15 L12 22 L15 20.5 L12 14 L19 14 Z"/></svg>` : ""}`;
+      break;
   }
 
-  case "cta": {
-    $("bolt").hidden = false;
-    body.innerHTML = `<div class="lift">
-      <h1 class="mono cta">${paint(S.headline, S.accent)}</h1>
-      ${S.payoff ? `<h1 class="mono cta a halo" style="margin-top:26px">${esc(S.payoff).replace(/\n/g, "<br>")}</h1>` : ""}
-    </div>
-    ${S.button ? `<div class="btn">${esc(S.button)}</div>
-      <svg class="cursor" viewBox="0 0 24 24" fill="#fff"><path d="M4 2 L4 20 L9 15 L12 22 L15 20.5 L12 14 L19 14 Z"/></svg>` : ""}`;
-    break;
+  // swipe cue on every slide except the last; a CTA never carries one
+  if (S.swipe && S.type !== "cta") r("swipe").hidden = false;
+  if (S.footer) { const f = r("footer"); f.textContent = S.footer; f.hidden = false; }
+
+  return el;
+}
+
+const stage = document.getElementById("stage");
+const isDeck = Array.isArray(window.DECK);
+const deck = isDeck ? window.DECK
+  : (window.SPEC ? [window.SPEC] : [{ type: "cover", headline: "No spec loaded", seed: 1 }]);
+
+if (isDeck) {
+  for (const node of [document.documentElement, document.body]) {
+    node.style.height = "auto";
+    node.style.overflow = "visible";
   }
 }
 
-// swipe cue on every slide except the last; CTA never carries one
-if (S.swipe && S.type !== "cta") $("swipe").hidden = false;
-if (S.footer) { $("footer").textContent = S.footer; $("footer").hidden = false; }
-
-PLAY3_starfield($("slide"), S.seed || 1);
+deck.forEach((S, i) => {
+  const el = buildSlide(S);
+  // one square page per slide; the last one mustn't add a trailing blank page
+  if (isDeck && i < deck.length - 1) {
+    el.style.breakAfter = "page";
+    el.style.pageBreakAfter = "always";
+  }
+  stage.appendChild(el);
+  PLAY3_starfield(el, S.seed || 1);
+});
 </script>
