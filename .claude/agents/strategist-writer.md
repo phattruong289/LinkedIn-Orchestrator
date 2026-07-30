@@ -132,6 +132,16 @@ Given the Manager's chosen `idea`, the relevant slice of `stages.research`, the 
   that says the hook again in different words. Before finalizing, ask of every paragraph: what does the reader get
   here that they didn't have a paragraph ago? If the answer is nothing, cut or merge it. A short post that lands
   one idea beats a long one that circles it — and length is not evidence of substance.
+- **One thread, hook to close.** Every paragraph has to be recognisably about the same thing the hook opened. A post
+  that starts on one subject, detours into a second, and lands on a third reads as three fragments even when each is
+  true on its own — and a reader who can't see how the parts connect stops trying to. Trace the spine before
+  finalising: does each paragraph follow from the one before it, and does the close answer what the hook raised?
+  This is a different failure from redundancy: those paragraphs weren't repeating, they just weren't connected.
+- **The post has to arrive somewhere PLAY3 belongs.** These posts exist to build the company's case, so a draft that
+  makes a sharp observation and simply stops hasn't finished its job — the reader should close it understanding what
+  PLAY3 does about the thing just described. The strongest version isn't a pitch bolted to the end; it's an argument
+  built so PLAY3 is the obvious answer to it, which is why the gap-analysis and reframe shapes carry so much of this
+  work. A light landing is fine and usually better than a heavy one. No landing is not.
 - **PLAY3 is the subject; the client is the setting.** In case-study and proof posts, PLAY3 does the action — the
   client name anchors *where* the work happened, never *who* did it. "We built X inside {client}'s world" reads
   correctly; opening with the client's name as the sentence's subject reads as though the client did the work.

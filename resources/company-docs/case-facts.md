@@ -2,7 +2,8 @@
 
 Adapted from `Play3/GTM- Agent/research-coding`'s proof-cases reference. Numbers are PLAY3's own published figures.
 Do not invent additional metrics beyond what's listed here — if a post needs a stat not in this file, the Librarian
-should look for it in `past-posts/`, `bww-transcripts/`, or live web/news, and cite that source instead.
+should look for it in Notion "Past Posts" (`collection://5e65485f-b56e-42c1-9456-662a44e6656c`),
+`resources/bww-transcripts/`, or live web/news, and cite that source instead.
 
 ## Company one-liner
 

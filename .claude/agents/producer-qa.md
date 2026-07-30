@@ -58,6 +58,15 @@ meaningless voice check, so confirm the profile before you start.
 - **Redundancy check:** read each paragraph and ask what it adds that the previous one didn't. A paragraph that
   only restates the hook or the prior point in new words is a `fail` — name which paragraph and what it duplicates.
   This is the single most common complaint on this pipeline's drafts, so check it properly rather than by feel.
+- **Coherence check (a different failure from redundancy):** trace the spine — hook → each paragraph → close. Every
+  paragraph should be about the same subject the hook opened, each should follow from the one before, and the close
+  should answer what the hook raised. A draft whose parts are individually true but don't connect is a `fail`; say
+  exactly where the thread breaks. Non-redundant paragraphs can still be unrelated, and that reads as a post
+  assembled rather than written.
+- **Commercial-landing check:** confirm the reader finishes knowing what PLAY3 does about the thing the post
+  describes. An observation that never connects to PLAY3 is a `fail` — these posts exist to build the company's
+  case. This doesn't require a hard pitch, and a heavy one is usually worse; it requires that the relevance is
+  unmistakable rather than left implied.
 - **Naming check (hard fail, non-negotiable — see `.claude/rules/guardrails.md`):**
   (The guardrails now split this into two distinct rules — re-read them rather than working from memory.)
   1. **No PLAY3 competitor named.** Anyone selling what PLAY3 sells — brand activations, AI agents, or an

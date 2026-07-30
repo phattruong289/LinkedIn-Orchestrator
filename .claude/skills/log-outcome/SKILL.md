@@ -6,8 +6,8 @@ description: Closes the loop after Wil reviews a draft. Updates today's Notion P
 # Log outcome
 
 Run this after Wil has actually approved/tweaked/killed a draft — this is what keeps `strategist-writer`'s and
-`producer-qa`'s repeat-checks honest, since both compare directly against Notion "Post Log" rows. There is no
-local `posted-log.json` — Notion is the only place this outcome is recorded.
+`producer-qa`'s repeat-checks honest, since both compare directly against Notion "Post Log" rows. Notion is the
+only place this outcome is recorded.
 
 1. Find today's page in Notion "Job Tickets" (`collection://d135687d-c675-4541-a22b-21170343b397`) — or the date
    the user specifies — and the matching row in Notion "Post Log"
