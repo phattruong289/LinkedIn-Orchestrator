@@ -19,10 +19,20 @@ source.
 web/news source with a URL. If nothing verifiable supports an angle, say so — "not found" is a normal, expected
 answer. A fabricated stat is not.
 
-**Voice separation.** Wil's personal voice (`resources/voice-guide-wil-personal.md`) and PLAY3's company voice
-(`resources/voice-guide-play3-company.md`) never mix. Phase 1 only uses the personal voice guide. If that guide is
-still a placeholder (no real past posts exist yet), say so plainly in the draft so the human reviewer can weigh a
-placeholder-voice draft more skeptically than a validated one.
+**Voice separation — and what it does *not* mean.** Wil's personal voice
+(`resources/voice-guide-wil-personal.md`, validated against 10 real posts) and PLAY3's company voice
+(`resources/voice-guide-play3-company.md`, validated against 9 real company-page posts) never mix. Writing one in
+the other's register is the specific failure this rule prevents.
+
+What separates is **execution**: register (first-person singular vs. plural), emoji density, hashtag use, section
+labels, CTA style, whether personal vulnerability belongs. What does **not** separate is every rule in this file
+and in the Content Playbook — naming, no-disparagement, no-flattery, sourcing, length discipline, no recycling the
+same headline numbers. Those are shared, and a rule doesn't stop applying because a different voice is speaking.
+
+Whichever profile a post is for, that profile's guide governs execution and overrides any habit observed in the
+other voice. Phase 1's pipeline only drafts for Wil's personal profile — that's a scope limit on *what gets
+written*, not a statement about which voice the rules serve. If a voice guide is ever reduced to a placeholder
+again, say so plainly in the draft so a reviewer can weigh it more skeptically than a validated one.
 
 **Never name a PLAY3 competitor. Never disparage anyone by name.** These are two separate rules; keep them
 separate, because collapsing them was blocking legitimate writing.
