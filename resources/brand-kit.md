@@ -67,7 +67,13 @@ badges · pill-shaped chips and buttons · year chips (`2026`) in top corners on
 renders bleeding in from the edges.
 
 Real screenshots — game capture, analytics dashboards — are embedded in rounded panels with a subtle border, and
-they carry a lot of the credibility. **They can't be generated; they have to be supplied.**
+they carry a lot of the credibility.
+
+**Screenshots can't be generated, and a missing one is not something to work around.** If a slide type needs a real
+capture and none has been supplied, drop that slide and build the deck without it — don't substitute a mockup, a
+generated image, a stand-in chart, or a description of what the screenshot would show. A deck of three honest
+slides beats four with one invented. This is the no-invented-facts rule applied to images: a fabricated dashboard
+is a fabricated statistic that happens to be rendered.
 
 ## Assets on hand
 
