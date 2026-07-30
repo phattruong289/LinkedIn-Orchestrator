@@ -151,18 +151,99 @@ def compact_starfield(html):
     return re.sub(r'<div class="stars">.*?</div>', collapse, html, flags=re.S)
 
 
+GOOGLE_FONTS = "https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=Poppins:ital,wght@0,500;0,900;1,500&family=Space+Mono:wght@700&display=swap"
+
+# The vendored files and these Google families are the same typefaces — the local copies
+# exist so a render needs no network, not because they differ.
+FAMILY_MAP = {
+    "P3Mono": "Space Mono",
+    "P3Display": "Chakra Petch",
+    "P3Figure": "Poppins",
+    "P3Body": "Poppins",
+}
+
+
+def svg_uri(path):
+    """Raw SVG as a data URI — percent-encoded, not base64.
+
+    base64 costs a third more bytes and turns readable markup into a random-looking
+    blob. Both matter here: the blob is what makes the self-contained bundle too large
+    to hand over as text.
+    """
+    s = re.sub(r"\s+", " ", Path(path).read_text(encoding="utf-8")).strip()
+    s = s.replace('"', "'")
+    for ch, enc in (("%", "%25"), ("#", "%23"), ("<", "%3C"), (">", "%3E"), ("&", "%26")):
+        s = s.replace(ch, enc)
+    return "data:image/svg+xml;charset=utf-8," + s
+
+
+def lean_bundle(full, out_path):
+    """Bundle the deck as source rather than as output.
+
+    Same CSS, same builder, same deck spec, same seed — so the browser rebuilds exactly
+    what the PNG renderer produces. What it drops is the *baked* form of things that are
+    already derivable: fonts fetched instead of inlined as base64, and the starfield
+    regenerated from its seed instead of shipped as a thousand coordinates.
+
+    Costs a network fetch at view time, which the self-contained bundle doesn't. Gains a
+    file that is ~22 KB of readable code, which an agent can hand to Notion's attachment
+    tool directly when no upload token is available.
+    """
+    html = (HERE / "slide.html").read_text(encoding="utf-8")
+    css = (HERE / "base.css").read_text(encoding="utf-8")
+
+    # Google Fonts supplies the @font-face rules, so drop the local ones and point the
+    # stylesheet at the real family names. Every usage already states its weight
+    # explicitly (`font: 700 76px/1.34 "P3Mono"`), so nothing depends on the dropped
+    # @font-face weight declarations.
+    css = re.sub(r"@font-face\s*\{[^}]*\}\s*", "", css)
+    for old, new in FAMILY_MAP.items():
+        css = css.replace('"%s"' % old, '"%s"' % new)
+        html = html.replace('"%s"' % old, '"%s"' % new)
+
+    html = html.replace(
+        '<link rel="stylesheet" href="base.css">',
+        '<link rel="stylesheet" href="%s">\n<style>\n%s\n</style>' % (GOOGLE_FONTS, css),
+    )
+    html = html.replace(
+        '<script src="starfield.js"></script>',
+        "<script>\n%s\n</script>" % (HERE / "starfield.js").read_text(encoding="utf-8"),
+    )
+    html = html.replace(
+        '<script src="spec.js"></script>',
+        "<script>window.DECK = %s;</script>" % json.dumps(full, ensure_ascii=False),
+    )
+    html = html.replace('src="play3-logo.svg"', 'src="%s"' % svg_uri(HERE / "play3-logo.svg"))
+    html = html.replace('src="play3-bolt.svg"', 'src="%s"' % svg_uri(HERE / "play3-bolt.svg"))
+
+    html = html.replace(
+        "</style>",
+        "\nhtml,body{height:auto;overflow:visible;width:auto;}\n"
+        "#stage{display:flex;flex-direction:column;align-items:center;gap:18px;}\n"
+        ".slide{flex:none;}\n</style>",
+        1,
+    )
+
+    out_path.write_text(html, encoding="utf-8")
+    return out_path.stat().st_size
+
+
 def main():
     if len(sys.argv) < 2:
-        raise SystemExit("usage: python visuals/bundle.py <deck.json> [out.html]")
+        raise SystemExit("usage: python visuals/bundle.py <deck.json> [out.html] [--lean]")
 
-    deck_path = Path(sys.argv[1])
+    argv = [a for a in sys.argv[1:] if not a.startswith("--")]
+    lean = "--lean" in sys.argv
+
+    deck_path = Path(argv[0])
     deck = json.loads(deck_path.read_text(encoding="utf-8"))
     slides = deck.get("slides", [])
     if not slides:
         raise SystemExit("Deck has no slides.")
 
     slug = deck.get("slug", "deck")
-    out_path = Path(sys.argv[2]) if len(sys.argv) > 2 else ROOT / "out" / f"{slug}.html"
+    default_name = f"{slug}-lean.html" if lean else f"{slug}.html"
+    out_path = Path(argv[1]) if len(argv) > 1 else ROOT / "out" / default_name
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
     # Same seed/swipe/footer derivation as render.mjs, so the bundle matches the PNGs.
@@ -175,6 +256,11 @@ def main():
         if "footer" not in s and i == 0 and deck.get("footer"):
             s["footer"] = deck["footer"]
         full.append(s)
+
+    if lean:
+        kb = lean_bundle(full, out_path) / 1024
+        print(f"{out_path}  {kb:.0f} KB   (lean — fonts and starfield resolved at view time)")
+        return
 
     spec_js = HERE / "spec.js"
     spec_js.write_text("window.DECK = " + json.dumps(full, ensure_ascii=False) + ";\n", encoding="utf-8")

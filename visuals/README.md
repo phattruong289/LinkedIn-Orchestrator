@@ -30,7 +30,7 @@ slide rather than a new interpretation of it.
 | `starfield.js` | Seeded starfield generator. Same seed → same background, so a copy edit doesn't reshuffle the stars |
 | `slide.html` | All five slide types. Renders one slide (`window.SPEC`) for PNG capture, or a whole deck (`window.DECK`) stacked one-per-page for PDF — same builder either way, so a slide can't look different depending on which output it came from |
 | `render.mjs` | Deck JSON → numbered PNGs, plus a PDF with `--pdf`. Finds Chrome or Edge automatically |
-| `bundle.py` | Deck JSON → one self-contained HTML, the file Notion can take |
+| `bundle.py` | Deck JSON → one HTML file for Notion. Self-contained by default; `--lean` fetches fonts and regenerates the starfield instead of baking both in |
 | `publish-to-notion.py` | Sends that HTML from disk to Notion and embeds it. Needs `NOTION_TOKEN` |
 | `render.sh` | Single-template shortcut, kept for quick one-off renders |
 | `example-deck.json` | A complete five-slide deck, one of each type |
@@ -60,47 +60,71 @@ Spreading it across several words is the fastest way to lose the look.
 ## Getting a deck into Notion
 
 ```bash
-python visuals/bundle.py <deck.json>      # -> out/<slug>.html, self-contained
+python visuals/bundle.py <deck.json> --lean   # -> out/<slug>-lean.html,  ~22 KB
+python visuals/bundle.py <deck.json>          # -> out/<slug>.html,       ~87 KB, self-contained
 ```
 
 `notion-create-attachment` takes **text content** or a public HTTPS URL that doesn't redirect. PNGs and PDFs are
 binary and local, so neither fits — and a cloud Routine has no way to publish them and no filesystem that outlives
 the run. An HTML file is text. That's the opening.
 
-The bundle inlines everything: CSS, fonts, both SVGs, and the already-rendered DOM. No external requests, no
-scripts. It's produced by driving the same `slide.html` the PNG renderer uses, so the preview can't drift from
-the images.
+Both forms drive the same `slide.html` the PNG renderer uses, so neither can drift from the images. They differ
+only in how much they resolve ahead of time.
 
-**Fonts were the reason this looked impossible.** Four families inline is ~477 KB, well past Notion's 200 KiB
-ceiling. A deck uses about 70 distinct glyphs, so subsetting to exactly those brings it to ~22 KB. The starfield
-was the second problem — one `<i>` per dot is 57% of the bytes and scales with slide count, so it's collapsed into
-`box-shadow` lists. A four-slide deck lands around 87 KB; eight slides still fit.
+### Lean — the default route
 
-Requires `pip install fonttools brotli`. Both are small and pure-Python. If they're missing, bundling fails loudly
-— report the bundle as unavailable rather than shipping a run with no visual.
+Ships the deck as source: `base.css`, the builder, the deck spec, and the seed. Fonts come from Google Fonts, and
+the starfield is regenerated from its seed rather than shipped as a thousand coordinates. About 22 KB, none of it
+base64, which is what makes it small enough for an agent to hand to `notion-create-attachment` directly — no
+upload token needed.
+
+**It is not a reduced deck.** Same CSS, same builder, same spec, same seed, so the browser rebuilds exactly what
+the renderer produced. Measured against the PNGs: slide 1 pixel-identical, the rest differing by at most 3/255 on
+text antialiasing. Nothing is dropped or simplified.
+
+The cost is a network fetch at view time. If Google Fonts is unreachable the text falls back to system faces —
+everything else still renders, since it's all CSS and inline SVG.
+
+Notion's HTML sandbox was verified to run scripts and load external fonts before this became the default. Both
+matter: without scripts there's no starfield and no slides at all.
+
+### Self-contained — for archival
+
+Inlines everything: CSS, subsetted fonts, both SVGs, and the already-rendered DOM. No network at view time, so it
+survives Google Fonts changing or disappearing. About 87 KB for four slides.
+
+Fonts are why this one is large. Four families inline is ~477 KB, well past Notion's 200 KiB ceiling; a deck uses
+about 70 distinct glyphs, so subsetting to exactly those brings it to ~22 KB. The starfield was the second
+problem — one `<i>` per dot is 57% of the bytes and scales with slide count, so it's collapsed into `box-shadow`
+lists. Eight slides still fit.
+
+Requires `pip install fonttools brotli` for the subsetting. Both are small and pure-Python. If they're missing,
+bundling fails loudly — use `--lean`, which needs neither.
 
 ## Publishing it
 
 ```bash
-python visuals/publish-to-notion.py out/<slug>.html <page_id> --caption "Deck — 4 slides"
+python visuals/publish-to-notion.py out/<slug>-lean.html <page_id> --caption "Deck — 4 slides"
 ```
 
 Sends the file from disk to Notion's File Upload API and embeds it on the page. Needs `NOTION_TOKEN` (a Notion
 internal integration token, with the target page shared to that integration); the script prints setup steps if it's
-missing.
+missing. This is the better route when a token exists: bytes move disk-to-Notion, costing no context and risking
+no corruption, and it handles either bundle form.
 
-**Why a script rather than the MCP attachment tool.** The MCP tool does accept the bundle — it takes text content,
-and this is text. But that route reads ~90 KB into an agent's context and has it reproduce every character on the
-way out. A third of those bytes are base64 font data, where a single wrong character silently breaks a typeface,
-and it costs roughly 45k tokens per run. Moving bytes is not work an LLM should be doing. The script does it with
-neither the risk nor the cost.
+**Without a token, attach the lean bundle with `notion-create-attachment` instead.** That means an agent reproduces
+the file through its context, which is the reason the lean form exists: 22 KB of readable CSS and JS is
+reproducible in a way that 90 KB of base64 font data is not. Verify the upload by comparing the returned
+`content_length` against the file's LF-normalised byte count — they should match exactly. (Note the file on disk
+has CRLF endings on Windows, so its raw size is larger; compare like for like or the check will look like a
+mismatch when nothing is wrong.)
 
-For scale: the same deck as a PDF through context would be ~550k tokens, and as four PNGs ~194k. That's why neither
-of those is a viable automated path at all, bundle or no bundle.
+Don't attach the self-contained bundle this way. It costs ~45k tokens and a third of it is base64 font data, where
+one wrong character silently breaks a typeface. For scale: the same deck as a PDF through context would be ~550k
+tokens, and as four PNGs ~194k — which is why neither of those is a viable automated path at all.
 
-Alternatives, neither automated: commit a render and pass the `raw.githubusercontent.com` URL as `source_url`
-(verified to return 200 with zero redirects — but it publishes the deck into a public repo before posting), or
-drag the PDF onto the Notion page by hand.
+One more alternative, not automated: commit a render and pass the `raw.githubusercontent.com` URL as `source_url`
+(verified to return 200 with zero redirects — but it publishes the deck into a public repo before posting).
 
 ## Known gaps
 

@@ -59,19 +59,23 @@ Read `resources/brand-kit.md` first — it holds the design system, the slide vo
 5. **Render, then bundle:**
    ```bash
    node visuals/render.mjs <deck.json> out/ --pdf
-   python visuals/bundle.py <deck.json>
+   python visuals/bundle.py <deck.json> --lean
    ```
    The first produces numbered PNGs (`<slug>-01.png` onward, in deck order) plus a single `<slug>.pdf` — one
    1080×1080 page per slide, text kept vector. Needs a local Chrome or Edge; no install, no network.
 
-   The second produces `<slug>.html`, a **self-contained bundle** — no external CSS, no fonts to fetch, no scripts,
-   no network. It's built from the same renderer, so it can't drift from the images. This is the file that goes
-   into Notion in step 7, and it exists because a PNG or PDF can't: Notion's attachment tool takes text content or
-   a public URL, and a cloud run has neither a way to publish nor a filesystem that survives the run.
+   The second produces `<slug>-lean.html`, ~22 KB — this is the file that goes into Notion in step 7. It exists
+   because a PNG or PDF can't go there: Notion's attachment tool takes text content or a public URL, and a cloud
+   run has neither a way to publish nor a filesystem that survives the run. HTML is text, so it fits.
 
-   It needs `fonttools` and `brotli` (`pip install fonttools brotli` — both small and pure-Python). If they're
-   missing, bundling fails loudly. **Don't treat that as fatal:** the PNGs and the spec still deliver, so report
-   the bundle as unavailable and carry on.
+   It's built by driving the same templates as the PNGs, and ships the deck as source — CSS, builder, spec, seed —
+   with fonts fetched and the starfield regenerated at view time rather than baked in. That keeps it small enough
+   to hand over without an upload token. It is not a reduced deck: same spec and same seed rebuild the same pixels.
+
+   Drop `--lean` for the self-contained form (~87 KB, everything inlined, no network at view time). Prefer it only
+   when the deck needs to survive without Google Fonts; it needs `pip install fonttools brotli`, and if those are
+   missing it fails loudly. **Don't treat that as fatal:** `--lean` needs neither, and the PNGs and spec still
+   deliver regardless.
 
 6. **Look at what you rendered.** Read the PNGs back and check each one:
    - Text fits, nothing clipped at an edge or colliding with the swipe cue
@@ -91,23 +95,26 @@ Read `resources/brand-kit.md` first — it holds the design system, the slide vo
    the spec and nothing is lost; keep only the images and the deck can't be corrected. This is also why a run in a
    cloud sandbox has to write the spec out: that filesystem is discarded when the run ends.
 
-   **Then attach the bundle so a reviewer can actually see the deck:**
+   **Then attach the bundle so a reviewer can actually see the deck.** With `NOTION_TOKEN` in the environment:
    ```bash
-   python visuals/publish-to-notion.py out/<slug>.html <post-log-page-id> --caption "Deck — N slides"
+   python visuals/publish-to-notion.py out/<slug>-lean.html <post-log-page-id> --caption "Deck — N slides"
    ```
-   This sends the file from disk straight to Notion's File Upload API and embeds it on the page. It needs
-   `NOTION_TOKEN` in the environment; the script prints setup instructions if it's missing.
+   This sends the file from disk straight to Notion's File Upload API. Prefer it whenever the token exists — bytes
+   never touch your context, so there's nothing to cost and nothing to corrupt.
 
-   **Use the script, not the MCP attachment tool, and the reason matters.** `notion-create-attachment` would work —
-   it takes text content, and the bundle is text — but only by reading ~90 KB into your context and reproducing it
-   character for character on the way out. A third of that is base64 font data, where one wrong byte silently
-   breaks a typeface, and it costs ~45k tokens every run. The script moves the same bytes with neither risk nor
-   cost. Fall back to the MCP tool only if the token genuinely isn't available, and say in your report that you did.
+   **Without a token, attach `<slug>-lean.html` with `notion-create-attachment`** and place it with
+   `<embed src="file-upload://...">`. That means reproducing the file through your context, which is exactly what
+   the lean form is sized for: ~22 KB of readable CSS and JS, no base64. **Verify it:** the returned
+   `content_length` must equal the file's LF-normalised byte count. On Windows the file on disk has CRLF endings,
+   so its raw size is larger — compare like for like, or a correct upload will look broken.
+
+   Never attach the self-contained bundle this way. Its ~90 KB is a third base64 font data, where one wrong
+   character silently breaks a typeface and you'd have no way to tell.
 
    Two things that stay true either way:
    - **The bundle is text, which is the whole reason any of this works.** PNGs and PDFs are binary and local, and
      Notion takes neither. Don't try to attach them, and don't describe the slides in prose as a substitute.
-   - **If the bundle would exceed Notion's 200 KiB ceiling**, `bundle.py` says so and exits. Shorten the deck;
+   - **If a bundle would exceed Notion's 200 KiB ceiling**, `bundle.py` says so and exits. Shorten the deck;
      never truncate the file.
 
 8. **Report:** slide count, type per slide, output paths, where the spec was saved, and anything dropped along with
