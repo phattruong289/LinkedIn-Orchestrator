@@ -1,0 +1,41 @@
+{
+  "slug": "2026-07-30-least-legible",
+  "seed": 20260730,
+  "footer": "Play3 | Goal Driven AI agents for interactive worlds",
+  "slides": [
+    {
+      "type": "cover",
+      "font": "display",
+      "headline": "The Most Protected\nAudience Is Also\nThe Least Legible",
+      "accent": ["Least Legible"],
+      "subtitle": "Ads To Under-13s On Roblox Match The Game's Theme.\nNothing Else. That's The Right Call."
+    },
+    {
+      "type": "list",
+      "headline": "What That Takes Off The Table",
+      "accent": ["Off The Table"],
+      "items": [
+        "Retargeting — there is no individual history to target against",
+        "Lookalikes — no behavioural profile to build a model from",
+        "Inferred intent — nothing to infer it from in the first place"
+      ]
+    },
+    {
+      "type": "metrics",
+      "headline": "The Mechanic Isn't Theoretical",
+      "accent": ["Isn't Theoretical"],
+      "metrics": [
+        { "value": "73,247", "label": "Unique Players Talked To Our Agents" },
+        { "value": "115,424", "label": "Interactions, Volunteered Not Inferred" },
+        { "value": "1.58", "label": "Interactions Per Player" }
+      ],
+      "footer": "Animal Troll Tower — a studio deployment, not an under-13 cohort"
+    },
+    {
+      "type": "cta",
+      "headline": "If Behavioural Data\nIs Off The Table\nBy Design —",
+      "payoff": "What Are You\nUsing Instead?",
+      "button": "Message Us"
+    }
+  ]
+}

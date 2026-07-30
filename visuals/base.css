@@ -17,6 +17,13 @@
   src: url("fonts/Poppins-Black.ttf") format("truetype");
   font-weight: 900;
 }
+/* Body weight for card text and metric labels. Without this they fell through to a
+   generic UI sans, which QA correctly flagged as matching neither brand family. */
+@font-face {
+  font-family: "P3Body";
+  src: url("fonts/Poppins-Medium.ttf") format("truetype");
+  font-weight: 500;
+}
 
 :root {
   --bg: #000000;

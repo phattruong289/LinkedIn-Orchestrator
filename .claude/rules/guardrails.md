@@ -57,7 +57,8 @@ work, the centre of gravity stays on the insight or the gap, not on how impressi
 also just reads as inauthentic, which costs more than the goodwill it buys.
 
 **Only name publicly-cleared clients.** A client name may appear only if it's already public in PLAY3's own
-published material — currently Diesel/OTB, Vinamilk/SUSU, Super League, plus the play3.ai logo wall (Samsung,
+published material — currently Diesel/OTB, Vinamilk/SUSU, Super League, Animal Troll Tower, plus the play3.ai logo
+wall (Samsung,
 American Eagle, Canon, Casetify, Pudgy Penguins, VeeFriends, Time Studios, Nelvana). Anything heard in a call,
 seen in a pipeline, or found in an internal doc is **not** cleared — describe it generically ("a household-name
 fashion brand") or don't use it. When in doubt: don't name it — describe it generically and flag the call in the QA

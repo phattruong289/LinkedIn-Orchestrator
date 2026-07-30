@@ -46,7 +46,7 @@
     clip-path: polygon(0 0, calc(100% - 29px) 0, 100% 29px, 100% 100%, 29px 100%, 0 calc(100% - 29px));
   }
   .card .n { font: 700 82px/1 "P3Mono", monospace; color: #fff; opacity: .92; min-width: 130px; }
-  .card .t { font: 400 34px/1.32 "Segoe UI", sans-serif; color: rgba(255,255,255,.92); }
+  .card .t { font: 500 31px/1.3 "P3Body", sans-serif; color: rgba(255,255,255,.92); }
 
   /* ---- metric stack ------------------------------------------------------ */
   .metrics {
@@ -54,7 +54,7 @@
     display: grid; grid-template-columns: 1fr 1fr; gap: 52px 56px; text-align: center;
   }
   .metrics .m .v { font: 900 88px/1 "P3Figure", sans-serif; color: var(--accent); letter-spacing: -.02em; }
-  .metrics .m .l { margin-top: 12px; font: 700 30px/1.25 "Segoe UI", sans-serif; color: #fff; }
+  .metrics .m .l { margin-top: 12px; font: 500 30px/1.25 "P3Body", sans-serif; color: #fff; }
   .metrics .m.wide { grid-column: 1 / -1; }
   /* without a chart there's no floor to sit on, so centre the block instead of
      leaving the lower half empty — charts need real series data and often won't exist */
@@ -74,18 +74,18 @@
   }
   .compare .cap {
     position: absolute; top: -19px; left: 50%; transform: translateX(-50%);
-    background: #000; padding: 0 22px; font: 400 30px/1 "Segoe UI", sans-serif; color: #fff; white-space: nowrap;
+    background: #000; padding: 0 22px; font: 500 30px/1 "P3Body", sans-serif; color: #fff; white-space: nowrap;
   }
   .compare .row { display: flex; align-items: center; justify-content: center; gap: 40px; }
   .compare .side { flex: 1; text-align: center; }
   .compare .side .v { font: 900 98px/1 "P3Figure", sans-serif; color: var(--accent); }
-  .compare .side .l { margin-top: 10px; font: 700 32px/1.2 "Segoe UI", sans-serif; color: #fff; }
-  .compare .side .n { margin-top: 4px; font: italic 400 27px/1.2 "Segoe UI", sans-serif; color: rgba(255,255,255,.8); }
+  .compare .side .l { margin-top: 10px; font: 500 32px/1.2 "P3Body", sans-serif; color: #fff; }
+  .compare .side .n { margin-top: 4px; font: italic 500 27px/1.2 "P3Body", sans-serif; color: rgba(255,255,255,.8); }
   .compare .gt { font: 900 62px/1 "P3Figure", sans-serif; color: #fff; }
   .sticker {
     position: absolute; right: 46px; top: 300px; transform: rotate(-7deg);
     background: var(--sticker); color: #fff; padding: 18px 30px; border-radius: 14px;
-    font: 700 34px/1 "Segoe UI", sans-serif; white-space: nowrap;
+    font: 500 34px/1 "P3Body", sans-serif; white-space: nowrap;
   }
 
   /* ---- cta --------------------------------------------------------------- */
@@ -153,7 +153,12 @@ function paint(text, words) {
   let out = esc(text);
   for (const w of words || []) {
     const safe = String(w).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    out = out.replace(new RegExp("\\b" + safe + "\\b", "g"), '<span class="a">' + esc(w) + "</span>");
+    // Only assert a boundary on an end that actually is a word character. An accent like
+    // "Stated," ends in punctuation, and \b after a comma never matches — which made the
+    // highlight fail silently rather than error. Silent is the dangerous part.
+    const lead = /^\w/.test(w) ? "\\b" : "";
+    const tail = /\w$/.test(w) ? "\\b" : "";
+    out = out.replace(new RegExp(lead + safe + tail, "g"), '<span class="a">' + esc(w) + "</span>");
   }
   return out.replace(/\n/g, "<br>");
 }
