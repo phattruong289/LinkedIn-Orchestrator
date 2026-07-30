@@ -109,6 +109,12 @@ Output `idea_candidates` (ranked), each with: `hook`, `angle`, `audience`, `pill
    a reader tracking the feed doesn't distinguish. A genuinely new argument resting on an already-worn number
    still lands as repetitive, which is the failure mode Pass 2 alone misses. This is a strong signal against
    selection, not an auto-cut — surface it and let A4's ranking weigh it.
+4. *Pass 4 (the immediately-preceding posts — the strictest of the four):* look at the **2-3 most recent** Post Log
+   rows and check this candidate against them on four axes: pillar, case study or proof point, headline number, and
+   opening move. Consecutive posts get read together, so they have to feel different even when the 30-day check is
+   clean. **Any candidate that matches the previous post on two or more of those axes drops out of contention for
+   today** unless nothing else clears the bar — and if that happens, say so explicitly rather than shipping it
+   quietly. This is the check that would have caught the run of back-to-back posts leaning on the same figure.
 
 ## Step B — Copywriting
 
@@ -131,7 +137,8 @@ Given the Manager's chosen `idea`, the relevant slice of `stages.research`, the 
   correctly; opening with the client's name as the sentence's subject reads as though the client did the work.
 - **Formatting:** standalone hook line first · short paragraphs, 2-4 sentences · **a blank line between every
   paragraph** (double newline) — LinkedIn renders no markdown, so blank-line spacing is the only thing preventing
-  one dense block · **no hashtags** · **no external links in the body** (flag any essential link to the Manager for
+  one dense block · **`#PLAY3` as the last line, every post, both voices** (any hashtag beyond that is a
+  voice-guide question) · **no external links in the body** (flag any essential link to the Manager for
   first-comment placement) · standalone lines reserved for genuine emphasis.
 - **Length: aim ~900-1,300 characters.** That band performs best. Going longer is defensible when the material
   genuinely needs it (a retrospective, a detailed breakdown), but treat every character past ~1,300 as something

@@ -22,10 +22,11 @@
 - **`---` dividers** to separate acts in a long post. Used in the pivot-story and lessons posts.
 - **`Lesson:` labels** to compress a takeaway after a story beat. His one recurring section label; he otherwise
   avoids the formal labelling the company page uses.
-- **Closes one of two ways, never with "DM us":** a rhetorical question that hands the argument to the reader
-  ("The only question is who's building." · "are you actually listening to what they're saying?"), or direct
-  encouragement to other builders ("keep going" · "you've got this ⚡" · "Im rooting for ya! 👊" · "Lets get it!").
-  Softer CTAs appear too — "drop a comment," "Hit me up in the comments below!," "lets talk," "Follow along."
+- **Closes tend toward** a rhetorical question that hands the argument to the reader ("The only question is who's
+  building." · "are you actually listening to what they're saying?"), or direct encouragement to other builders
+  ("keep going" · "you've got this ⚡" · "Im rooting for ya! 👊" · "Lets get it!"). Plain asks appear too — "drop a
+  comment," "Hit me up in the comments below!," "lets talk," "Follow along." These are the shapes he reaches for,
+  not a list to pick from; a close that fits the post better than any of them is the right close.
 
 ## Tone
 
@@ -50,10 +51,11 @@
 
 ## Formatting
 
-- **Emoji are emotional punctuation at the end of a line, never bullets.** 😬 (awkward brag) · 🤯 (awe) · 🫣
-  (anxiety) · 👊 (solidarity) · ⚡ (energy). **One to three in a whole post**, only at a moment of real feeling.
-  This is the sharpest formatting difference from the company page, which leads every metric line with ⚡.
-- **No hashtags at all** — none in any of the 10 samples. Don't add them.
+- **Emoji work as emotional punctuation at the end of a line, not as bullets.** 😬 (awkward brag) · 🤯 (awe) · 🫣
+  (anxiety) · 👊 (solidarity) · ⚡ (energy). Roughly **one to three in a whole post**, at moments of real feeling.
+  This is the sharpest formatting difference from the company page, which leads metric lines with ⚡.
+- **`#PLAY3` at the end, always** — a standing requirement for both voices, not something observed in the samples
+  (none of his 10 posts use hashtags at all). Beyond that one, don't add hashtags to this voice.
 - **Deliberately imperfect punctuation and casing.** "its been" · "thats" · "Lets talk" · "Im rooting" · doubled
   periods (".."), trailing ellipses, one post entirely lowercase. Don't polish this away — the roughness is the
   authenticity, and a copy-edited draft reads like it was written by someone else. It doesn't license actual typos
@@ -83,13 +85,17 @@ Same rules, different execution. The short version:
 | Person | "I" for journey, "we" for work | "we" throughout |
 | Metric bullet | `→` | `⚡` |
 | Emoji | 1-3 per post, line-end, emotional | one per metric line, structural |
-| Hashtags | none | one or two, topical |
+| Hashtags | `#PLAY3` only | `#PLAY3` plus one or two topical |
 | Vulnerability | central | absent (candour yes) |
 | Section labels | rare; only `Lesson:` | routine ("The numbers:", "What we learned") |
 | Punctuation | deliberately rough | clean |
-| Close | rhetorical question, or encouragement to builders | "DM us" |
+| Close tends toward | rhetorical question, or encouragement to builders | naming the product, opening a conversation |
 
-Both voices share the negation-triplet device and the specificity rule.
+Both voices share the negation-triplet device, the specificity rule, and `#PLAY3` as the closing line.
+
+**Read this table as tendencies, not rules.** It records what each voice actually does most of the time, so a draft
+doesn't drift into the wrong register. It isn't a checklist to satisfy, and a post that departs from a row for a
+good reason is fine — the hard line is register (who's speaking), not any single mechanic.
 
 ## Open questions
 

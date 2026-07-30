@@ -19,9 +19,10 @@ meaningless voice check, so confirm the profile before you start.
 - **Brand check:** if there's a visual, it matches the locked template and correct asset tier (core vs. case-study).
 - **Dimension check:** if there's a visual, it meets the spec in `brand-kit.md` (1200×1200 PNG, <5MB).
 - **Voice check:** the copy reads like the *active* voice guide describes — and carries none of the other voice's
-  habits. The tells that a draft slipped registers: first-person singular in a company post or plural in Wil's;
-  hashtags in Wil's voice (he uses none); ⚡ leading every line in Wil's voice (he caps emoji at one or two per
-  post); personal vulnerability in a company post. Any of these is a `fail`, named specifically.
+  habits. The register is the hard line: first-person singular in a company post, or plural throughout a Wil post,
+  is a `fail`. Weaker tells to flag rather than fail on: ⚡ leading every line in Wil's voice, hashtags beyond
+  `#PLAY3` in Wil's voice, personal vulnerability in a company post, formal section labels in Wil's. Judge whether
+  the post reads as the right person speaking; don't fail a draft over one mechanic if the register is right.
 - **Duplicate-content check (safety net on top of the Strategist's own repeat-check):** query Notion "Post Log"
   (`collection://edc91fd0-7523-407c-82d2-df69f4be616d`) for rows from the last ~30 days. Notion connector ID
   differs by environment (`mcp__9787b242-...__notion-*` locally, `mcp__Notion__notion-*` in cloud Routines) — try
@@ -29,9 +30,14 @@ meaningless voice check, so confirm the profile before you start.
   this post's, compare the final copy's actual argument and cited facts against that row's `Core Argument`/`Key
   Facts Cited` — don't just trust the ticket's `repeat_risk` flag from Step A, re-verify it independently since
   this is the last check before a human sees it.
-  Per Wil's rule (2026-07-23): sharing a topic or getting mentioned again is fine; landing ~80% the same in
-  substance (same core argument + same key facts/case-study) is not. If you find a collision the Strategist missed,
-  that's a `fail`, named specifically (which past post, which argument/facts collide) — don't wave it through.
+  Sharing a topic or getting mentioned again is fine; landing ~80% the same in substance (same core argument + same
+  key facts/case-study) is not. If you find a collision the Strategist missed, that's a `fail`, named specifically
+  (which past post, which argument/facts collide) — don't wave it through.
+- **Consecutive-post check (separate, and stricter):** pull the **2-3 most recent** Post Log rows and compare this
+  draft against them specifically. Back-to-back posts get read together, so they need to feel different even when
+  the 30-day check passes cleanly — different pillar, different case study, different headline number, different
+  opening move. Two consecutive posts leaning on the same proof point or repeating a structure is a `fail` even
+  when neither is near-duplicate in substance. Name what repeats and which post it repeats from.
 - **Format/voice-quality check (independent re-check — don't trust the Strategist already did this right):** scan
   the final copy for the banned-word list (delve, leverage, utilize, harness, streamline, underscore, tapestry,
   landscape, realm, synergy, testament, underpinnings, boundaries, ever-evolving), banned openers ("In today's
@@ -39,7 +45,8 @@ meaningless voice check, so confirm the profile before you start.
   any external link in the post body (not allowed — links suppress LinkedIn reach; should be a note for the first
   comment instead, never in the body). Confirm there's a blank line between every paragraph (LinkedIn has no
   markdown, so this is the only thing that keeps it from reading as one dense block) — a missing blank line is a
-  `fail`, fix is mechanical. Check length against the ~900-1,300 character target band — not a hard fail, but flag
+  `fail`, fix is mechanical. Confirm the post ends with **`#PLAY3`** — required on every post in both voices; its
+  absence is a `fail`. Check length against the ~900-1,300 character target band — not a hard fail, but flag
   anything meaningfully over, since over-long drafts are this pipeline's most-reported weakness. Also flag any
   **imperative opener** ("Stop doing X," "Read this if…"), which measurably suppresses reach. Any banned
   word/phrase or in-body link found is a `fail` — name exactly what and where, don't silently strip it yourself.
