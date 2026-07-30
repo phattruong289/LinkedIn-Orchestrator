@@ -30,6 +30,7 @@ slide rather than a new interpretation of it.
 | `starfield.js` | Seeded starfield generator. Same seed → same background, so a copy edit doesn't reshuffle the stars |
 | `slide.html` | All five slide types. Renders one slide (`window.SPEC`) for PNG capture, or a whole deck (`window.DECK`) stacked one-per-page for PDF — same builder either way, so a slide can't look different depending on which output it came from |
 | `render.mjs` | Deck JSON → numbered PNGs, plus a PDF with `--pdf`. Finds Chrome or Edge automatically |
+| `bundle.py` | Deck JSON → one self-contained HTML, the file Notion can take |
 | `render.sh` | Single-template shortcut, kept for quick one-off renders |
 | `example-deck.json` | A complete five-slide deck, one of each type |
 | `fonts/` | Vendored so a render needs no network |
@@ -57,21 +58,33 @@ Spreading it across several words is the fastest way to lose the look.
 
 ## Getting a deck into Notion
 
-The deck **spec** goes to Notion as text on every run — that's the durable artifact, and the renderer reproduces
-the images from it exactly (the starfield is seeded). The rendered files are a separate question, because
-`notion-create-attachment` only accepts text content or a **public HTTPS URL that doesn't redirect**; local binary
-files need the Notion File Upload API, which isn't wired up.
+```bash
+python visuals/bundle.py <deck.json>      # -> out/<slug>.html, self-contained
+```
 
-Two routes that do work, neither of them currently automated:
+`notion-create-attachment` takes **text content** or a public HTTPS URL that doesn't redirect. PNGs and PDFs are
+binary and local, so neither fits — and a cloud Routine has no way to publish them and no filesystem that outlives
+the run. An HTML file is text. That's the opening.
 
-- **Serve the file over HTTPS and pass `source_url`.** `raw.githubusercontent.com` was checked and returns 200
-  with zero redirects, so committing a render into the repo makes it attachable. The trade: this repo is public
-  and the output is binary, so it means publishing the deck early and adding binary churn to history. Fine for
-  slides that are about to be posted publicly anyway; a deliberate choice, not a default.
-- **Attach by hand.** Render locally, drag the PDF onto the Notion page. One file, and the obvious answer while
-  the pipeline still stops at a human review.
+The bundle inlines everything: CSS, fonts, both SVGs, and the already-rendered DOM. No external requests, no
+scripts. It's produced by driving the same `slide.html` the PNG renderer uses, so the preview can't drift from
+the images.
 
-Prefer the PDF for either — one file instead of five, vector text, and no quality loss.
+**Fonts were the reason this looked impossible.** Four families inline is ~477 KB, well past Notion's 200 KiB
+ceiling. A deck uses about 70 distinct glyphs, so subsetting to exactly those brings it to ~22 KB. The starfield
+was the second problem — one `<i>` per dot is 57% of the bytes and scales with slide count, so it's collapsed into
+`box-shadow` lists. A four-slide deck lands around 87 KB; eight slides still fit.
+
+Requires `pip install fonttools brotli`. Both are small and pure-Python. If they're missing, bundling fails loudly
+— report the bundle as unavailable rather than shipping a run with no visual.
+
+**What it costs:** the file passes through the agent's context to reach the tool, so roughly 20-25k tokens per
+run. That is the price of the automated path. For comparison, the same deck as a PDF would be ~550k and as four
+PNGs ~194k, which is why neither is viable.
+
+Alternatives, neither automated: commit a render and pass the `raw.githubusercontent.com` URL as `source_url`
+(verified to return 200 with zero redirects — but it publishes the deck into a public repo before posting), or
+drag the PDF onto the Notion page by hand.
 
 ## Known gaps
 

@@ -56,13 +56,22 @@ Read `resources/brand-kit.md` first — it holds the design system, the slide vo
    - **Keep `accent` to one or two words.** Green marks the thing that matters — the figure, or the single word the
      argument turns on. Spread across four words it stops marking anything.
 
-5. **Render:**
+5. **Render, then bundle:**
    ```bash
    node visuals/render.mjs <deck.json> out/ --pdf
+   python visuals/bundle.py <deck.json>
    ```
-   Numbered PNGs (`<slug>-01.png` onward, in deck order) plus a single `<slug>.pdf` — one 1080×1080 page per
-   slide, text kept vector. Prefer the PDF when handing the deck to a person: one file, crisp at any zoom, and the
-   format PLAY3 already uses for decks. Needs a local Chrome or Edge; no install, no network.
+   The first produces numbered PNGs (`<slug>-01.png` onward, in deck order) plus a single `<slug>.pdf` — one
+   1080×1080 page per slide, text kept vector. Needs a local Chrome or Edge; no install, no network.
+
+   The second produces `<slug>.html`, a **self-contained bundle** — no external CSS, no fonts to fetch, no scripts,
+   no network. It's built from the same renderer, so it can't drift from the images. This is the file that goes
+   into Notion in step 7, and it exists because a PNG or PDF can't: Notion's attachment tool takes text content or
+   a public URL, and a cloud run has neither a way to publish nor a filesystem that survives the run.
+
+   It needs `fonttools` and `brotli` (`pip install fonttools brotli` — both small and pure-Python). If they're
+   missing, bundling fails loudly. **Don't treat that as fatal:** the PNGs and the spec still deliver, so report
+   the bundle as unavailable and carry on.
 
 6. **Look at what you rendered.** Read the PNGs back and check each one:
    - Text fits, nothing clipped at an edge or colliding with the swipe cue
@@ -82,11 +91,17 @@ Read `resources/brand-kit.md` first — it holds the design system, the slide vo
    the spec and nothing is lost; keep only the images and the deck can't be corrected. This is also why a run in a
    cloud sandbox has to write the spec out: that filesystem is discarded when the run ends.
 
-   **The rendered files can't currently be attached automatically.** `notion-create-attachment` takes text content
-   or a public HTTPS URL that doesn't redirect; local binary files need the separate Notion File Upload API, which
-   isn't wired up. Two routes work but neither is automated — serving the file over HTTPS and passing `source_url`,
-   or attaching the PDF by hand. See `visuals/README.md`. Don't work around the gap by describing the slides in
-   prose as though that were equivalent: record the spec, note where the files were written, and leave it there.
+   **Then attach the bundle so a reviewer can actually see the deck.** Read `out/<slug>.html` and pass it as the
+   `content` of `notion-create-attachment` (filename `<slug>.html`), then place the returned `markdown_source` on
+   the Post Log page as `<embed src="file-upload://…"></embed>`. Notion renders it inline as a sandboxed preview.
+
+   Two things about this that are easy to get wrong:
+   - **The bundle is text, which is the whole reason it works.** PNGs and PDFs are binary and local; the attachment
+     tool takes neither. Don't try to attach them and don't describe the slides in prose as a substitute.
+   - **It costs real context** — roughly 20-25k tokens for a four-slide deck, because the file has to pass through
+     the agent to reach the tool. That's the price of the automated path and it's expected, not a fault. If the
+     bundle would exceed Notion's 200 KiB ceiling, `bundle.py` says so and exits; shorten the deck rather than
+     truncating the file.
 
 8. **Report:** slide count, type per slide, output paths, where the spec was saved, and anything dropped along with
    why — a missing screenshot, a figure that wasn't in the copy. If a slide was dropped, say so plainly rather than
