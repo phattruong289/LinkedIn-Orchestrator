@@ -59,6 +59,11 @@ don't block the stage on it.
 
 Given the ticket's `stages.research`:
 
+**Query the databases yourself.** If the dispatch prompt describes what's in Post Log or the Idea Bank — a row
+count, which rows exist, "the bank is empty" — treat it as context and verify it anyway. A Manager-supplied row
+count was wrong once and every stage downstream repeated it, so the repeat-check ran against a corpus that didn't
+exist. If a query fails, say the check is blocked rather than falling back on what you were told.
+
 **A1. Check the pillar mix.** Query the last ~20 rows of Notion "Post Log"
 (`collection://edc91fd0-7523-407c-82d2-df69f4be616d`) and count the actual share of each `Pillar` value. Compare
 against the Playbook's target mix — **read the current targets from the Playbook, don't assume them; they get

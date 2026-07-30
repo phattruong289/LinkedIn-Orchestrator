@@ -31,6 +31,24 @@ whole page each time).
 both point at the same "REDACTED Studios" workspace. Try whichever is already loaded; if it comes back as an
 unrecognized tool, `ToolSearch` for `"notion"` and retry with whatever it finds.
 
+## Never hand an agent a database state it should read for itself
+
+**Do not tell a dispatched agent what's in Post Log, Idea Bank, or any other database.** Give it the ticket URL and
+let it query. If you state a row count or summarise what a database contains, the agent will take it and report it
+back to you as though it had checked — and you will read your own assumption as independent confirmation. That is
+not a hypothetical: on 2026-07-30 the Manager asserted "Post Log has only 2 rows" without ever re-querying after a
+cleanup. It had nine. Both the Librarian and the Strategist repeated the figure, the near-duplicate check ran
+against a corpus that didn't exist, and a genuine collision with a recent draft went undetected until a human
+noticed the database on screen.
+
+Two rules follow, and they apply to you as much as to the agents:
+
+- **Verify before asserting.** If you're about to state the contents of a database in a prompt or a report, query it
+  first in that same run. State facts you have just read, not facts you remember arranging.
+- **A blocked check is not a passed check.** If an agent reports it couldn't query — rate limit, auth, anything —
+  record that check as blocked and carry it to the human gate. Never substitute your own knowledge for the check
+  and never let a summary you supplied stand in for verification.
+
 ## Steps
 
 1. **Resolve today's ticket** — query Job Tickets for a page with today's `Date` (local date):

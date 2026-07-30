@@ -31,7 +31,13 @@ meaningless voice check, so confirm the profile before you start.
   is a `fail`. Weaker tells to flag rather than fail on: ⚡ leading every line in Wil's voice, hashtags beyond
   `#PLAY3` in Wil's voice, personal vulnerability in a company post, formal section labels in Wil's. Judge whether
   the post reads as the right person speaking; don't fail a draft over one mechanic if the register is right.
-- **Duplicate-content check (safety net on top of the Strategist's own repeat-check):** query Notion "Post Log"
+- **Duplicate-content check (safety net on top of the Strategist's own repeat-check).** **Query Post Log yourself.**
+  If the dispatch prompt tells you what's in it — a row count, a summary, "only these two rows exist" — treat that
+  as context, never as the check. This check exists precisely so an upstream assertion doesn't go unverified, and
+  it has already failed that way once: a Manager-supplied row count was wrong, and a real collision with a recent
+  draft went undetected because every stage repeated the same unverified figure. If you can't query, record the
+  check as **blocked** and say so loudly. Blocked is a useful, honest state; a pass you didn't earn is not.
+  Query Notion "Post Log"
   (`collection://edc91fd0-7523-407c-82d2-df69f4be616d`) for rows from the last ~30 days. Notion connector ID
   differs by environment (`mcp__9787b242-...__notion-*` locally, `mcp__Notion__notion-*` in cloud Routines) — try
   the one already loaded, `ToolSearch` for `"notion"` if it's unrecognized. For any row whose `Topic Tags` overlap
