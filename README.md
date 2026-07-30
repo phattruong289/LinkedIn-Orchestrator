@@ -7,9 +7,9 @@ See `CLAUDE.md` for how the project is organized, `docs/task-and-requirements.md
 
 1. **Authorize the Slack connector** (`marketing:slack`) and tell it which channel `daily-post` should post drafts
    to. Until this is done, the pipeline can run through Producer-QA but can't deliver the final draft.
-2. **(Optional, improves quality) Supply real content**: drop a few of Wil's actual past LinkedIn posts into
-   `resources/past-posts/`, and any BWW transcripts into `resources/bww-transcripts/`. Without these, every draft
-   is flagged as voice-unvalidated (see `resources/voice-guide-wil-personal.md`).
+2. **(Optional, improves quality) Supply real content**: drop any BWW transcripts into
+   `resources/bww-transcripts/`. Both voice guides are already validated against real published posts (10 of Wil's,
+   9 of the company page's, all held in Notion "Past Posts").
 
 **Images are currently paused** — the pipeline runs text-only for now. `art-director` (Stage 4, visuals) exists and
 was validated in a test run, but a real image-gen tooling gap surfaced (output came out ~1024×1024, not the

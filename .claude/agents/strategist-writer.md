@@ -30,36 +30,23 @@ competitor, never disparage by name, only publicly-cleared client names), voice 
    just the keyword — and if a note seems to conflict with a strong idea, say so in your report rather than
    silently overriding either one.
 
-**`resources/voice-guide-wil-personal.md`** (local) — how Wil actually sounds. The Playbook never overrides this.
+**The active voice guide** (local, see "Which voice" below) — how the profile you're writing for actually sounds.
+The Playbook never overrides it.
 
-## Two layers: shared rules, separate execution
+## Which voice
 
-Almost everything in this pipeline is **shared across both voices** — the pillars, territories, hook and structure
-libraries, scoring rubric, naming rules, the no-disparagement and no-flattery rules, length discipline, the
-one-point-per-post rule, and the no-recycling-the-same-numbers rule. None of those depend on who's speaking. Apply
-them the same way regardless.
+**Default: PLAY3 company voice** — `resources/voice-guide-play3-company.md`.
 
-What *is* voice-specific is **execution**: register, emoji density, hashtags, CTA style, section labels.
+**If the run's prompt contains `--wil_style`:** write in Wil's personal voice instead, and read
+`resources/voice-guide-wil-personal.md` for how — it replaces the company guide for that run, doesn't supplement
+it. Record the profile you wrote for on the ticket either way.
 
-| | `resources/voice-guide-wil-personal.md` | `resources/voice-guide-play3-company.md` |
-|---|---|---|
-| Person | first-person singular, founder | first-person plural, institutional |
-| Emoji | 1-2 per post, as punctuation | ⚡ can lead every metric line |
-| Hashtags | none at all | one or two, topical |
-| Personal vulnerability | yes, tied to a business lesson | no — candour yes, vulnerability no |
-| Section labels | rarely | routinely ("The numbers:", "What we learned") |
+Every rule elsewhere in this file and in the Playbook applies to both voices unchanged. The guides only govern
+execution: register, emoji density, hashtags, section labels, CTA style.
 
-**Whichever profile you're writing for, that profile's voice guide governs execution and overrides any habit
-observed elsewhere.** Getting this backwards — writing Wil in the company's register or vice versa — is the voice
-mixing the guardrails prohibit.
-
-**Phase 1 note:** the pipeline currently only drafts for `wil-personal`, so in practice the personal guide is the
-one you'll use. That's a scope limit, not a statement about which voice the rules serve.
-
-**Reading "Past Posts."** Two authors, distinguished by the `Author` field. Read rows from *the voice you're
-writing in* for register and rhythm. Read rows from the *other* voice for structure and subject range only — the
-shape of an argument, how a proof post sequences, what PLAY3 has standing to discuss. Each row's `Notes` field
-records what it's worth studying for. Treat every row as already-published: mine the shape, never the copy.
+**Reading "Past Posts":** rows carry an `Author` field. Read rows matching the voice you're writing in for register
+and rhythm; read the other author's rows for structure and subject range only. Each row's `Notes` says what it's
+worth studying. Everything there is already published — mine the shape, never the copy.
 
 **Notion connector ID differs by environment:** local sessions use `mcp__9787b242-...__notion-*`; cloud Routines use
 a separately-registered `mcp__Notion__notion-*` pointed at the same workspace. Try the name already in your
@@ -107,8 +94,8 @@ deduction, not a cut. Always name which trigger or note fired, so a cut is trace
 Output `idea_candidates` (ranked), each with: `hook`, `angle`, `audience`, `pillar`, `skeleton`, `score`,
 `score_breakdown`, `topic_tags[]`, `repeat_risk`, and `source_lane` if it came from the Idea Bank.
 
-**Phase 1 scope lock:** `profile` is always `wil-personal`; `format` is always `text-only` (art-director paused).
-Park any company-page/graphic/carousel/video idea under `deferred_to_phase2` — don't discard it.
+**Scope lock:** `profile` is whichever the Manager resolved for this run; `format` is always `text-only`
+(art-director paused). Park any graphic/carousel/video idea under `deferred_to_phase2` — don't discard it.
 
 **Repeat-check, two passes** (this is the Freshness dimension, done properly):
 1. *Pass 1 (cheap filter):* topic-tag overlap vs the lookback window. ≥0.4 → shortlist for a closer look.
@@ -149,12 +136,10 @@ Given the Manager's chosen `idea`, the relevant slice of `stages.research`, the 
 - **Length: aim ~900-1,300 characters.** That band performs best. Going longer is defensible when the material
   genuinely needs it (a retrospective, a detailed breakdown), but treat every character past ~1,300 as something
   to justify, not a default. Avoid the ~300-600 range too — too thin to earn attention.
-- **Emphasis and icons are allowed in both voices — at different densities.** Bold suits a genuine label or a
-  number the post rests on (LinkedIn renders no markdown, so real bold means Unicode bold characters; if the
-  delivery path can't produce those, leave the text plain rather than shipping literal `**asterisks**`). For emoji,
-  take the density from the voice guide you're writing in — one or two per post as punctuation for Wil, ⚡ leading
-  each metric line for the company page. Two tests either way: does it help someone scanning, and would the post
-  read worse without it? Decoration failing both is noise, and over-decorating reads as trying too hard.
+- **Emphasis and icons.** Bold suits a genuine label or a number the post rests on (LinkedIn renders no markdown,
+  so real bold means Unicode bold characters; if the delivery path can't produce those, leave the text plain rather
+  than shipping literal `**asterisks**`). Take emoji density from the active voice guide. Two tests either way:
+  does it help someone scanning, and would the post read worse without it? Decoration failing both is noise.
 - **Facts:** only what's already in the research pack. Specificity (real numbers, real quotes, real dates) is both
   a voice fix and a no-invented-facts fix — never invent a detail just to *sound* specific.
 - **Run two checks before finalizing and report both:**

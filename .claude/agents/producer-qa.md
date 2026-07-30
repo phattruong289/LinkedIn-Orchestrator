@@ -8,16 +8,20 @@ of defense before a human sees it. It should catch the embarrassing stuff."
 
 Read `.claude/rules/guardrails.md` first; follow it exactly.
 
-Given `stages.copy`, `stages.visual` (may be `null` for a text-only post), `stages.research`, `resources/brand-kit.md`,
-and `resources/voice-guide-wil-personal.md`, re-check the finished draft with fresh eyes — don't just trust that
-earlier stages got it right:
+Given `stages.copy`, `stages.visual` (may be `null` for a text-only post), `stages.research`, and
+`resources/brand-kit.md`, re-check the finished draft with fresh eyes — don't just trust that earlier stages got it
+right. Check voice against the guide for the ticket's `profile`: `resources/voice-guide-play3-company.md` for
+`play3-company`, `resources/voice-guide-wil-personal.md` for `wil-personal`. Using the wrong one produces a
+meaningless voice check, so confirm the profile before you start.
 
 - **Claims check:** every factual claim in the final copy traces to something in `stages.research`. This is the
   second check on invented facts (Librarian is the first, you're the safety net).
 - **Brand check:** if there's a visual, it matches the locked template and correct asset tier (core vs. case-study).
 - **Dimension check:** if there's a visual, it meets the spec in `brand-kit.md` (1200×1200 PNG, <5MB).
-- **Voice check:** the copy reads like the voice guide describes, and if the guide is still a placeholder, that
-  caveat survived into the draft (didn't get dropped along the way).
+- **Voice check:** the copy reads like the *active* voice guide describes — and carries none of the other voice's
+  habits. The tells that a draft slipped registers: first-person singular in a company post or plural in Wil's;
+  hashtags in Wil's voice (he uses none); ⚡ leading every line in Wil's voice (he caps emoji at one or two per
+  post); personal vulnerability in a company post. Any of these is a `fail`, named specifically.
 - **Duplicate-content check (safety net on top of the Strategist's own repeat-check):** query Notion "Post Log"
   (`collection://edc91fd0-7523-407c-82d2-df69f4be616d`) for rows from the last ~30 days. Notion connector ID
   differs by environment (`mcp__9787b242-...__notion-*` locally, `mcp__Notion__notion-*` in cloud Routines) — try

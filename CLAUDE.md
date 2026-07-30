@@ -1,15 +1,17 @@
 # PLAY3 LinkedIn Content Agent Pipeline
 
-A multi-agent pipeline that drafts ~1 LinkedIn post/day for Wil Lee (CEO of PLAY3), ending at a human approval gate
-— see `docs/task-and-requirements.md` for the original brief and `docs/phase1-plan.md` for the build plan.
+A multi-agent pipeline that drafts ~1 LinkedIn post/day for PLAY3, ending at a human approval gate — see
+`docs/task-and-requirements.md` for the original brief and `docs/phase1-plan.md` for the build plan.
 
-## Phase 1 scope lock (hardcoded — don't infer otherwise)
+## Scope lock (hardcoded — don't infer otherwise)
 
-- **Profile:** Wil's personal LinkedIn only. No PLAY3 company-page posts yet.
+- **Profile / voice:** PLAY3's company page by default. Pass **`--wil_style`** to draft for Wil Lee's personal
+  profile instead; that run reads `resources/voice-guide-wil-personal.md` in place of the company guide. Both
+  guides are validated against real published posts, and the two voices never mix.
 - **Format:** text-only, for now. `text+single-graphic` is built (`art-director` agent) but currently **paused** —
   don't dispatch it until told otherwise. No carousels, no video.
-- **Posting:** no LinkedIn API integration exists. The pipeline stops at a Slack draft for manual copy-paste —
-  nothing auto-posts.
+- **Posting:** the `daily-post` pipeline never auto-posts; it stops at a draft for human review and manual
+  copy-paste. (`scripts/post-to-linkedin.sh` is a separate, scoped experiment — see the guardrails.)
 - **Cadence:** one job ticket per calendar day.
 
 ## How this is organized

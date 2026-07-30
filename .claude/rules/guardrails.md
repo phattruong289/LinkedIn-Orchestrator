@@ -19,20 +19,13 @@ source.
 web/news source with a URL. If nothing verifiable supports an angle, say so — "not found" is a normal, expected
 answer. A fabricated stat is not.
 
-**Voice separation — and what it does *not* mean.** Wil's personal voice
-(`resources/voice-guide-wil-personal.md`, validated against 10 real posts) and PLAY3's company voice
-(`resources/voice-guide-play3-company.md`, validated against 9 real company-page posts) never mix. Writing one in
-the other's register is the specific failure this rule prevents.
+**Voice separation.** The default voice is PLAY3's company voice (`resources/voice-guide-play3-company.md`);
+`--wil_style` in a run's prompt switches to Wil's personal voice (`resources/voice-guide-wil-personal.md`) for that
+run. Both are validated against real posts. They never mix — writing one in the other's register is the failure
+this rule prevents.
 
-What separates is **execution**: register (first-person singular vs. plural), emoji density, hashtag use, section
-labels, CTA style, whether personal vulnerability belongs. What does **not** separate is every rule in this file
-and in the Content Playbook — naming, no-disparagement, no-flattery, sourcing, length discipline, no recycling the
-same headline numbers. Those are shared, and a rule doesn't stop applying because a different voice is speaking.
-
-Whichever profile a post is for, that profile's guide governs execution and overrides any habit observed in the
-other voice. Phase 1's pipeline only drafts for Wil's personal profile — that's a scope limit on *what gets
-written*, not a statement about which voice the rules serve. If a voice guide is ever reduced to a placeholder
-again, say so plainly in the draft so a reviewer can weigh it more skeptically than a validated one.
+Only **execution** is voice-specific: register, emoji density, hashtags, section labels, CTA style. Every rule in
+this file and in the Content Playbook applies to both unchanged.
 
 **Never name a PLAY3 competitor. Never disparage anyone by name.** These are two separate rules; keep them
 separate, because collapsing them was blocking legitimate writing.
@@ -72,8 +65,8 @@ fashion brand") or don't use it. When in doubt: don't name, ask Wil.
 **Content Playbook, not a voice override.** Notion's **Content Playbook** database
 (`collection://94187f4f-93aa-44c7-bbec-81c092b53fda`) holds the method in 5 components: content pillars + target
 mix, hook library, post skeletons, idea scoring rubric, and voice + naming rules. It's a layer that improves a
-draft's odds of landing — it never overrides `resources/voice-guide-wil-personal.md`, which stays authoritative on
-how Wil actually sounds. `strategist-writer` applies it; `producer-qa` independently re-checks banned
+draft's odds of landing — it never overrides the run's active voice guide, which stays authoritative on how that
+profile actually sounds. `strategist-writer` applies it; `producer-qa` independently re-checks banned
 words/phrases, naming-rule violations, and in-body external links (not allowed — reach-suppressing; links belong
 in a first-comment note, not the post text).
 
@@ -93,10 +86,11 @@ argument/fact comparison against Notion "Post Log"'s (`collection://edc91fd0-752
 it. This depends on `log-outcome` actually being run after every real post so each row's `Status` reflects what
 actually happened — a Post Log with no `posted` rows yet means this check has nothing real to compare against.
 
-**Phase 1 scope lock.** Profile: Wil's personal only (no company page). Format: **text-only only, for now** — no
-carousels, no video. `text+single-graphic` is a documented Phase 1 capability (`art-director` agent exists) but is
-currently paused by explicit instruction; don't dispatch `art-director` or propose graphic-format ideas until that
-pause is lifted. One post per calendar day. Don't infer otherwise from context — these are hardcoded.
+**Scope lock.** Profile: PLAY3 company page by default; `--wil_style` switches that run to Wil's personal profile.
+Format: **text-only only, for now** — no carousels, no video. `text+single-graphic` is a built capability
+(`art-director` agent exists) but is currently paused by explicit instruction; don't dispatch `art-director` or
+propose graphic-format ideas until that pause is lifted. One post per calendar day. Don't infer otherwise from
+context — these are hardcoded.
 
 **`scripts/post-to-linkedin.sh` is a standalone technical experiment, not part of the pipeline.** It exists so
 Quang can manually test the LinkedIn Posts API against his own personal account (`LINKEDIN_PERSON_URN` in `.env`

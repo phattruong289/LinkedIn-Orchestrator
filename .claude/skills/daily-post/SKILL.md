@@ -1,6 +1,6 @@
 ---
 name: daily-post
-description: Manager/Orchestrator for PLAY3's Phase 1 LinkedIn pipeline. Runs librarian, then strategist-writer, then producer-qa, in order, for Wil's personal profile, text-only format (art-director/graphics paused for now) — then posts the finished draft to Slack for human approve/tweak/kill. Invoke manually, or via a scheduled task, once daily.
+description: Manager/Orchestrator for PLAY3's LinkedIn pipeline. Runs librarian, then strategist-writer, then producer-qa, in order, text-only format (art-director/graphics paused for now) — then delivers the finished draft for human approve/tweak/kill. Writes in PLAY3's company voice by default; pass --wil_style to draft for Wil's personal profile instead. Invoke manually, or via a scheduled task, once daily.
 ---
 
 # Daily post — the Manager
@@ -9,9 +9,11 @@ You are the **Manager/Orchestrator** for PLAY3's Phase 1 LinkedIn pipeline. This
 an LLM "agent" persona — your job is to run the stages in order, keep the job ticket honest, and stop at the human
 gate. Read `.claude/rules/guardrails.md` first.
 
-**Phase 1 scope, hardcoded — do not infer otherwise from context:** profile is always `wil-personal`; format is
-always `text-only` **for now** (`text+single-graphic`/`art-director` are paused — see `.claude/rules/guardrails.md`);
-one post per calendar day; never auto-post.
+**Scope, hardcoded — do not infer otherwise from context:** profile is `play3-company` by default, or
+`wil-personal` when the run's prompt contains `--wil_style`; format is always `text-only` **for now**
+(`text+single-graphic`/`art-director` are paused — see `.claude/rules/guardrails.md`); one post per calendar day;
+never auto-post. Pass `--wil_style` through to `strategist-writer` when present, and record the resolved profile on
+the ticket.
 
 ## State model
 
@@ -32,8 +34,8 @@ unrecognized tool, `ToolSearch` for `"notion"` and retry with whatever it finds.
 ## Steps
 
 1. **Resolve today's ticket** — query Job Tickets for a page with today's `Date` (local date):
-   - No page for today → create one: `Name` = today's date (`YYYY-MM-DD`), `Status: started`, `Profile:
-     wil-personal`, `Format Target` left unset, body seeded with `{"run_log": [], "stages": {}}`.
+   - No page for today → create one: `Name` = today's date (`YYYY-MM-DD`), `Status: started`, `Profile` set to the
+     resolved profile for this run, `Format Target` left unset, body seeded with `{"run_log": [], "stages": {}}`.
    - Page exists with `Status` already `posted_to_slack`, `qa_failed`, `failed`, or `closed` → **stop**, report
      "today's post is already handled, see the ticket" (idempotency guard against a double-fire or accidental
      re-run).
@@ -44,7 +46,7 @@ unrecognized tool, `ToolSearch` for `"notion"` and retry with whatever it finds.
    resource pool is too thin for any decent angle → set the page's `Status` property to `failed`, log why in
    `run_log`, **stop and report** — don't force a weak post.
 4. **Dispatch `strategist-writer`, Step A (ideation)**, telling it explicitly that `text+single-graphic` is paused
-   this run — it should only propose `text-only` ideas. Get `idea_candidates` (each scored, with a `pillar` and
+   this run — it should only propose `text-only` ideas — and which profile/voice this run is for. Get `idea_candidates` (each scored, with a `pillar` and
    `skeleton`). **You (the Manager) pick:**
    - Prefer the highest-scoring idea that isn't `repeat_risk: true`.
    - **Scoring thresholds are a real gate, not decoration.** If the top candidate scores <70, don't write it —
@@ -52,8 +54,8 @@ unrecognized tool, `ToolSearch` for `"notion"` and retry with whatever it finds.
      `idea-harvest`. If the top candidate is 70-89, you may proceed, but record in the ticket that it was written
      below the ≥90 "write now" threshold, so the human reviewer knows.
    - Break near-ties (within ~10 points) in favour of the under-served pillar the Strategist reported.
-   - Write `stages.idea_chosen` (including `pillar`, `skeleton`, `score`, `score_breakdown`); `format_target` is
-     always `"text-only"` for now.
+   - Write `stages.idea_chosen` (including `pillar`, `skeleton`, `score`, `score_breakdown`, `profile`);
+     `format_target` is always `"text-only"` for now.
    - **Park the leftovers:** any candidate scoring 70-89 that wasn't chosen goes into Notion "Idea Bank"
      (`collection://9592e8bf-2758-4a95-9f8f-63400feb71a3`) as `Status: parked`; anything auto-cut goes in as
      `Status: cut` with its `Cut Reason`. Today's research shouldn't evaporate just because only one post ships.
