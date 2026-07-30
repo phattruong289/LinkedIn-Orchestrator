@@ -91,17 +91,24 @@ Read `resources/brand-kit.md` first — it holds the design system, the slide vo
    the spec and nothing is lost; keep only the images and the deck can't be corrected. This is also why a run in a
    cloud sandbox has to write the spec out: that filesystem is discarded when the run ends.
 
-   **Then attach the bundle so a reviewer can actually see the deck.** Read `out/<slug>.html` and pass it as the
-   `content` of `notion-create-attachment` (filename `<slug>.html`), then place the returned `markdown_source` on
-   the Post Log page as `<embed src="file-upload://…"></embed>`. Notion renders it inline as a sandboxed preview.
+   **Then attach the bundle so a reviewer can actually see the deck:**
+   ```bash
+   python visuals/publish-to-notion.py out/<slug>.html <post-log-page-id> --caption "Deck — N slides"
+   ```
+   This sends the file from disk straight to Notion's File Upload API and embeds it on the page. It needs
+   `NOTION_TOKEN` in the environment; the script prints setup instructions if it's missing.
 
-   Two things about this that are easy to get wrong:
-   - **The bundle is text, which is the whole reason it works.** PNGs and PDFs are binary and local; the attachment
-     tool takes neither. Don't try to attach them and don't describe the slides in prose as a substitute.
-   - **It costs real context** — roughly 20-25k tokens for a four-slide deck, because the file has to pass through
-     the agent to reach the tool. That's the price of the automated path and it's expected, not a fault. If the
-     bundle would exceed Notion's 200 KiB ceiling, `bundle.py` says so and exits; shorten the deck rather than
-     truncating the file.
+   **Use the script, not the MCP attachment tool, and the reason matters.** `notion-create-attachment` would work —
+   it takes text content, and the bundle is text — but only by reading ~90 KB into your context and reproducing it
+   character for character on the way out. A third of that is base64 font data, where one wrong byte silently
+   breaks a typeface, and it costs ~45k tokens every run. The script moves the same bytes with neither risk nor
+   cost. Fall back to the MCP tool only if the token genuinely isn't available, and say in your report that you did.
+
+   Two things that stay true either way:
+   - **The bundle is text, which is the whole reason any of this works.** PNGs and PDFs are binary and local, and
+     Notion takes neither. Don't try to attach them, and don't describe the slides in prose as a substitute.
+   - **If the bundle would exceed Notion's 200 KiB ceiling**, `bundle.py` says so and exits. Shorten the deck;
+     never truncate the file.
 
 8. **Report:** slide count, type per slide, output paths, where the spec was saved, and anything dropped along with
    why — a missing screenshot, a figure that wasn't in the copy. If a slide was dropped, say so plainly rather than

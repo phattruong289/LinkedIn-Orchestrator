@@ -31,6 +31,7 @@ slide rather than a new interpretation of it.
 | `slide.html` | All five slide types. Renders one slide (`window.SPEC`) for PNG capture, or a whole deck (`window.DECK`) stacked one-per-page for PDF — same builder either way, so a slide can't look different depending on which output it came from |
 | `render.mjs` | Deck JSON → numbered PNGs, plus a PDF with `--pdf`. Finds Chrome or Edge automatically |
 | `bundle.py` | Deck JSON → one self-contained HTML, the file Notion can take |
+| `publish-to-notion.py` | Sends that HTML from disk to Notion and embeds it. Needs `NOTION_TOKEN` |
 | `render.sh` | Single-template shortcut, kept for quick one-off renders |
 | `example-deck.json` | A complete five-slide deck, one of each type |
 | `fonts/` | Vendored so a render needs no network |
@@ -78,9 +79,24 @@ was the second problem — one `<i>` per dot is 57% of the bytes and scales with
 Requires `pip install fonttools brotli`. Both are small and pure-Python. If they're missing, bundling fails loudly
 — report the bundle as unavailable rather than shipping a run with no visual.
 
-**What it costs:** the file passes through the agent's context to reach the tool, so roughly 20-25k tokens per
-run. That is the price of the automated path. For comparison, the same deck as a PDF would be ~550k and as four
-PNGs ~194k, which is why neither is viable.
+## Publishing it
+
+```bash
+python visuals/publish-to-notion.py out/<slug>.html <page_id> --caption "Deck — 4 slides"
+```
+
+Sends the file from disk to Notion's File Upload API and embeds it on the page. Needs `NOTION_TOKEN` (a Notion
+internal integration token, with the target page shared to that integration); the script prints setup steps if it's
+missing.
+
+**Why a script rather than the MCP attachment tool.** The MCP tool does accept the bundle — it takes text content,
+and this is text. But that route reads ~90 KB into an agent's context and has it reproduce every character on the
+way out. A third of those bytes are base64 font data, where a single wrong character silently breaks a typeface,
+and it costs roughly 45k tokens per run. Moving bytes is not work an LLM should be doing. The script does it with
+neither the risk nor the cost.
+
+For scale: the same deck as a PDF through context would be ~550k tokens, and as four PNGs ~194k. That's why neither
+of those is a viable automated path at all, bundle or no bundle.
 
 Alternatives, neither automated: commit a render and pass the `raw.githubusercontent.com` URL as `source_url`
 (verified to return 200 with zero redirects — but it publishes the deck into a public repo before posting), or
