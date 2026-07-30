@@ -61,10 +61,14 @@ Given the ticket's `stages.research`:
 
 **A1. Check the pillar mix.** Query the last ~20 rows of Notion "Post Log"
 (`collection://edc91fd0-7523-407c-82d2-df69f4be616d`) and count the actual share of each `Pillar` value. Compare
-against the Playbook's target mix (~40% Category POV, ~25% Proof, ~15% Build-in-public, ~10% Industry reaction,
-~10% Dogfooding). Report the actual-vs-target gap — this is real signal, not bookkeeping. **Known baseline as of
-2026-07-25: the pipeline's first four drafts were all Industry reaction (target ~10%), so Category POV is badly
-under-served.**
+against the Playbook's target mix — **read the current targets from the Playbook, don't assume them; they get
+revised** (as of 2026-07-30: ~40% Category POV, ~25% Proof, ~10% Build-in-public, ~20% Industry reaction, ~5%
+Dogfooding). Report the actual-vs-target gap — this is real signal, not bookkeeping.
+
+Note that Post Log was cleaned back to two rows on 2026-07-30, so there isn't yet enough history for a meaningful
+rolling average. Until it rebuilds, say so rather than reporting a gap computed from two posts. The known
+standing risk is the opposite of a gap: news-driven angles are the easiest to find, so the mix drifts toward
+Industry reaction and starves the harder original-argument work — which is why that pillar has a ceiling.
 
 **A2. Pool the Idea Bank with today's fresh research.** Query Notion "Idea Bank"
 (`collection://9592e8bf-2758-4a95-9f8f-63400feb71a3`) for rows with `Status` = `fresh` or `parked`, and pool them
