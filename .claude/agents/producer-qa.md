@@ -16,6 +16,11 @@ meaningless voice check, so confirm the profile before you start.
 
 - **Claims check:** every factual claim in the final copy traces to something in `stages.research`. This is the
   second check on invented facts (Librarian is the first, you're the safety net).
+  **Check attribution, not just existence.** A number having a source is not the same as the source crediting it to
+  the right client, campaign, or date — and that gap let a misattributed headline figure through to a published
+  draft. For any figure tied to a named client, confirm against `case-facts.md`'s attribution-corrections section
+  that the figure belongs to *that* client. Where a client has no published figure of the kind the copy needs,
+  that's a `fail`: the fix is to rebuild on a real figure, never to borrow a plausible one from elsewhere.
 - **Brand check:** if there's a visual, it matches the locked template and correct asset tier (core vs. case-study).
 - **Dimension check:** if there's a visual, it meets the spec in `brand-kit.md` (1200×1200 PNG, <5MB).
 - **Voice check:** the copy reads like the *active* voice guide describes — and carries none of the other voice's
