@@ -11,14 +11,32 @@ competitor, never disparage by name, only publicly-cleared client names), voice 
 
 ## Read these before doing anything else
 
-**Notion "Content Playbook"** (`collection://94187f4f-93aa-44c7-bbec-81c092b53fda`) — 5 components, all relevant:
+**Notion "Content Playbook"** (`collection://94187f4f-93aa-44c7-bbec-81c092b53fda`) — 8 components, all relevant:
 1. *Content Pillars + Target Mix* — the 5 pillars and their target shares
 2. *Hook Library* — named hook patterns
-3. *Post Skeletons* — structures A/B/C/D, one per pillar
-4. *Idea Scoring Rubric* — the 100-point rubric and auto-cut triggers
-5. *Voice + Naming Rules* — banned words plus the hard naming rules
+3. *Post Skeletons* — structures A/B/C/D, one per pillar (the defaults)
+4. *Extended Structure Library* — 11 researched structures with measured lift, plus hook/length/CTA findings. Use
+   when a pillar's default shape doesn't fit the material, or when that pillar has been written the same way
+   several runs in a row and the feed needs variation.
+5. *Content Territories* — the subject areas PLAY3 has standing to talk about, and the angle-shapes for entering
+   one. **Read this at ideation, not at copywriting.** Its purpose is to stop the pipeline recycling the same
+   two case studies: a territory can be entered many times from different angles without repeating. It's a floor
+   for thin days, not a menu to work through — an idea outside it is still fair game.
+6. *Idea Scoring Rubric* — the 100-point rubric and auto-cut triggers
+7. *Voice + Naming Rules* — banned words plus the hard naming rules
+6. *Topic Guidance* (`https://app.notion.com/p/3ad997375f94818eabfbe50afd20594d`) — **read every run; it changes
+   often.** Current standing notes on what to lean into and what to leave alone, updated as feedback comes in.
+   Weight each note as it's written: some are hard holds, some are "be more selective here." Read the intent, not
+   just the keyword — and if a note seems to conflict with a strong idea, say so in your report rather than
+   silently overriding either one.
 
 **`resources/voice-guide-wil-personal.md`** (local) — how Wil actually sounds. The Playbook never overrides this.
+
+**Voice separation when reading "Past Posts."** That database holds two authors. Rows tagged `Wil (personal)` are
+the voice ground truth for every draft this pipeline writes. Rows tagged `PLAY3 (company)` are the *company* voice
+— useful for structure, formatting habits, and what subjects PLAY3 has standing to discuss, but **never as a model
+for how Wil sounds** (see the voice-separation rule in the guardrails). Their `Notes` field records what each one
+is worth studying for. Treat every company-page row as already-published content: mine its shape, never its copy.
 
 **Notion connector ID differs by environment:** local sessions use `mcp__9787b242-...__notion-*`; cloud Routines use
 a separately-registered `mcp__Notion__notion-*` pointed at the same workspace. Try the name already in your
@@ -48,7 +66,10 @@ two weeks ago may have been overtaken by something published since.
 **A3. Score every candidate** against the rubric: Ownability (30) + Evidence (25) + Audience relevance (20) +
 Hook strength (15) + Freshness (10) = 100. Record the **per-dimension breakdown**, not just the total. Apply the
 six auto-cut triggers (generic thought-leadership · restates last 60 days · needs an unverified stat · names a
-non-cleared client · names a competitor · requires a disparaging comparison) — any one forces the total to 0.
+non-cleared client · names a PLAY3 competitor · requires disparaging or congratulating another company) — any one
+forces the total to 0. Then apply Topic Guidance's current holds as their wording warrants: a stated hold on a
+topic or case study behaves like a trigger for as long as it stands; a "be more selective" note is a scoring
+deduction, not a cut. Always name which trigger or note fired, so a cut is traceable rather than mysterious.
 
 **A4. Rank and select.** Thresholds: **≥90 write now · 70-89 park · <70 cut.**
 - Rank by score, then break near-ties (within ~10 points) in favour of an **under-served pillar** from A1.
@@ -72,6 +93,12 @@ Park any company-page/graphic/carousel/video idea under `deferred_to_phase2` —
    `key_facts_cited`. Same argument **and** same key facts → `repeat_risk: true`, naming exactly what collides.
    Shares a topic but genuinely different angle or facts → `repeat_risk: false`, and say so explicitly. Topic
    recurrence is fine; argument-and-fact recurrence is not.
+3. *Pass 3 (case-study/stat reuse — separate from Pass 2, and checked even when the argument is genuinely new):*
+   if this idea leans on the same headline stat or case study as a Post Log row from the last ~14 days, flag
+   `case_study_reuse: true` and name which prior post. Count draft and test rows too, not just published ones —
+   a reader tracking the feed doesn't distinguish. A genuinely new argument resting on an already-worn number
+   still lands as repetitive, which is the failure mode Pass 2 alone misses. This is a strong signal against
+   selection, not an auto-cut — surface it and let A4's ranking weigh it.
 
 ## Step B — Copywriting
 
@@ -82,12 +109,29 @@ Given the Manager's chosen `idea`, the relevant slice of `stages.research`, the 
   D: news in one line → "everyone's reading this wrong" → the real signal → take-a-side question). Don't force a
   narrative arc onto a reaction post, and don't force a clean payoff onto a build-in-public post.
 - **Hook from the library**, filled in only with real sourced specifics. Never invent a number, a quote, or an
-  "in the room" moment to make a pattern work.
-- **Formatting:** standalone hook line first · short paragraphs 2-4 sentences (not one line per thought) · **a
-  blank line between every paragraph** (double newline, not single) — LinkedIn has no markdown, so blank-line
-  spacing is the only thing that keeps a post from reading as one dense block · target ~1,300-1,900 characters ·
-  **no hashtags** · **no external links in the body** (flag any essential link to the
-  Manager for first-comment placement instead) · standalone lines reserved for genuine emphasis only.
+  "in the room" moment to make a pattern work. Prefer a **stat hook** or a **story hook** where the material
+  supports one — those consistently outperform. **Avoid imperative openers** ("Stop doing X," "Read this if…"):
+  they measurably suppress reach rather than earning it.
+- **One point per post, not one point restated.** The most common failure in this pipeline's drafts is a paragraph
+  that says the hook again in different words. Before finalizing, ask of every paragraph: what does the reader get
+  here that they didn't have a paragraph ago? If the answer is nothing, cut or merge it. A short post that lands
+  one idea beats a long one that circles it — and length is not evidence of substance.
+- **PLAY3 is the subject; the client is the setting.** In case-study and proof posts, PLAY3 does the action — the
+  client name anchors *where* the work happened, never *who* did it. "We built X inside {client}'s world" reads
+  correctly; opening with the client's name as the sentence's subject reads as though the client did the work.
+- **Formatting:** standalone hook line first · short paragraphs, 2-4 sentences · **a blank line between every
+  paragraph** (double newline) — LinkedIn renders no markdown, so blank-line spacing is the only thing preventing
+  one dense block · **no hashtags** · **no external links in the body** (flag any essential link to the Manager for
+  first-comment placement) · standalone lines reserved for genuine emphasis.
+- **Length: aim ~900-1,300 characters.** That band performs best. Going longer is defensible when the material
+  genuinely needs it (a retrospective, a detailed breakdown), but treat every character past ~1,300 as something
+  to justify, not a default. Avoid the ~300-600 range too — too thin to earn attention.
+- **Emphasis and icons, used sparingly.** Bold is available for a genuine label or a number that carries the post
+  (note: LinkedIn has no markdown, so real bold means Unicode bold characters — if the delivery path can't produce
+  those, leave the text plain rather than shipping literal `**asterisks**`). PLAY3's company page uses ⚡ to lead
+  list items, plus 🚀 and ✅ occasionally; matching that is fine where a post genuinely has a list. Two tests before
+  keeping any of it: does it help someone scanning, and would the post read worse without it? Decoration that
+  fails both is noise, and a post dense with icons reads as trying too hard.
 - **Facts:** only what's already in the research pack. Specificity (real numbers, real quotes, real dates) is both
   a voice fix and a no-invented-facts fix — never invent a detail just to *sound* specific.
 - **Run two checks before finalizing and report both:**

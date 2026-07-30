@@ -24,14 +24,34 @@ answer. A fabricated stat is not.
 still a placeholder (no real past posts exist yet), say so plainly in the draft so the human reviewer can weigh a
 placeholder-voice draft more skeptically than a validated one.
 
-**Never name a competitor. Never disparage by name.** React to the *pattern*, never the company — "another brand
-just ran a gaming activation, here's what that approach misses" is fine; naming the company that ran it is not.
-This holds even for neutral or complimentary mentions: a blanket rule is harder to get wrong than a judgment call
-each time. No "unlike {company}, we…". No implying another company's product is bad, failing, or dishonest. The
-"named enemy" hook pattern targets a **tactic or a habit** ("rented reach," "counting impressions," "one-off
-stunts") — never a company, a team, or a person. *Exception:* platforms PLAY3 builds on or reacts to as industry
-news (Roblox, Fortnite, Discord, Minecraft, Zepeto, TikTok, YouTube, LinkedIn) are not competitors and can be
-named. If it's ambiguous whether something is a platform or a competitor, treat it as a competitor.
+**Never name a PLAY3 competitor. Never disparage anyone by name.** These are two separate rules; keep them
+separate, because collapsing them was blocking legitimate writing.
+
+*Rule 1 — PLAY3's own competitors stay unnamed.* Anyone selling what PLAY3 sells (brand activations, AI agents,
+or intelligence layers inside virtual worlds) is never named, not even neutrally or admiringly. React to the
+*pattern* instead: "another studio just ran a gaming activation, here's what that approach misses" is fine; naming
+the studio is not. The "named enemy" hook targets a **tactic or a habit** ("rented reach," "counting
+impressions," "one-off stunts") — never a company, team, or person. If it's genuinely unclear whether a company
+competes with PLAY3, treat it as one.
+
+*Rule 2 — other companies can be named as market context, but never as a target.* Brands, platforms, and IP that
+PLAY3 doesn't compete with can appear when they're genuinely part of the picture: the platforms PLAY3 builds on
+(Roblox, Fortnite, Discord, Minecraft, Zepeto, TikTok, YouTube, LinkedIn), and a client's own competitive set when
+the post is about that client's market. PLAY3's own company page does this — a beauty-brand post naming the other
+beauty brands players compare it to is market analysis, not an attack. What's still off-limits regardless of who
+it is: implying a company's product is bad, failing, or dishonest, or "unlike {company}, we…" framing.
+
+**Talk about the gap, not the failure.** This applies with extra force to large, well-known companies and to
+Roblox itself. There's a real difference between "here's what nobody has solved yet" and "here's what they got
+wrong" — write the first. Unmet potential, a missing layer, a question the current tooling can't answer: all fair.
+Naming a specific company and then attaching a negative: not fair, even when the criticism is accurate, and
+especially when it's a platform PLAY3 depends on.
+
+**Don't congratulate, and don't gush.** A post can reference someone else's campaign as evidence that the category
+is working — but if the framing reads as applause for another player in the space, it's a post promoting them, not
+PLAY3. Real reader feedback on one such post: it read like congratulating a competitor. When referencing outside
+work, the centre of gravity stays on the insight or the gap, not on how impressive the other party was. Flattery
+also just reads as inauthentic, which costs more than the goodwill it buys.
 
 **Only name publicly-cleared clients.** A client name may appear only if it's already public in PLAY3's own
 published material — currently Diesel/OTB, Vinamilk/SUSU, Super League, plus the play3.ai logo wall (Samsung,

@@ -19,6 +19,11 @@ see the mix and the Idea Bank can track it):
    else can post it. Sources: Notion "Past Posts" (`collection://5e65485f-b56e-42c1-9456-662a44e6656c`),
    `resources/company-docs/case-facts.md`, Notion "Reference Resources"
    (`collection://777ba81f-e6a6-4eea-a5af-2fe48ade6ab1`), `resources/bww-transcripts/`.
+   **"Past Posts" holds two authors** — note which one anything came from. `Wil (personal)` rows are his own
+   published material; `PLAY3 (company)` rows are the company page's. Both are already-published content, so
+   anything drawn from either is territory already covered, not a fresh angle — flag it that way rather than
+   surfacing it as new. `case-facts.md` opens with an attribution-corrections section; read it before citing any
+   figure, since several numbers appear at different roundings across sources and one was previously misattributed.
 2. **`2-industry-news`** — Roblox + brand-gaming news to react to with a POV. Named outlets worth checking:
    Digiday, Campaign, The Drum, Marketing Dive, Mobile Marketer, Roblox's own newsroom, Business of Fashion (for
    the fashion-brand angle). Use WebSearch/WebFetch.

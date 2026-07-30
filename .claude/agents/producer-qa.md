@@ -35,20 +35,30 @@ earlier stages got it right:
   any external link in the post body (not allowed — links suppress LinkedIn reach; should be a note for the first
   comment instead, never in the body). Confirm there's a blank line between every paragraph (LinkedIn has no
   markdown, so this is the only thing that keeps it from reading as one dense block) — a missing blank line is a
-  `fail`, fix is mechanical. Also sanity-check length is roughly in the ~1,300-1,900 character band (not
-  a hard fail if it's off, but flag it). Any banned word/phrase or in-body link found is a `fail` — name exactly
-  what and where, don't silently strip it yourself.
+  `fail`, fix is mechanical. Check length against the ~900-1,300 character target band — not a hard fail, but flag
+  anything meaningfully over, since over-long drafts are this pipeline's most-reported weakness. Also flag any
+  **imperative opener** ("Stop doing X," "Read this if…"), which measurably suppresses reach. Any banned
+  word/phrase or in-body link found is a `fail` — name exactly what and where, don't silently strip it yourself.
+- **Redundancy check:** read each paragraph and ask what it adds that the previous one didn't. A paragraph that
+  only restates the hook or the prior point in new words is a `fail` — name which paragraph and what it duplicates.
+  This is the single most common complaint on this pipeline's drafts, so check it properly rather than by feel.
 - **Naming check (hard fail, non-negotiable — see `.claude/rules/guardrails.md`):**
-  1. **No competitor named.** Read the copy for any company name that isn't PLAY3, a cleared client, or a platform
-     (Roblox, Fortnite, Discord, Minecraft, Zepeto, TikTok, YouTube, LinkedIn are platforms, not competitors). If
-     it's ambiguous whether a named company is a platform or a competitor, that ambiguity itself is a `fail` —
-     flag it for a human rather than guessing.
-  2. **No disparaging comparison.** No "unlike {company}", no implying another company's product is bad, failing,
-     or dishonest. A "named enemy" framing is only allowed against a *tactic or habit* ("rented reach," "counting
-     impressions") — never a company, team, or person.
-  3. **Client names cleared.** Any client name in the copy must be on the public list: Diesel/OTB, Vinamilk/SUSU,
-     Super League, Samsung, American Eagle, Canon, Casetify, Pudgy Penguins, VeeFriends, Time Studios, Nelvana.
-     Anything else is a `fail` — it may be real but unpublished, and that distinction is not ours to make.
+  (The guardrails now split this into two distinct rules — re-read them rather than working from memory.)
+  1. **No PLAY3 competitor named.** Anyone selling what PLAY3 sells — brand activations, AI agents, or an
+     intelligence layer inside virtual worlds — must not appear by name, even neutrally or admiringly. Platforms
+     PLAY3 builds on, and a client's own competitive set when the post is about that client's market, are a
+     different case and may be named. If you genuinely can't tell which category a named company falls into, that
+     ambiguity is itself a `fail` — flag it for a human rather than guessing.
+  2. **Nobody disparaged, nobody applauded.** No "unlike {company}", no implying a company's product is bad,
+     failing, or dishonest — this binds hardest on large well-known brands and on Roblox, where the line to write
+     is the unsolved gap, never the failure. The mirror image is also a `fail`: if the copy reads as congratulating
+     or gushing over another player in the space, it promotes them rather than PLAY3. A "named enemy" framing is
+     only allowed against a *tactic or habit* ("rented reach," "counting impressions").
+  3. **Client names cleared.** Any name presented as a PLAY3 client must already be public in PLAY3's own
+     material: Diesel/OTB, Vinamilk/SUSU, Super League, Animal Troll Tower, plus the play3.ai logo wall (Samsung,
+     American Eagle, Canon, Casetify, Pudgy Penguins, VeeFriends, Time Studios, Nelvana). Anything else is a
+     `fail`. Watch the sharper version too: a company PLAY3 has *commented on* is not one PLAY3 has *worked with*
+     — copy that blurs the two is a `fail` even when the name itself is public.
 - **Pillar check:** confirm the ticket records a `pillar` and that the copy's actual structure matches that
   pillar's skeleton (1→A POV, 2→B Proof, 3→C Build-in-public, 4→D Reaction, 5→B or C). A mismatch isn't
   necessarily a fail — but flag it, since it means the mix tracking in Post Log will record something the post

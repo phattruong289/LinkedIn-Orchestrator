@@ -40,7 +40,7 @@ Split by **purpose**, so both humans and agents know exactly where a thing belon
 | **Reference Resources** | **WHAT WE KNOW** — company facts, positioning, case studies, external sources. Channel-agnostic: filter by `Use For` (linkedin/blog/pitch/meeting/any) so it's reusable beyond LinkedIn | `collection://777ba81f-e6a6-4eea-a5af-2fe48ade6ab1` |
 | **Idea Bank** | **WHAT WE'LL WRITE NEXT** — scored idea pipeline (`fresh`/`parked`/`used`/`cut`) | `collection://9592e8bf-2758-4a95-9f8f-63400feb71a3` |
 | **Post Log** | **WHAT WE WROTE** — one row per daily draft, with `Pillar`/`Skeleton Used`/`Idea Score` for mix tracking | `collection://edc91fd0-7523-407c-82d2-df69f4be616d` |
-| **Past Posts** | **HOW WIL SOUNDS** — his 10 real past posts, the voice ground truth | `collection://5e65485f-b56e-42c1-9456-662a44e6656c` |
+| **Past Posts** | **HOW WE SOUND** — two authors, kept distinct by the `Author` field. `Wil (personal)`: his 10 real posts, the voice ground truth for everything this pipeline writes. `PLAY3 (company)`: the company page's posts, studied for structure and subject range only — never as a voice model (see voice separation in the guardrails) | `collection://5e65485f-b56e-42c1-9456-662a44e6656c` |
 | **Job Tickets** | **RUNTIME PIPELINE STATE** — one page per daily run (research pack, idea candidates, copy, QA report, run_log). Replaces local `jobs/*.json` (2026-07-27) so a daily run never needs git write access | `collection://d135687d-c675-4541-a22b-21170343b397` |
 
 Rule of thumb for where new material goes: a *fact or source* → Reference Resources. A *method or rule* → Content
