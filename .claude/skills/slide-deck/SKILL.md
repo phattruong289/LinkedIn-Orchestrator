@@ -16,6 +16,10 @@ Read `resources/brand-kit.md` first — it holds the design system, the slide vo
 
 - **This produces images, nothing else.** No posting, no publishing. The deck is delivered alongside the draft for
   the same human review the copy goes through.
+- **Rendering needs a local Chrome or Edge.** Whether one exists in a cloud Routine sandbox is unverified. If the
+  renderer can't find a browser, don't improvise a substitute — write the deck spec to the ticket anyway, report
+  that rendering was unavailable, and let it be rendered later from the spec. A spec with no images is a recoverable
+  state; a made-up description of images is not.
 - **Nothing here generates imagery.** Slides are rendered from HTML/CSS templates. If a slide needs a real
   screenshot — a game capture, an analytics dashboard — and one hasn't been supplied, **drop that slide**. Don't
   substitute a mockup, a generated image, a stand-in chart, or a description of what the capture would show. A
@@ -67,9 +71,23 @@ Read `resources/brand-kit.md` first — it holds the design system, the slide vo
 
    A slide that's wrong is a slide to fix and re-render, not to hand over with a caveat.
 
-7. **Report:** slide count, type per slide, output paths, and anything dropped along with why — a missing
-   screenshot, a figure that wasn't in the copy. If a slide was dropped, say so plainly rather than quietly
-   shipping a shorter deck.
+7. **Save the spec to Notion — this is the durable artifact, not the PNGs.** Write the deck JSON into the day's
+   Job Tickets page under `stages.visual`, and put the same JSON in a code block on the Post Log row so the deck
+   travels with the draft a human reviews.
+
+   The reasoning matters, because it's easy to get backwards: the rendered images are *derived*. Given the spec,
+   the renderer reproduces them exactly — the starfield is seeded, so the same spec yields the same pixels. Keep
+   the spec and nothing is lost; keep only the images and the deck can't be corrected. This is also why a run in a
+   cloud sandbox has to write the spec out: that filesystem is discarded when the run ends.
+
+   **The PNGs can't currently go into Notion.** `notion-create-attachment` takes text content or a public HTTPS
+   URL; local binary files need the separate Notion File Upload API, which isn't wired up. Don't work around this
+   by describing the slides in prose as though that were equivalent — record the spec, note where the PNGs were
+   written, and leave it there.
+
+8. **Report:** slide count, type per slide, output paths, where the spec was saved, and anything dropped along with
+   why — a missing screenshot, a figure that wasn't in the copy. If a slide was dropped, say so plainly rather than
+   quietly shipping a shorter deck.
 
 ## Not to do
 
