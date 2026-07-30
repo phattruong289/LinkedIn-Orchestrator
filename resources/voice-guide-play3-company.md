@@ -69,6 +69,24 @@
 - Recycling the same headline case study across consecutive posts. Two different arguments resting on the same
   number still read as repetition to anyone following the page.
 
+## How this differs from Wil's personal voice
+
+Same rules, different execution. The short version:
+
+| | PLAY3 company | Wil |
+|---|---|---|
+| Person | "we" throughout | "I" for journey, "we" for work |
+| Metric bullet | `⚡` | `→` |
+| Emoji | one per metric line, structural | 1-3 per post, line-end, emotional |
+| Hashtags | one or two, topical | none |
+| Vulnerability | absent (candour yes) | central |
+| Section labels | routine ("The numbers:", "What we learned") | rare; only `Lesson:` |
+| Punctuation | clean | deliberately rough |
+| Close | "DM us" | rhetorical question, or encouragement to builders |
+
+Both voices share two devices: the **negation triplet** ("Not impressions. Not views. Real conversations inside a
+live game.") and the **specificity rule** — the exact number, never a rounded one.
+
 ## Open questions
 
 - Posting cadence and approval path for the company page are undefined — Phase 1's pipeline only drafts for Wil's

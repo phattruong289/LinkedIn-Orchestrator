@@ -1,55 +1,102 @@
 # Voice guide — Wil Lee (personal profile)
 
-> **Validated against 10 real past posts** in Notion's "Past Posts" database (no local mirror as of 2026-07-23 —
-> see `resources/past-posts/README.md`). No longer a placeholder — but see "Open questions" below for a couple of
-> things still worth confirming with Wil directly.
+> **Validated against 10 real posts** in Notion's "Past Posts", `Author: Wil (personal)`. Re-derived 2026-07-30
+> from the full post texts, using the same lens as `voice-guide-play3-company.md` so the two are comparable.
+>
+> **What this guide is and isn't.** It governs *execution* — register, rhythm, emoji, formatting, how a post opens
+> and closes. It does **not** hold the content rules: pillars, territories, scoring, naming, and the
+> no-disparagement/no-flattery rules are shared with the company voice and live in `.claude/rules/guardrails.md`
+> and Notion's Content Playbook. Read those too.
 
 ## Structure
 
-- **Hook line first**, standalone, often a bold claim, a number, or a question ("The Death Spiral of Roblox (or
-  not?)", "10 lessons after getting scammed by a 14-year-old on Roblox", "Not every day you pitch a $2B fashion
-  empire.").
-- **Short paragraphs (2-4 sentences), not one-line-per-thought.** The 10 raw samples use heavy one-idea-per-line
-  breaks, but Wil confirmed (2026-07-23) that's more staccato than he actually wants written *for* him — draft
-  copy should read as short, punchy paragraphs instead. Reserve a fully standalone line for genuine emphasis only
-  (e.g. "Read that again.") rather than breaking after every sentence.
-- Common shapes: **numbered lists** ("5 things," "10 lessons," "3 forces"), or a **narrative arc** (setup → tension
-  → turn → payoff → reflection).
-- Closes with either a direct CTA ("Lets talk," "Follow along," "Hit me up in the comments below!") or a
-  reflective, slightly vulnerable line aimed at other builders ("keep going," "you've got this").
+- **Hook is a claim, a number, or an admission against himself.** "10 lessons after getting scammed by a
+  14-year-old on Roblox." · "The Death Spiral of Roblox (or not?)" · "Brands are spending six figures in Roblox and
+  can't answer one question:" · "Not every day you pitch a $2B fashion empire." The self-deprecating variant is
+  distinctive and works — he'll lead with the thing that cost him something.
+- **Short paragraphs, 2-4 sentences.** The raw samples break after nearly every sentence; Wil confirmed
+  (2026-07-23) that reads more staccato than he wants written *for* him. Draft in short paragraphs instead, and
+  save a fully standalone line for genuine emphasis.
+- **`→` for metric lines, `-` or numbers for lists.** Not `⚡` — that's the company page's bullet, and it's the
+  fastest way to make a draft read like the wrong account.
+- **`---` dividers** to separate acts in a long post. Used in the pivot-story and lessons posts.
+- **`Lesson:` labels** to compress a takeaway after a story beat. His one recurring section label; he otherwise
+  avoids the formal labelling the company page uses.
+- **Closes one of two ways, never with "DM us":** a rhetorical question that hands the argument to the reader
+  ("The only question is who's building." · "are you actually listening to what they're saying?"), or direct
+  encouragement to other builders ("keep going" · "you've got this ⚡" · "Im rooting for ya! 👊" · "Lets get it!").
+  Softer CTAs appear too — "drop a comment," "Hit me up in the comments below!," "lets talk," "Follow along."
 
 ## Tone
 
-- First-person, confident, opinionated — states a view rather than hedging ("The impression is dead. The
-  conversation is the new currency.").
-- Comfortable being vulnerable/personal: money fears, stealth-building doubt, kids, a scam story, imposter-moment
-  anxiety. Not oversharing — each vulnerable beat ties back to a business lesson.
-- Contrarian framing is a recurring device: names the "old" metric/assumption everyone uses, then says why it's
-  wrong ("Visits. Impressions. Playtime... that's like sitting inside the world's richest consumer behavior lab and
-  only counting foot traffic.").
+- **"I" for the journey and the feeling, "we" for the work.** He switches deliberately: "I was terrified" but "we
+  deployed 6 Player Intelligence." Keep both and keep them in their lanes.
+- **Vulnerability is central, and always pays for itself.** Fear, doubt, awe, money anxiety, embarrassment: "I got
+  wrecked early." · "Two moments broke me." · "I'm not gonna lie. I was terrified." · "No income. No safety net."
+  Every one of these lands next to a business lesson — that's what keeps it from being oversharing.
+- **Personal stake, specific and small.** His mom buying him his first pair of Diesel jeans. His second child born
+  during the shutdown. Two kids, no safety net. These are the details that make the argument his rather than
+  anyone's.
+- **Negation pairs and triplets — his signature device**, present in nearly every post: "Not chatbots. Not scripted
+  NPCs." · "Not walk-bys. Not passive glances." · "Not hype. Not vanity metrics." · "No budget. No team. No AI." ·
+  "Not a mascot. Not a spokesperson." · "No focus group. No incentivized feedback." Say what it isn't, then what it
+  is. Use it; don't use it four times in one post.
+- **Contrast couplets** that fit on one line: "The impression is dead. The conversation is the new currency." ·
+  "Studios report on awareness. We extract intent." · "Right market. Wrong product." · "That's not an impression.
+  That's an identity choice."
+- **Generous about the space.** "Someone will build creator campaign tools…" · "The entire lane is wide open." He
+  leaves room for others rather than claiming the whole category — and it reads as confidence, not modesty.
+- **Opinionated, never hedged.** States the view and moves on. No "arguably," no "in many ways."
 
-## Content patterns
+## Formatting
 
-- **Always backs claims with specific real numbers**, never vague ("372K virtual try-ons across 18 products," "DAU
-  increased +55%," "16,371 conversations about a single beanie") — never a rounded-off marketing stat.
-- Recurring topics: the Diesel/Renzo Rosso relationship (told personally, not as a case-study brag), founder-journey
-  pivots (carnival business → Netflix animation deal → live events platform → Roblox questing app → PLAY3.ai),
-  industry contrarian takes about Roblox/Gen Alpha, and the "conversation > impression" thesis.
-- **No hashtags at all** across all 10 samples — do not add hashtags to match this voice (this contradicts earlier
-  drafts that added 4 hashtags; drop them for personal-profile posts going forward).
-- Sparing emoji, used for punctuation not decoration (⚡ 👊 🤯 🫣 😬) — never more than one or two per post.
-- Signs off some (not all) posts with "Cass Chan" — see open question below.
+- **Emoji are emotional punctuation at the end of a line, never bullets.** 😬 (awkward brag) · 🤯 (awe) · 🫣
+  (anxiety) · 👊 (solidarity) · ⚡ (energy). **One to three in a whole post**, only at a moment of real feeling.
+  This is the sharpest formatting difference from the company page, which leads every metric line with ⚡.
+- **No hashtags at all** — none in any of the 10 samples. Don't add them.
+- **Deliberately imperfect punctuation and casing.** "its been" · "thats" · "Lets talk" · "Im rooting" · doubled
+  periods (".."), trailing ellipses, one post entirely lowercase. Don't polish this away — the roughness is the
+  authenticity, and a copy-edited draft reads like it was written by someone else. It doesn't license actual typos
+  in numbers or names.
+- **Bold** for a label or a number the post rests on. LinkedIn renders no markdown, so real bold means Unicode
+  bold characters; if the delivery path can't produce them, leave the text plain rather than shipping literal
+  asterisks.
+- **Co-sign** with "Cass Chan" appears on some posts — see open questions.
 
 ## Avoid
 
-- Corporate marketing-speak, generic hype ("game-changing," "revolutionary").
-- Rounded/vague stats — if a number isn't real and specific, don't state one (matches the pipeline's no-invented-facts rule).
-- Breaking a line after every single sentence — the raw samples do this, but draft copy shouldn't; use short
-  paragraphs instead (see Structure above).
+- Corporate marketing-speak and generic hype — "game-changing," "revolutionary."
+- Rounded or vague stats. He always uses the exact number: "16,371 conversations about a single beanie," "372K
+  virtual try-ons across 18 products," "Average session: 6.4 messages." A rounded stat reads as marketing; a
+  specific one reads as someone who was actually there.
+- Breaking after every sentence (see Structure) — that's the raw sample, not the target.
+- The company page's furniture: ⚡ bullets, "The numbers:" labels, "DM us" closes, hashtags, first-person plural
+  throughout. Any of these in a Wil draft means the voices got crossed.
+- Institutional distance. If a paragraph could have been written by the company account, it doesn't belong here.
 
-## Open questions for Wil
+## How this differs from the company voice
 
-- **Who is Cass Chan, and should future drafts include that sign-off?** Appears as a co-sign on 2 posts and is
-  named as a co-founder/co-pitcher in a 3rd ("Cass Chan and I pitched PLAY3.ai"). Confirm whether this is a regular
-  practice to keep, a cross-post artifact, or something not to replicate going forward.
-- Whether there are more recent posts (these may not reflect the latest phase of the company/voice).
+Same rules, different execution. The short version:
+
+| | Wil | PLAY3 company |
+|---|---|---|
+| Person | "I" for journey, "we" for work | "we" throughout |
+| Metric bullet | `→` | `⚡` |
+| Emoji | 1-3 per post, line-end, emotional | one per metric line, structural |
+| Hashtags | none | one or two, topical |
+| Vulnerability | central | absent (candour yes) |
+| Section labels | rare; only `Lesson:` | routine ("The numbers:", "What we learned") |
+| Punctuation | deliberately rough | clean |
+| Close | rhetorical question, or encouragement to builders | "DM us" |
+
+Both voices share the negation-triplet device and the specificity rule.
+
+## Open questions
+
+- **Who is Cass Chan, and should drafts include that sign-off?** Appears as a co-sign on 2 posts and is named as a
+  co-pitcher in a third ("Cass Chan and I pitched PLAY3.ai"). Confirm whether to keep it, and when.
+- **He names other companies more freely than the guardrails assume** — Disney's Fortnite spend, Nike's world, a
+  Netflix deal, Samsung and Canon as clients, and one outright compliment to a developer-analytics company. None
+  are direct PLAY3 competitors, so this is consistent with the revised naming rules, but it's worth confirming
+  where he personally draws the line before a draft leans on it.
+- Whether there are posts more recent than these 10 — they may not reflect the current phase of the company.
