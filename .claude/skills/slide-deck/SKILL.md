@@ -113,9 +113,18 @@ Read `resources/brand-kit.md` first — it holds the design system, the slide vo
 
    Two things that stay true either way:
    - **The bundle is text, which is the whole reason any of this works.** PNGs and PDFs are binary and local, and
-     Notion takes neither. Don't try to attach them, and don't describe the slides in prose as a substitute.
+     Notion takes neither — through the MCP tools, binary would have to travel as base64 through an agent's
+     context, which costs hundreds of thousands of tokens per run. Don't try to attach them, and don't describe
+     the slides in prose as a substitute.
    - **If a bundle would exceed Notion's 200 KiB ceiling**, `bundle.py` says so and exits. Shorten the deck;
      never truncate the file.
+
+   **Then say how to turn it into something postable**, in the caption — don't assume it's obvious. What's on the
+   page is for reading; LinkedIn takes images or a PDF, not HTML. Downloading the attachment and printing it from
+   a browser yields the deck as a correctly-sized PDF, because the bundle carries its own page-size rule. That
+   path needs no repo, no tooling and no credentials, which is what makes it the one to name: whoever reviews the
+   draft may be nowhere near the machine that rendered it, and a cloud run's own files are gone by then. Separate
+   PNGs still need a local `render.mjs` run against the saved spec.
 
 8. **Report:** slide count, type per slide, output paths, where the spec was saved, and anything dropped along with
    why — a missing screenshot, a figure that wasn't in the copy. If a slide was dropped, say so plainly rather than

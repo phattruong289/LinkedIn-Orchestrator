@@ -126,6 +126,30 @@ tokens, and as four PNGs ~194k — which is why neither of those is a viable aut
 One more alternative, not automated: commit a render and pass the `raw.githubusercontent.com` URL as `source_url`
 (verified to return 200 with zero redirects — but it publishes the deck into a public repo before posting).
 
+## Getting a postable file back out
+
+What lands in Notion is for reading. LinkedIn takes images or a PDF, so the review copy has to become one of those
+before it can ship.
+
+**From the Notion attachment, with nothing installed:** download it, open it in a browser, and print to PDF. The
+bundle carries `@page { size: 1080px 1080px }` and a page break per slide, so this yields one square page per
+slide — measured at 810×810 pt, which is 1080 px (PDF units are 1/72 in, CSS px are 1/96 in). Output lands within
+a couple of percent of what `render.mjs --pdf` produces.
+
+This matters more than it first looks. A cloud Routine's files are discarded when the run ends, and whoever
+reviews the draft may be on a machine that has never seen this repo. That path needs no repo, no Node, no Python
+and no credentials — only a browser. It does need a network connection when the file is opened, since the lean
+bundle fetches its fonts; offline, the layout and colour survive but the typefaces fall back.
+
+**For separate PNGs**, re-render from the spec saved on the ticket:
+
+```bash
+node visuals/render.mjs <deck.json> out/ --pdf
+```
+
+Deterministic, so this reproduces the original pixels rather than something close to them. That's the reason the
+spec is treated as the durable artifact and the images as derived.
+
 ## Known gaps
 
 - **The two real typefaces aren't identified.** Current stand-ins: Space Mono (for the monospace), Chakra Petch
