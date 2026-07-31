@@ -93,6 +93,17 @@ meaningless voice check, so confirm the profile before you start.
      American Eagle, Canon, Casetify, Pudgy Penguins, VeeFriends, Time Studios, Nelvana). Anything else is a
      `fail`. Watch the sharper version too: a company PLAY3 has *commented on* is not one PLAY3 has *worked with*
      — copy that blurs the two is a `fail` even when the name itself is public.
+- **Sensitive-framing check (hard fail — see `.claude/rules/guardrails.md`):** the post must not rest on the
+  audience's age or on privacy regulation. Specifically a `fail`: dwelling on how young players are, discussing
+  what is or isn't advertised to minors, or asserting what a privacy regime requires or forbids. Platform rules
+  can still appear as context for why a capability gap exists — what's not allowed is the gap being *about* a
+  protected group or a rulebook.
+  Apply the same test the guardrails give: mentally delete every reference to the audience's age and re-read. If
+  the argument collapses, age was load-bearing and the angle needs replacing — that's a `fail` on the angle, not
+  something a wording fix can rescue, so say so plainly rather than suggesting a softer phrasing.
+  **Check the slides too, not only the body.** A deck restates the post's spine in large type, which makes a
+  headline the fastest way for a framing problem to reach a reader — and it won't be caught by reading the copy
+  alone.
 - **Pillar check:** confirm the ticket records a `pillar` and that the copy's actual structure matches that
   pillar's skeleton (1→A POV, 2→B Proof, 3→C Build-in-public, 4→D Reaction, 5→B or C). A mismatch isn't
   necessarily a fail — but flag it, since it means the mix tracking in Post Log will record something the post
@@ -101,7 +112,7 @@ meaningless voice check, so confirm the profile before you start.
 **Write into the ticket:**
 ```json
 "draft": {"final_copy": "...", "final_visual_ref": "... or null", "suggested_post_time": "..."},
-"qa_report": {"claims_checked": [...], "brand_check": "pass|fail + notes", "dimension_check": "pass|fail", "voice_check": "pass|fail + notes", "duplicate_check": "pass|fail + notes", "format_check": "pass|fail + notes", "naming_check": "pass|fail + notes", "pillar_check": "pass|flag + notes"},
+"qa_report": {"claims_checked": [...], "brand_check": "pass|fail + notes", "dimension_check": "pass|fail", "voice_check": "pass|fail + notes", "duplicate_check": "pass|fail + notes", "format_check": "pass|fail + notes", "naming_check": "pass|fail + notes", "sensitive_framing_check": "pass|fail + notes", "pillar_check": "pass|flag + notes"},
 "qa_status": "pass|fail"
 ```
 

@@ -56,6 +56,21 @@ PLAY3. Real reader feedback on one such post: it read like congratulating a comp
 work, the centre of gravity stays on the insight or the gap, not on how impressive the other party was. Flattery
 also just reads as inauthentic, which costs more than the goodwill it buys.
 
+**Argue from the mechanism, not from who the audience is.** PLAY3's case — that signal players give on purpose
+beats signal inferred about them — holds for any audience. Hanging it on minors turns a general claim into a
+special case and buys risk for nothing. A business post that dwells on how young the players are, or on what is
+or isn't served to them, reads as uncomfortable at best; at worst it invites the reader to wonder whether the
+pitch is a route around protections that exist for good reason. Neither is worth what the angle adds.
+
+Be equally careful with privacy law. Citing what a regulation requires or forbids casts PLAY3 as its interpreter —
+not its expertise, and a position that ages badly as the rules change. Write what the environment makes possible
+rather than what the rulebook removes.
+
+None of this puts platform rules off-limits as *context* for why a capability gap exists. What changes is where the
+weight sits: on the gap and how PLAY3 answers it, never on a protected group or the regulations covering them. A
+useful test — if the angle stops working once the audience's age is left out, age was carrying the argument, and
+the angle needs replacing rather than rewording.
+
 **Only name publicly-cleared clients.** A client name may appear only if it's already public in PLAY3's own
 published material — currently Diesel/OTB, Vinamilk/SUSU, Super League, Animal Troll Tower, plus the play3.ai logo
 wall (Samsung,
