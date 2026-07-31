@@ -56,6 +56,9 @@ Read `resources/brand-kit.md` first — it holds the design system, the slide vo
      place more often than not.
    - **Keep `accent` to one or two words.** Green marks the thing that matters — the figure, or the single word the
      argument turns on. Spread across four words it stops marking anything.
+   - **The cover `chip` is a reader-facing label, never an internal tag.** "CASE STUDY" is fine; a pillar name
+     ("DOGFOODING", "CATEGORY POV"), a skeleton letter, or a status is not — those are pipeline plumbing and leak
+     onto the slide. No honest label → leave `chip` off. Most slides don't need one.
 
 4b. **If a slide would carry a real image (`media`), clear it first — this is a hard gate, not a nicety.** An
    image makes a feature or a moment land harder than type, but only a *real, sourced* one qualifies; generating one
@@ -63,7 +66,9 @@ Read `resources/brand-kit.md` first — it holds the design system, the slide vo
    tiers:
    - **Embed directly** when it's an asset PLAY3 owns (platform/campaign captures, `resources/brand-assets/`), an
      official press/newsroom asset offered for editorial use, or an image the user supplied or approved. Set
-     `credit` to the source; it renders as a visible line.
+     `credit` to the source **only when the image isn't PLAY3's own** — a press asset or third-party image needs the
+     attribution line; a play3.ai screenshot or an owned capture does not (omit `credit`; crediting our own site on
+     our own post is clutter). Record the provenance in your report regardless.
    - **A cleared image already in Notion "Reference Resources"** (a row with a source and a rights note) is usable
      the same way — this is where the pipeline should look first, and where the user stocks images over time.
    - **Propose, don't embed**, when the image is lifted from an article or any third party whose rights are

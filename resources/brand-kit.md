@@ -45,7 +45,7 @@ brand font — those appear only in unrelated video templates elsewhere and are 
 
 Six types. A deck picks from these rather than inventing layouts.
 
-1. **Cover** — logo top-centre · optional pill chip label ("CASE STUDY") · large headline mixing white and green
+1. **Cover** — logo top-centre · optional pill chip label · large headline mixing white and green
    words · monospace subtitle · optional in-game screenshot in a rounded panel · green swipe arrow bottom-centre ·
    small italic muted footer tagline.
 2. **Numbered list** — headline with one green word · `01`/`02`/`03` cards on dark translucent green panels with
@@ -65,6 +65,12 @@ Six types. A deck picks from these rather than inventing layouts.
    asset, a product capture — makes the point more vividly than type can. Fields: `image` (path or URL), `credit`
    (required), optional `caption`, optional `fit`. This is the only type that carries an image sourced from
    outside the template, so the image rules below are load-bearing, not decoration.
+
+**A chip is a genuine content label, never an internal tag.** The pill chip (`chip` field, cover only) carries
+something that belongs on the slide for the reader — "CASE STUDY" on a real case-study deck. It must **never** carry
+the pipeline's own taxonomy: a pillar name ("DOGFOODING", "CATEGORY POV"), a skeleton letter, a status. Those are
+internal plumbing and putting them on a slide leaks the machinery. When there's no honest reader-facing label,
+leave the chip off — most slides don't need one.
 
 ## Motifs (observed)
 
@@ -89,8 +95,10 @@ sourced image can be used — but three things must hold, and they mirror the gu
 - **Its rights are clear.** Directly usable: an asset PLAY3 owns, an official press/newsroom asset for editorial
   use, or an image the user supplied or approved. An image lifted from an article with unknown rights is *not*
   embedded — it goes to the reviewer as a suggestion with its source, to approve or not.
-- **Every media slide shows a credit.** The `credit` field is required; an image with no traceable source doesn't
-  go on a slide.
+- **Credit shows only when the image isn't ours.** The `credit` field is required for a press asset or any
+  third-party image; for a PLAY3-owned asset (a play3.ai screenshot, a campaign capture) it's omitted — crediting
+  our own site on our own post is clutter. Every image still needs a traceable source recorded in the run report,
+  credit line or not; an image with no source at all doesn't go on a slide.
 Uncertain on either the depiction or the rights → drop the slide. Drop rather than fake, drop rather than infringe.
 
 ## Assets on hand

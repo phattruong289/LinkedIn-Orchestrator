@@ -125,7 +125,11 @@ one real image in-brand (see `slide-deck` and `brand-kit.md`). This is not a loo
 a *generated* image is still banned; only a *real, sourced* one qualifies, and only if —
 1. **It has a source, and depicts what the slide claims.** An image that implies something the copy can't support
    is a fabricated claim that happens to be a photo — the no-invented-facts rule applies to it exactly as to a
-   stat. Every media slide carries a visible credit line.
+   stat. A **visible credit line is required whenever the image isn't PLAY3's own** — a press asset, a third-party
+   image, anything where attribution is the point. For a PLAY3-owned asset (a play3.ai screenshot, a campaign
+   capture) the credit is **optional and usually omitted**: crediting your own site on your own post is clutter,
+   not attribution. The provenance still has to be established in the run's report either way; what changes is
+   whether it shows on the slide.
 2. **Its rights are clear for this use.** Three provenance tiers are usable directly: an asset PLAY3 owns (platform
    or campaign captures), an official press/newsroom asset offered for editorial use, or an image the user supplied
    or approved. An image lifted from an article or a third party, whose rights are unknown, is **not** embedded —
