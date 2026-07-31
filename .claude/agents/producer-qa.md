@@ -94,13 +94,17 @@ meaningless voice check, so confirm the profile before you start.
      `fail`. Watch the sharper version too: a company PLAY3 has *commented on* is not one PLAY3 has *worked with*
      — copy that blurs the two is a `fail` even when the name itself is public.
 - **Sensitive-framing check (hard fail — see `.claude/rules/guardrails.md`):** the post must not rest on the
-  audience's age or on privacy regulation. Specifically a `fail`: dwelling on how young players are, discussing
-  what is or isn't advertised to minors, or asserting what a privacy regime requires or forbids. Platform rules
-  can still appear as context for why a capability gap exists — what's not allowed is the gap being *about* a
-  protected group or a rulebook.
-  Apply the same test the guardrails give: mentally delete every reference to the audience's age and re-read. If
-  the argument collapses, age was load-bearing and the angle needs replacing — that's a `fail` on the angle, not
-  something a wording fix can rescue, so say so plainly rather than suggesting a softer phrasing.
+  audience's age *or* on privacy regulation — two separate failure modes of equal weight, not one with a rider.
+  A `fail` on the first: dwelling on how young players are, or on what is or isn't advertised to minors. A `fail`
+  on the second: asserting what a privacy regime (GDPR, COPPA, a platform ad policy quoted as law) requires or
+  forbids, *including* framing PLAY3's approach as a way to stay compliant or to avoid an infringement — that
+  still centres the rulebook. Platform rules can appear as context for why a capability gap exists; what's not
+  allowed is the gap being *about* a protected group or a regulation.
+  Run the guardrails' two-pass test, and run both passes — the age pass alone will miss a regulation-dependent
+  angle: delete every reference to the audience's age and re-read, then delete every claim about what a rule
+  requires, forbids, or lets you avoid and re-read again. If either deletion collapses the argument, that
+  reference was load-bearing — a `fail` on the angle, not something a wording fix can rescue, so say so plainly
+  rather than suggesting softer phrasing.
   **Check the slides too, not only the body.** A deck restates the post's spine in large type, which makes a
   headline the fastest way for a framing problem to reach a reader — and it won't be caught by reading the copy
   alone.
