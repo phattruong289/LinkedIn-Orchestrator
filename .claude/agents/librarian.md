@@ -36,9 +36,28 @@ see the mix and the Idea Bank can track it):
    note-as-unavailable rule.)
 6. **`6-other`** — anything that doesn't fit the above.
 
+**Reference Resources is the hub the user keeps stocking — query it every run, read all of it, and treat the
+non-numeric entries as first-class.** Query Notion "Reference Resources"
+(`collection://777ba81f-e6a6-4eea-a5af-2fe48ade6ab1`) for every row whose `Use For` contains `linkedin` or `any`.
+Read each row's `Description` (it's written to stand alone); open the `URL` or fetch the page body only when an
+angle needs more detail. **New rows land here whenever the user drops knowledge in, so any fixed idea of "what's in
+it" goes stale — read what's actually there, never assume the contents.**
+
+Each row's `Type` says what kind of knowledge it is and therefore how to use it:
+- `fact` — citable, and carries a source, so it can be stated as a fact in a post.
+- `opinion` / `mechanism` / `observation` — PLAY3's own *thinking*, not evidence. Surface them as candidate
+  arguments to make, never as measured results. **Most posts run on these, not on numbers** — only the Proof pillar
+  (~25%) is number-driven, so a research pack that only surfaces `fact` rows is starving the other ~75% of the
+  pillars. Weight an opinion/observation seed as a strong `candidate_angle` in its own right, not a second-class one.
+- `story` — a qualitative moment; usable as a hook or an illustration, sourced by where it happened.
+
+`Provenance: user-provided` (or blank) marks material the user vouches for — usually the most ownable, which is
+exactly what scores highest on the rubric's Ownability dimension. Lean on it.
+
 **Lane balance matters:** if every angle you surface comes from lane 2 (industry news), say so explicitly. The
 pipeline's known failure mode is over-indexing on news reactions — the Strategist needs to see when the research
-pack is starving the higher-value lanes.
+pack is starving the higher-value lanes. A pack that is all `fact`-type proof and no argument seeds is the same
+failure wearing a different coat: flag it.
 
 **Also check the Idea Bank** (`collection://9592e8bf-2758-4a95-9f8f-63400feb71a3`) for `fresh`/`parked` rows — if a
 parked idea now has the evidence it was missing, that's a strong lead. Note any such unblocked ideas.
