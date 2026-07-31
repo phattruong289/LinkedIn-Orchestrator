@@ -17,8 +17,10 @@ Output is fully self-contained: no external CSS, no fonts to fetch, no scripts, 
 network. Same markup the PNG renderer produces, so the preview matches the images.
 """
 
-import base64, json, os, re, subprocess, sys, tempfile
+import base64, json, mimetypes, os, re, subprocess, sys, tempfile
 from pathlib import Path
+from urllib.parse import urlparse
+from urllib.request import url2pathname
 
 try:
     from fontTools import subset as _subset_check  # noqa: F401
@@ -101,6 +103,67 @@ def subset_fonts(text):
 
 def data_uri_svg(path):
     return "data:image/svg+xml;base64," + base64.b64encode(Path(path).read_bytes()).decode("ascii")
+
+
+def _shrink_for_preview(raw, max_px=1100, jpeg_q=82):
+    """Downscale a raster image for the Notion preview, if Pillow is available.
+
+    The preview only needs to be looked at, so a full-resolution screenshot is wasted
+    bytes that push the bundle past Notion's 200 KiB ceiling. The postable PNG/PDF is
+    rendered separately from the full-res original, so nothing that ships loses quality
+    — this smaller copy exists only inside the Notion bundle. Returns (bytes, mime) or
+    None (Pillow missing, decode failed, or shrinking didn't actually help).
+    """
+    try:
+        import io
+        from PIL import Image
+    except ImportError:
+        return None
+    try:
+        im = Image.open(io.BytesIO(raw))
+    except Exception:
+        return None
+    w, h = im.size
+    scale = min(1.0, max_px / max(w, h))
+    if scale < 1.0:
+        im = im.resize((round(w * scale), round(h * scale)), Image.LANCZOS)
+    has_alpha = im.mode in ("RGBA", "LA") or (im.mode == "P" and "transparency" in im.info)
+    buf = io.BytesIO()
+    if has_alpha:
+        im.convert("RGBA").save(buf, format="PNG", optimize=True)
+        out_mime = "image/png"
+    else:
+        im.convert("RGB").save(buf, format="JPEG", quality=jpeg_q, optimize=True)
+        out_mime = "image/jpeg"
+    data = buf.getvalue()
+    return (data, out_mime) if len(data) < len(raw) else None
+
+
+def img_data_uri(ref):
+    """Inline a media-slide image so it survives in a Notion bundle, which has no
+    filesystem to read a local path from.
+
+    A remote URL (or an already-inlined data: URI) passes through unchanged — Notion's
+    sandbox loads external images, and a cleared press asset is fine to hotlink. A local
+    file, including a file:// URL, is read, shrunk for the preview if possible, and
+    base64'd. A missing file fails loudly rather than shipping a broken image.
+    """
+    if ref.startswith(("http://", "https://", "data:")):
+        return ref
+    if ref.startswith("file://"):
+        ref = url2pathname(urlparse(ref).path)   # handles the Windows /C:/ vs POSIX /home difference
+    path = Path(ref)
+    if not path.is_absolute():
+        path = ROOT / ref
+    if not path.exists():
+        raise SystemExit(f"media image not found: {ref}  (resolved to {path})")
+    raw = path.read_bytes()
+    mime = mimetypes.guess_type(path.name)[0] or "image/png"
+    if mime in ("image/png", "image/jpeg", "image/webp"):
+        shrunk = _shrink_for_preview(raw)
+        if shrunk:
+            raw, mime = shrunk
+    return "data:%s;base64,%s" % (mime, base64.b64encode(raw).decode("ascii"))
 
 
 STAR_RE = re.compile(
@@ -209,9 +272,17 @@ def lean_bundle(full, out_path):
         '<script src="starfield.js"></script>',
         "<script>\n%s\n</script>" % (HERE / "starfield.js").read_text(encoding="utf-8"),
     )
+    # A media slide's <img> is built at view time from the DECK JSON, so the image
+    # reference has to be inlined there rather than in the static HTML.
+    deck_js = []
+    for s in full:
+        s = dict(s)
+        if s.get("type") == "media" and s.get("image"):
+            s["image"] = img_data_uri(s["image"])
+        deck_js.append(s)
     html = html.replace(
         '<script src="spec.js"></script>',
-        "<script>window.DECK = %s;</script>" % json.dumps(full, ensure_ascii=False),
+        "<script>window.DECK = %s;</script>" % json.dumps(deck_js, ensure_ascii=False),
     )
     html = html.replace('src="play3-logo.svg"', 'src="%s"' % svg_uri(HERE / "play3-logo.svg"))
     html = html.replace('src="play3-bolt.svg"', 'src="%s"' % svg_uri(HERE / "play3-bolt.svg"))
@@ -300,6 +371,16 @@ def main():
     # execute them anyway, so strip rather than depend on it.
     html = re.sub(r"<script\b[^>]*>.*?</script>", "", html, flags=re.S)
     html = re.sub(r"<template\b.*?</template>", "", html, flags=re.S)
+
+    # media images arrive as <img src="file://..."> in the dumped DOM; inline them.
+    # logo and bolt were already turned into data: URIs above, so they're skipped.
+    html = re.sub(
+        r'<img([^>]*?)src="([^"]+)"',
+        lambda m: m.group(0) if m.group(2).startswith("data:")
+        else '<img%ssrc="%s"' % (m.group(1), img_data_uri(m.group(2))),
+        html,
+    )
+
     html = compact_starfield(html)
 
     # stack the slides for a scrollable preview
