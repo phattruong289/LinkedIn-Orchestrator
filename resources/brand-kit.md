@@ -43,7 +43,7 @@ brand font — those appear only in unrelated video templates elsewhere and are 
 
 ## Slide vocabulary (observed)
 
-Five recurring types. A deck picks from these rather than inventing layouts.
+Six types. A deck picks from these rather than inventing layouts.
 
 1. **Cover** — logo top-centre · optional pill chip label ("CASE STUDY") · large headline mixing white and green
    words · monospace subtitle · optional in-game screenshot in a rounded panel · green swipe arrow bottom-centre ·
@@ -58,6 +58,13 @@ Five recurring types. A deck picks from these rather than inventing layouts.
    a real dashboard screenshot in a rounded panel.
 5. **CTA** — logo · oversized lightning-bolt watermark set diagonally · monospace headline · payoff line in green
    with a glow · green pill button with black label and a white cursor arrow.
+6. **Media** — headline with one green word · one real image in a rounded frame with a thin green border, on a
+   near-black panel · a white caption and a muted **source credit** beneath it. The image is held, not full-bleed:
+   it `contain`-fits so a non-square capture letterboxes cleanly rather than cropping out its point (`fit: "cover"`
+   opts into cropping when that's genuinely better). Use it when a real image — a platform screenshot, a press
+   asset, a product capture — makes the point more vividly than type can. Fields: `image` (path or URL), `credit`
+   (required), optional `caption`, optional `fit`. This is the only type that carries an image sourced from
+   outside the template, so the image rules below are load-bearing, not decoration.
 
 ## Motifs (observed)
 
@@ -74,6 +81,17 @@ capture and none has been supplied, drop that slide and build the deck without i
 generated image, a stand-in chart, or a description of what the screenshot would show. A deck of three honest
 slides beats four with one invented. This is the no-invented-facts rule applied to images: a fabricated dashboard
 is a fabricated statistic that happens to be rendered.
+
+**A real image is allowed; a fabricated or unrightsed one is not.** The `media` slide exists precisely so a real,
+sourced image can be used — but three things must hold, and they mirror the guardrails' image rule:
+- **It depicts what the slide claims.** An image standing in for something it doesn't actually show is a fabricated
+  claim in picture form.
+- **Its rights are clear.** Directly usable: an asset PLAY3 owns, an official press/newsroom asset for editorial
+  use, or an image the user supplied or approved. An image lifted from an article with unknown rights is *not*
+  embedded — it goes to the reviewer as a suggestion with its source, to approve or not.
+- **Every media slide shows a credit.** The `credit` field is required; an image with no traceable source doesn't
+  go on a slide.
+Uncertain on either the depiction or the rights → drop the slide. Drop rather than fake, drop rather than infringe.
 
 ## Assets on hand
 

@@ -120,6 +120,22 @@ an analytics dashboard — and none has been supplied, **drop that slide.** Neve
 image, a stand-in chart, or a description of the missing capture: a fabricated dashboard is a fabricated statistic
 that happens to be rendered, and the no-invented-facts rule covers images exactly as it covers text.
 
+**A real, sourced image may go on a slide — under three conditions, all required.** The `media` slide type frames
+one real image in-brand (see `slide-deck` and `brand-kit.md`). This is not a loosening of the rule above:
+a *generated* image is still banned; only a *real, sourced* one qualifies, and only if —
+1. **It has a source, and depicts what the slide claims.** An image that implies something the copy can't support
+   is a fabricated claim that happens to be a photo — the no-invented-facts rule applies to it exactly as to a
+   stat. Every media slide carries a visible credit line.
+2. **Its rights are clear for this use.** Three provenance tiers are usable directly: an asset PLAY3 owns (platform
+   or campaign captures), an official press/newsroom asset offered for editorial use, or an image the user supplied
+   or approved. An image lifted from an article or a third party, whose rights are unknown, is **not** embedded —
+   the run surfaces it to the reviewer as a suggestion with its source link, and it only ships if the human at the
+   gate approves it. Republishing someone else's copyrighted image into a branded post unattended is the specific
+   thing this prevents.
+3. **When either is uncertain, it drops** — the same reflex as a missing screenshot, extended: drop rather than
+   fake, and drop rather than infringe. A text slide is a complete slide; an uncleared image is not worth the risk
+   it carries.
+
 **`scripts/post-to-linkedin.sh` is a standalone technical experiment, not part of the pipeline.** It exists so
 Quang can manually test the LinkedIn Posts API against his own personal account (`LINKEDIN_PERSON_URN` in `.env`
 is his, never Wil's). Nothing in `daily-post`, `librarian`, `strategist-writer`, or `producer-qa` calls it — the

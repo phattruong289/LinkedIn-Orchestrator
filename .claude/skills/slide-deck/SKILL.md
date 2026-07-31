@@ -43,6 +43,7 @@ Read `resources/brand-kit.md` first — it holds the design system, the slide vo
    | `list` | The post has discrete objectives, steps, or lessons |
    | `metrics` | Several figures matter and none is the single story |
    | `compare` | The story is a *change* — before and after — not a static number |
+   | `media` | A real image makes the point more vividly than type — a platform screenshot, a press asset, a product capture. Only with a cleared, sourced image (see step 4b) |
    | `cta` | Always last. The commercial landing |
 
    A post whose argument is one number wants `cover` → `metrics` → `cta` and nothing more.
@@ -55,6 +56,25 @@ Read `resources/brand-kit.md` first — it holds the design system, the slide vo
      place more often than not.
    - **Keep `accent` to one or two words.** Green marks the thing that matters — the figure, or the single word the
      argument turns on. Spread across four words it stops marking anything.
+
+4b. **If a slide would carry a real image (`media`), clear it first — this is a hard gate, not a nicety.** An
+   image makes a feature or a moment land harder than type, but only a *real, sourced* one qualifies; generating one
+   is banned (see `.claude/rules/guardrails.md`). Before writing a `media` slide, place the image in one of three
+   tiers:
+   - **Embed directly** when it's an asset PLAY3 owns (platform/campaign captures, `resources/brand-assets/`), an
+     official press/newsroom asset offered for editorial use, or an image the user supplied or approved. Set
+     `credit` to the source; it renders as a visible line.
+   - **A cleared image already in Notion "Reference Resources"** (a row with a source and a rights note) is usable
+     the same way — this is where the pipeline should look first, and where the user stocks images over time.
+   - **Propose, don't embed**, when the image is lifted from an article or any third party whose rights are
+     unknown. Don't put it on a slide; instead note it in your report as a suggestion *with its source URL*, for
+     the human at the review gate to approve or reject. Republishing someone else's copyrighted image into a
+     branded post unattended is the thing this avoids.
+
+   Two tests every media image must pass regardless of tier: it **depicts what the copy claims** (an image standing
+   in for something it doesn't show is a fabricated claim in picture form), and it **carries a credit**. Fail either,
+   or can't establish rights → **drop the slide and build the deck without it.** Drop rather than fake, drop rather
+   than infringe. Say in your report what was dropped and why.
 
 5. **Render, then bundle:**
    ```bash

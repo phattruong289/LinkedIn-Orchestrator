@@ -88,6 +88,22 @@
     font: 500 34px/1 "P3Body", sans-serif; white-space: nowrap;
   }
 
+  /* ---- media (one real, sourced image, held in-brand) ------------------- */
+  /* The image is framed rather than full-bleed so a non-square capture
+     letterboxes cleanly instead of cropping out its point. Every media slide
+     carries a visible source credit: the image is sourced, never generated, and
+     must depict what the copy claims — see brand-kit.md and the guardrails. */
+  .media { position: absolute; left: 84px; right: 84px; top: 300px; }
+  .media .frame {
+    height: 540px; border-radius: 22px; overflow: hidden; background: #0e0e0e;
+    border: 2px solid rgba(173,255,0,.5);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .media .frame img { width: 100%; height: 100%; object-fit: contain; }
+  .media .frame.cover img { object-fit: cover; }
+  .media .cap { margin-top: 18px; text-align: center; font: 500 30px/1.3 "P3Body", sans-serif; color: #fff; }
+  .media .credit { margin-top: 8px; text-align: center; font: 500 23px/1.3 "P3Body", sans-serif; color: var(--muted); }
+
   /* ---- cta --------------------------------------------------------------- */
   /* CTA carries two stacked headlines, so it runs a size down to stay on two lines each */
   h1.cta { font-size: 66px; }
@@ -231,6 +247,18 @@ function buildSlide(S) {
             <div class="side"><div class="v">${esc(S.to.value)}</div><div class="l">${esc(S.to.label)}</div>
               ${S.to.note ? `<div class="n">(${esc(S.to.note)})</div>` : ""}</div>
           </div>
+        </div>`;
+      break;
+
+    case "media":
+      r("logo").hidden = true;
+      // The image is assumed present: a media slide with no cleared image is
+      // demoted to a text slide upstream, not rendered with an empty frame.
+      body.innerHTML = `<h2 class="top">${paint(S.headline, S.accent)}</h2>
+        <div class="media">
+          <div class="frame ${S.fit === "cover" ? "cover" : ""}"><img src="${esc(S.image)}" alt=""></div>
+          ${S.caption ? `<div class="cap">${esc(S.caption)}</div>` : ""}
+          ${S.credit ? `<div class="credit">${esc(S.credit)}</div>` : ""}
         </div>`;
       break;
 
