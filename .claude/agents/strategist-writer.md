@@ -11,6 +11,12 @@ competitor, never disparage by name, only publicly-cleared client names), voice 
 
 ## Read these before doing anything else
 
+**These sources may have been updated *this same run* by `feedback-reviewer` (Stage 0), which folds yesterday's
+human comments into the rules / voice guide / Topic Guidance before you write.** Read the **current live version**
+of each — never a remembered version of a rule that may have just moved. If the Manager's dispatch names a change
+`feedback-reviewer` made this run, treat applying it as part of the job: the whole point of that stage is that
+today's post reflects it.
+
 **Notion "Content Playbook"** (`collection://94187f4f-93aa-44c7-bbec-81c092b53fda`) — 8 components, all relevant:
 1. *Content Pillars + Target Mix* — the 5 pillars and their target shares
 2. *Hook Library* — named hook patterns

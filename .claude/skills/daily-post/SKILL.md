@@ -66,7 +66,14 @@ Two rules follow, and they apply to you as much as to the agents:
    persists the change (commit+push, or a Notion edit), and marks the comments processed — **without rewriting
    yesterday's post.** No comments → it's a no-op. Run it **before** the Librarian so today's post is written with any
    improvement already in effect. Write its returned summary to `stages.feedback_review` and append a `run_log`
-   entry. **A feedback-review failure must never stall the run:** if it reports a push/edit failure or that Notion
+   entry.
+   **Carry its `changes` into every later dispatch — this is what makes the improvement actually land.** When you
+   dispatch the Librarian, Strategist, and Producer-QA below, include a one-line note of what `feedback-reviewer`
+   changed this run and where, and tell them to read the **current live** rules / voice guide / Topic Guidance
+   (not a remembered version). Those agents already re-read those sources each run; this makes sure they apply the
+   change that was *just* made rather than yesterday's version, so a rule tuned at 2b governs the very post written at
+   Steps 4–5 and the QA at Step 7. If `feedback-reviewer` reported `no feedback`, there's nothing to carry.
+   **A feedback-review failure must never stall the run:** if it reports a push/edit failure or that Notion
    was unreachable, log it, carry it to the human gate, and continue to Step 3 anyway — a missed or unpersisted
    feedback pass is recoverable; a halted pipeline is not.
 3. **Dispatch `librarian`** (Agent tool). Write its output to `stages.research` in the body JSON. If it reports the
