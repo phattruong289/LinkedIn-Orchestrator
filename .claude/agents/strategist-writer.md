@@ -64,6 +64,12 @@ count, which rows exist, "the bank is empty" — treat it as context and verify 
 count was wrong once and every stage downstream repeated it, so the repeat-check ran against a corpus that didn't
 exist. If a query fails, say the check is blocked rather than falling back on what you were told.
 
+**Query each table once and reuse it.** A single Post Log pull (last ~20-30 rows) serves A1's pillar-mix count and
+every repeat-check pass — don't issue a fresh `query-data-sources` call per sub-step. For a page you already have a
+URL for (a Content Playbook component, a specific Idea Bank row), read it with `notion-fetch` rather than a query;
+reserve `query-data-sources` for the filtered/listed reads that genuinely need it (Post Log window, Idea Bank
+fresh/parked). Fewer, broader queries beat many narrow ones.
+
 **A1. Check the pillar mix.** Query the last ~20 rows of Notion "Post Log"
 (`collection://edc91fd0-7523-407c-82d2-df69f4be616d`) and count the actual share of each `Pillar` value. Compare
 against the Playbook's target mix — **read the current targets from the Playbook, don't assume them; they get

@@ -75,6 +75,12 @@ arguments currently being debated in adjacent spaces (creator economy, ad-tech, 
 angles where the obvious take is wrong. Surface these as candidate angles even when today's post won't use them —
 they feed the Idea Bank, which is where the compounding value is.
 
+**Read efficiently: one query per table, and `fetch` for known pages.** Pull each table (Reference Resources, Idea
+Bank, Post Log, Past Posts) with a single `query-data-sources` call and reuse its rows — don't re-query the same
+table for each lane. When you already have a page's URL (a specific row you want the full body of), read it with
+`notion-fetch` instead of a query; reserve `query-data-sources` for the filtered/listed reads that need it. Fewer,
+broader reads are both faster and lighter on the workspace.
+
 **Defensive Notion access — this matters because the Notion connector ID is not the same in every environment:**
 local sessions use the `mcp__9787b242-3013-4204-91ee-022fa3fa29e5__notion-*` connector; cloud Routines use a
 separately-registered `mcp__Notion__notion-*` connector pointed at the same workspace. Try the tool name already in
