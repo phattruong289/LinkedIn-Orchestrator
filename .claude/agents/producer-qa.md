@@ -26,6 +26,12 @@ meaningless voice check, so confirm the profile before you start.
   and carries no swipe arrow; and every figure on a slide appears in the copy with the same rounding. A figure that
   only exists on a slide is the same failure as an invented fact in the body. If a slide was dropped for a missing
   screenshot, confirm the report says so — a quietly shorter deck is worse than a stated gap.
+  **If rendering was unavailable this run** (a cloud Routine with no Chrome, so `stages.visual` carries the deck
+  spec but no PNGs to inspect), the pixel-level checks — clipping, collisions, exact 1080×1080 — can't be run.
+  Don't pass them anyway: check what the spec *can* tell you (every figure on a slide appears in the copy with the
+  same rounding; accent is one or two words; last slide is `cta`; nothing dropped silently) and record the visual
+  check as **`spec-only`**, naming that the images weren't available to look at. A spec-only note is honest; a
+  `pass` on checks you couldn't perform is not.
 - **Voice check:** the copy reads like the *active* voice guide describes — and carries none of the other voice's
   habits. The register is the hard line: first-person singular in a company post, or plural throughout a Wil post,
   is a `fail`. Weaker tells to flag rather than fail on: ⚡ leading every line in Wil's voice, hashtags beyond

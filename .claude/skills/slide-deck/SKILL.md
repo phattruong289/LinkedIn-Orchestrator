@@ -34,7 +34,7 @@ Read `resources/brand-kit.md` first — it holds the design system, the slide vo
    genuinely carries — a five-slide deck padded to eight is worse than a clean three. Cover and CTA are near-always
    present; the middle is whatever the post actually supports.
 
-3. **Pick slide types** from the five in the vocabulary. Match the type to what the post is doing, not to variety
+3. **Pick slide types** from the six in the vocabulary. Match the type to what the post is doing, not to variety
    for its own sake:
 
    | Type | Use when |
@@ -132,6 +132,13 @@ Read `resources/brand-kit.md` first — it holds the design system, the slide vo
    the lean form is sized for: ~22 KB of readable CSS and JS, no base64. **Verify it:** the returned
    `content_length` must equal the file's LF-normalised byte count. On Windows the file on disk has CRLF endings,
    so its raw size is larger — compare like for like, or a correct upload will look broken.
+
+   **The no-token path assumes a text-only deck — or a `media` slide whose image is a remote https URL.** A media
+   slide pointing at a **local/owned** image base64-inlines that image into the lean bundle, so it stops being
+   hand-reproducible and you'd be back to copying base64 through context (unreliable — don't). For a local/owned
+   media image, the only clean routes are `publish-to-notion.py` with `NOTION_TOKEN`, or rendering the PNG/PDF and
+   skipping the Notion preview. This media→Notion path is still being finalised — until it is, prefer a remote
+   cleared image for any deck that must ship through the token-free Routine.
 
    Never attach the self-contained bundle this way. Its ~90 KB is a third base64 font data, where one wrong
    character silently breaks a typeface and you'd have no way to tell.

@@ -39,7 +39,7 @@ Split by **purpose**, so both humans and agents know exactly where a thing belon
 
 | DB | Holds | Data source |
 |---|---|---|
-| **Content Playbook** | **HOW we write** — pillars + target mix, hook library, skeletons, scoring rubric, voice + naming rules | `collection://94187f4f-93aa-44c7-bbec-81c092b53fda` |
+| **Content Playbook** | **HOW we write** — core five: pillars + target mix, hook library, skeletons, scoring rubric, voice + naming rules; plus extended structure library, content territories, standing topic guidance (the set grows — `strategist-writer` reads the current list) | `collection://94187f4f-93aa-44c7-bbec-81c092b53fda` |
 | **Reference Resources** | **WHAT WE KNOW** — company facts, positioning, case studies, external sources. Channel-agnostic: filter by `Use For` (linkedin/blog/pitch/meeting/any) so it's reusable beyond LinkedIn | `collection://777ba81f-e6a6-4eea-a5af-2fe48ade6ab1` |
 | **Idea Bank** | **WHAT WE'LL WRITE NEXT** — scored idea pipeline (`fresh`/`parked`/`used`/`cut`) | `collection://9592e8bf-2758-4a95-9f8f-63400feb71a3` |
 | **Post Log** | **WHAT WE WROTE** — one row per daily draft, with `Pillar`/`Skeleton Used`/`Idea Score` for mix tracking | `collection://edc91fd0-7523-407c-82d2-df69f4be616d` |

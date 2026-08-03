@@ -28,12 +28,12 @@ slide rather than a new interpretation of it.
 |---|---|
 | `base.css` | Design tokens and shared furniture — background layers, logo, chips, swipe cue, accent treatment |
 | `starfield.js` | Seeded starfield generator. Same seed → same background, so a copy edit doesn't reshuffle the stars |
-| `slide.html` | All five slide types. Renders one slide (`window.SPEC`) for PNG capture, or a whole deck (`window.DECK`) stacked one-per-page for PDF — same builder either way, so a slide can't look different depending on which output it came from |
+| `slide.html` | All six slide types. Renders one slide (`window.SPEC`) for PNG capture, or a whole deck (`window.DECK`) stacked one-per-page for PDF — same builder either way, so a slide can't look different depending on which output it came from |
 | `render.mjs` | Deck JSON → numbered PNGs, plus a PDF with `--pdf`. Finds Chrome or Edge automatically |
 | `bundle.py` | Deck JSON → one HTML file for Notion. Self-contained by default; `--lean` fetches fonts and regenerates the starfield instead of baking both in |
 | `publish-to-notion.py` | Sends that HTML from disk to Notion and embeds it. Needs `NOTION_TOKEN` |
 | `render.sh` | Single-template shortcut, kept for quick one-off renders |
-| `example-deck.json` | A complete five-slide deck, one of each type |
+| `example-deck.json` | A complete five-slide deck — one of each type except `media`, which needs a real sourced image and so isn't shown here |
 | `fonts/` | Vendored so a render needs no network |
 | `play3-logo.svg` | Copy of the core asset, kept alongside the templates so the render has no path dependency outside this folder |
 
@@ -77,6 +77,12 @@ Ships the deck as source: `base.css`, the builder, the deck spec, and the seed. 
 the starfield is regenerated from its seed rather than shipped as a thousand coordinates. About 22 KB, none of it
 base64, which is what makes it small enough for an agent to hand to `notion-create-attachment` directly — no
 upload token needed.
+
+**Exception — a `media` slide with a local image.** The "none of it base64" property only holds for text decks and
+for media slides whose image is a **remote https URL** (which passes through untouched). A media slide pointing at
+a **local/owned** file base64-inlines that image into the bundle, so it's no longer hand-reproducible without a
+token — that's the base64-by-hand trap. For a local/owned image, use `publish-to-notion.py` with `NOTION_TOKEN`, or
+render the PNG/PDF separately and skip the Notion preview. (This media→Notion path is still being finalised.)
 
 **It is not a reduced deck.** Same CSS, same builder, same spec, same seed, so the browser rebuilds exactly what
 the renderer produced. Measured against the PNGs: slide 1 pixel-identical, the rest differing by at most 3/255 on

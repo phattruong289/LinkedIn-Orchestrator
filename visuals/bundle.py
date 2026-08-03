@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Bundle a rendered deck into ONE self-contained HTML file.
+"""Bundle a rendered deck into ONE HTML file Notion can render as a preview.
 
-    python visuals/bundle.py <deck.json> [out.html]
+    python visuals/bundle.py <deck.json> [out.html]           # self-contained (~87 KB)
+    python visuals/bundle.py <deck.json> [out.html] --lean     # source form (~22 KB)
 
 Why this exists: a Routine run can't hand anyone a PNG. Its sandbox is discarded,
 Notion's attachment tool takes text content or a public HTTPS URL but not local
@@ -9,12 +10,25 @@ binary, and pushing renders to the repo would publish them. Notion *does* render
 attached HTML file as a sandboxed preview, and HTML is text — so the deck can travel
 as text and still be looked at.
 
-The size problem that made this look impossible was fonts: four families inline is
-~477 KB, well past the 200 KiB ceiling. A deck uses ~70 distinct glyphs, so subsetting
-to exactly those drops it to ~22 KB. That is the whole trick.
+Two forms, both driving the same templates the PNG renderer uses (so neither drifts
+from the images):
 
-Output is fully self-contained: no external CSS, no fonts to fetch, no scripts, no
-network. Same markup the PNG renderer produces, so the preview matches the images.
+- **Self-contained** (default): everything inlined — CSS, subsetted fonts, both SVGs,
+  the baked DOM. No network at view time. Fonts are the size problem: four families
+  inline is ~477 KB, but a deck uses ~70 glyphs, so subsetting drops it to ~22 KB and
+  the whole bundle to ~87 KB. Needs `fonttools`+`brotli`.
+- **--lean**: ships the deck as source (CSS, builder, spec, seed); fonts fetched from
+  Google Fonts and the starfield regenerated from its seed at view time. ~22 KB, no
+  dependencies. This is the form an agent can hand to Notion's attachment tool WITHOUT
+  an upload token, because it's readable text rather than base64.
+
+CAVEAT — media slides break the "no base64" property of --lean. A `media` slide with a
+LOCAL image path is base64-inlined into the bundle (see img_data_uri), so a lean bundle
+carrying a local image is NO LONGER hand-reproducible without a token — that is the
+exact base64-by-hand trap to avoid. A media image given as a REMOTE https URL passes
+through untouched and keeps the bundle small and token-free. So: remote cleared image →
+token-free path works; local/owned image → needs publish-to-notion.py + NOTION_TOKEN,
+or render the PNG/PDF separately. (The media→Notion path is still being finalised.)
 """
 
 import base64, json, mimetypes, os, re, subprocess, sys, tempfile

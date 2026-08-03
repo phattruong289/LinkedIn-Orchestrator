@@ -86,8 +86,10 @@ fashion brand") or don't use it. When in doubt: don't name it — describe it ge
 report so whoever reviews the draft can decide.
 
 **Content Playbook, not a voice override.** Notion's **Content Playbook** database
-(`collection://94187f4f-93aa-44c7-bbec-81c092b53fda`) holds the method in 5 components: content pillars + target
-mix, hook library, post skeletons, idea scoring rubric, and voice + naming rules. It's a layer that improves a
+(`collection://94187f4f-93aa-44c7-bbec-81c092b53fda`) holds the method across several components — the core five
+are content pillars + target mix, hook library, post skeletons, idea scoring rubric, and voice + naming rules,
+plus an extended structure library, content territories, and standing topic guidance (see `strategist-writer` for
+the full list, which grows). It's a layer that improves a
 draft's odds of landing — it never overrides the run's active voice guide, which stays authoritative on how that
 profile actually sounds. `strategist-writer` applies it; `producer-qa` independently re-checks banned
 words/phrases, naming-rule violations, and in-body external links (not allowed — reach-suppressing; links belong
