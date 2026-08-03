@@ -81,26 +81,20 @@ Read `resources/brand-kit.md` first — it holds the design system, the slide vo
    or can't establish rights → **drop the slide and build the deck without it.** Drop rather than fake, drop rather
    than infringe. Say in your report what was dropped and why.
 
-5. **Render, then bundle:**
+5. **Render:**
    ```bash
    node visuals/render.mjs <deck.json> out/ --pdf
-   python visuals/bundle.py <deck.json> --lean
    ```
-   The first produces numbered PNGs (`<slug>-01.png` onward, in deck order) plus a single `<slug>.pdf` — one
-   1080×1080 page per slide, text kept vector. Needs a local Chrome or Edge; no install, no network.
+   Produces numbered PNGs (`<slug>-01.png` onward, in deck order) plus a single `<slug>.pdf` — one 1080×1080 page
+   per slide, text kept vector. Needs a local Chrome or Edge; no install, no network.
 
-   The second produces `<slug>-lean.html`, ~22 KB — this is the file that goes into Notion in step 7. It exists
-   because a PNG or PDF can't go there: Notion's attachment tool takes text content or a public URL, and a cloud
-   run has neither a way to publish nor a filesystem that survives the run. HTML is text, so it fits.
+   **The PDF is what ships.** It's one file, crisp at any zoom, and already the postable review copy — a human
+   downloads it and posts it to LinkedIn as-is. It goes to Google Drive in step 7. The PNGs are there for when
+   separate square images are wanted.
 
-   It's built by driving the same templates as the PNGs, and ships the deck as source — CSS, builder, spec, seed —
-   with fonts fetched and the starfield regenerated at view time rather than baked in. That keeps it small enough
-   to hand over without an upload token. It is not a reduced deck: same spec and same seed rebuild the same pixels.
-
-   Drop `--lean` for the self-contained form (~87 KB, everything inlined, no network at view time). Prefer it only
-   when the deck needs to survive without Google Fonts; it needs `pip install fonttools brotli`, and if those are
-   missing it fails loudly. **Don't treat that as fatal:** `--lean` needs neither, and the PNGs and spec still
-   deliver regardless.
+   (`python visuals/bundle.py <deck.json> --lean` still exists — it turns the deck into a ~22 KB HTML file for
+   the Notion-attach *fallback* in step 7, only used when Drive credentials aren't available. It's no longer the
+   primary delivery.)
 
 6. **Look at what you rendered.** Read the PNGs back and check each one:
    - Text fits, nothing clipped at an edge or colliding with the swipe cue
@@ -111,52 +105,43 @@ Read `resources/brand-kit.md` first — it holds the design system, the slide vo
 
    A slide that's wrong is a slide to fix and re-render, not to hand over with a caveat.
 
-7. **Save the spec to Notion — this is the durable artifact, not the PNGs.** Write the deck JSON into the day's
-   Job Tickets page under `stages.visual`, and put the same JSON in a code block on the Post Log row so the deck
-   travels with the draft a human reviews.
+7. **Save the spec to Notion, then deliver the deck via Google Drive.**
 
-   The reasoning matters, because it's easy to get backwards: the rendered images are *derived*. Given the spec,
-   the renderer reproduces them exactly — the starfield is seeded, so the same spec yields the same pixels. Keep
-   the spec and nothing is lost; keep only the images and the deck can't be corrected. This is also why a run in a
-   cloud sandbox has to write the spec out: that filesystem is discarded when the run ends.
+   **The spec is the durable artifact — not the PNGs.** Write the deck JSON into the day's Job Tickets page under
+   `stages.visual`, and put the same JSON in a code block on the Post Log row. The rendered images are *derived*:
+   given the spec, the renderer reproduces them exactly (the starfield is seeded, so the same spec yields the same
+   pixels). Keep the spec and nothing is lost; keep only images and the deck can't be corrected. A cloud sandbox's
+   filesystem is discarded at run end, so writing the spec out is what makes the deck survivable.
 
-   **Then attach the bundle so a reviewer can actually see the deck.** With `NOTION_TOKEN` in the environment:
+   **The viewable deck goes to Drive, and its link goes on the Post Log row.** Upload the rendered PDF:
    ```bash
-   python visuals/publish-to-notion.py out/<slug>-lean.html <post-log-page-id> --caption "Deck — N slides"
+   python visuals/upload-to-drive.py out/<slug>.pdf --folder $GDRIVE_FOLDER_ID --name "<date> — <slug> (deck).pdf"
    ```
-   This sends the file from disk straight to Notion's File Upload API. Prefer it whenever the token exists — bytes
-   never touch your context, so there's nothing to cost and nothing to corrupt.
+   It streams the file straight from disk to Drive (never through your context), sets it to "anyone with the link:
+   viewer", and prints a shareable URL. Put that URL on the Post Log row as the deck link, so the deck travels with
+   the draft a human reviews. This is the whole delivery — the file on Drive is the real, sharp PDF: no 200 KiB
+   ceiling, no base64, no Notion upload token, and it's already the postable file (download → post to LinkedIn).
 
-   **Without a token, attach `<slug>-lean.html` with `notion-create-attachment`** and place it with
-   `<embed src="file-upload://...">`. That means reproducing the file through your context, which is exactly what
-   the lean form is sized for: ~22 KB of readable CSS and JS, no base64. **Verify it:** the returned
-   `content_length` must equal the file's LF-normalised byte count. On Windows the file on disk has CRLF endings,
-   so its raw size is larger — compare like for like, or a correct upload will look broken.
+   Credentials: `upload-to-drive.py` reads `gdrive-token.json` (or `$GDRIVE_TOKEN`) — a one-time OAuth setup, see
+   `visuals/README.md`. `$GDRIVE_FOLDER_ID` is the shared deck folder. In a Routine, both live in the run
+   environment; run the script with the environment loaded, or pass `--folder <id>` explicitly.
 
-   **The no-token path assumes a text-only deck — or a `media` slide whose image is a remote https URL.** A media
-   slide pointing at a **local/owned** image base64-inlines that image into the lean bundle, so it stops being
-   hand-reproducible and you'd be back to copying base64 through context (unreliable — don't). For a local/owned
-   media image, the only clean routes are `publish-to-notion.py` with `NOTION_TOKEN`, or rendering the PNG/PDF and
-   skipping the Notion preview. This media→Notion path is still being finalised — until it is, prefer a remote
-   cleared image for any deck that must ship through the token-free Routine.
+   **Fallback — only if Drive credentials are absent this run.** Attach the lean bundle to Notion as text instead:
+   `python visuals/bundle.py <deck.json> --lean`, then attach `<slug>-lean.html` with `notion-create-attachment` +
+   `<embed src="file-upload://...">`, verifying the returned `content_length` equals the file's LF-normalised byte
+   count (on Windows the on-disk file is CRLF, so raw size is larger — compare like for like). This ~22 KB text
+   route is base64-free **only** for text decks or media slides with a remote-URL image; a media slide with a
+   **local** image base64-inlines and breaks it. So for any deck with a local media image, don't use this fallback
+   — re-render and deliver via Drive, or note the deck as spec-only. Never hand-attach the self-contained bundle
+   (~90 KB, a third base64 font data — one wrong character silently breaks a typeface).
 
-   Never attach the self-contained bundle this way. Its ~90 KB is a third base64 font data, where one wrong
-   character silently breaks a typeface and you'd have no way to tell.
+   **Binary never travels through context.** PNGs and PDFs are binary; the Notion MCP tools would carry them as
+   base64 through an agent's context at hundreds of thousands of tokens per run. That's exactly why the deck goes to
+   Drive (disk→Drive, zero context) and only a text link lands in Notion. Don't attach a PNG/PDF through the tools,
+   and don't describe the slides in prose as a substitute.
 
-   Two things that stay true either way:
-   - **The bundle is text, which is the whole reason any of this works.** PNGs and PDFs are binary and local, and
-     Notion takes neither — through the MCP tools, binary would have to travel as base64 through an agent's
-     context, which costs hundreds of thousands of tokens per run. Don't try to attach them, and don't describe
-     the slides in prose as a substitute.
-   - **If a bundle would exceed Notion's 200 KiB ceiling**, `bundle.py` says so and exits. Shorten the deck;
-     never truncate the file.
-
-   **Then say how to turn it into something postable**, in the caption — don't assume it's obvious. What's on the
-   page is for reading; LinkedIn takes images or a PDF, not HTML. Downloading the attachment and printing it from
-   a browser yields the deck as a correctly-sized PDF, because the bundle carries its own page-size rule. That
-   path needs no repo, no tooling and no credentials, which is what makes it the one to name: whoever reviews the
-   draft may be nowhere near the machine that rendered it, and a cloud run's own files are gone by then. Separate
-   PNGs still need a local `render.mjs` run against the saved spec.
+   **Postable file:** the Drive PDF already is one — download and post, or print its pages as square images. If you
+   only have the spec later, re-render deterministically: `node visuals/render.mjs <deck.json> out/ --pdf`.
 
 8. **Report:** slide count, type per slide, output paths, where the spec was saved, and anything dropped along with
    why — a missing screenshot, a figure that wasn't in the copy. If a slide was dropped, say so plainly rather than

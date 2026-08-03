@@ -30,8 +30,10 @@ slide rather than a new interpretation of it.
 | `starfield.js` | Seeded starfield generator. Same seed → same background, so a copy edit doesn't reshuffle the stars |
 | `slide.html` | All six slide types. Renders one slide (`window.SPEC`) for PNG capture, or a whole deck (`window.DECK`) stacked one-per-page for PDF — same builder either way, so a slide can't look different depending on which output it came from |
 | `render.mjs` | Deck JSON → numbered PNGs, plus a PDF with `--pdf`. Finds Chrome or Edge automatically |
-| `bundle.py` | Deck JSON → one HTML file for Notion. Self-contained by default; `--lean` fetches fonts and regenerates the starfield instead of baking both in |
-| `publish-to-notion.py` | Sends that HTML from disk to Notion and embeds it. Needs `NOTION_TOKEN` |
+| `upload-to-drive.py` | **Primary delivery.** Uploads the rendered PDF/PNG to Google Drive, sets "anyone with link", prints a shareable URL for the Post Log row. Reads `gdrive-token.json` |
+| `gdrive-auth.py` | One-time: turns a downloaded OAuth client secret into `gdrive-token.json` (a refresh token). Run once, see setup below |
+| `bundle.py` | *Fallback route.* Deck JSON → one HTML file for a Notion inline preview when Drive creds are absent. Self-contained by default; `--lean` fetches fonts and regenerates the starfield instead of baking both in |
+| `publish-to-notion.py` | Sends that HTML from disk to Notion and embeds it. Needs `NOTION_TOKEN` (only for the fallback route) |
 | `render.sh` | Single-template shortcut, kept for quick one-off renders |
 | `example-deck.json` | A complete five-slide deck — one of each type except `media`, which needs a real sourced image and so isn't shown here |
 | `fonts/` | Vendored so a render needs no network |
@@ -57,7 +59,46 @@ Each template carries a `SPEC` object near the bottom — this is the shape `str
 **On the accent:** green marks the thing that matters — the figure, or the single word the argument turns on.
 Spreading it across several words is the fastest way to lose the look.
 
-## Getting a deck into Notion
+## Delivering the deck — Google Drive (primary route)
+
+The rendered PDF is the deck a reviewer actually wants: the real, sharp, postable file. It goes to Google Drive,
+and only its link lands in Notion.
+
+```bash
+node visuals/render.mjs <deck.json> out/ --pdf
+python visuals/upload-to-drive.py out/<slug>.pdf --folder $GDRIVE_FOLDER_ID --name "<date> — <slug> (deck).pdf"
+```
+
+`upload-to-drive.py` streams the file **disk → Drive** (never through an agent's context), sets it to "anyone with
+the link: viewer", and prints a shareable URL to put on the Post Log row. This sidesteps everything that made the
+Notion route painful: no 200 KiB text ceiling, no base64 through context, no Notion upload token, and no fidelity
+loss — it's the actual PDF, already postable to LinkedIn.
+
+### One-time OAuth setup
+
+Google has no "paste a token" route for private Drive that this org allows — service-account keys are blocked by
+org policy — so this uses an OAuth **Internal** app (Workspace-only, no verification, no key). Once done, day-to-day
+is just running the script; there's no interactive step per run.
+
+1. In Google Cloud Console (signed in as the account that owns the deck folder): create/pick a project → enable
+   **Google Drive API**.
+2. **Google Auth Platform** → Audience = **Internal**.
+3. **Clients** → Create client → **Desktop app** → Download JSON (e.g. `client_secret.json`).
+4. Mint the refresh token once:
+   ```bash
+   python visuals/gdrive-auth.py client_secret.json      # -> gdrive-token.json
+   ```
+   A browser opens; approve as the folder-owning account. `gdrive-token.json` = {client_id, client_secret,
+   refresh_token}.
+5. Set `GDRIVE_FOLDER_ID` to the target folder (from its URL) in `.env`, and in the Routine environment paste
+   `gdrive-token.json`'s contents plus `GDRIVE_FOLDER_ID`.
+
+`gdrive-token.json` and `client_secret*.json` are secrets — both are git-ignored. Scope is `drive.file` (the app
+only ever touches files it creates), which is enough to upload into a folder you share the ID of.
+
+## Fallback — getting a deck into Notion as an inline preview
+
+Use this only when Drive credentials aren't available. It renders the deck as an HTML file Notion can preview inline.
 
 ```bash
 python visuals/bundle.py <deck.json> --lean   # -> out/<slug>-lean.html,  ~22 KB
