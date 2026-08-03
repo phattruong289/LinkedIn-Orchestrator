@@ -60,6 +60,15 @@ Two rules follow, and they apply to you as much as to the agents:
    - Page exists mid-pipeline (`Status: started`, a stage errored last run) → **resume from the first incomplete
      stage** found in the body JSON, don't restart.
 2. Append a `run_log` entry (`{ts, event: "manager_start"}`) to the body JSON.
+2b. **Absorb yesterday's feedback before writing anything.** Dispatch `feedback-reviewer` (Agent tool). It reads the
+   human comments on *yesterday's* Post Log row(s) only; if there are any it hasn't already processed, it folds them
+   into the pipeline's own rules/voice/Topic-Guidance as flexible principles, keeps related files consistent,
+   persists the change (commit+push, or a Notion edit), and marks the comments processed — **without rewriting
+   yesterday's post.** No comments → it's a no-op. Run it **before** the Librarian so today's post is written with any
+   improvement already in effect. Write its returned summary to `stages.feedback_review` and append a `run_log`
+   entry. **A feedback-review failure must never stall the run:** if it reports a push/edit failure or that Notion
+   was unreachable, log it, carry it to the human gate, and continue to Step 3 anyway — a missed or unpersisted
+   feedback pass is recoverable; a halted pipeline is not.
 3. **Dispatch `librarian`** (Agent tool). Write its output to `stages.research` in the body JSON. If it reports the
    resource pool is too thin for any decent angle → set the page's `Status` property to `failed`, log why in
    `run_log`, **stop and report** — don't force a weak post.

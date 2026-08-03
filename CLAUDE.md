@@ -20,8 +20,9 @@ A multi-agent pipeline that drafts ~1 LinkedIn post/day for PLAY3, ending at a h
 - `.claude/rules/guardrails.md` — the non-negotiables every agent follows (human gate, no invented facts, voice
   separation, **naming rules**, brand lock, traceability, no near-duplicates). Read this before touching any agent
   or skill file.
-- `.claude/agents/` — the specialist subagents: `librarian` (research across 6 source lanes),
-  `strategist-writer` (scoring + pillar balance + copy), `producer-qa` (final check).
+- `.claude/agents/` — the specialist subagents: `feedback-reviewer` (Stage 0: folds yesterday's Post Log comments
+  into the rules before writing), `librarian` (research across 6 source lanes), `strategist-writer` (scoring +
+  pillar balance + copy), `producer-qa` (final check).
 - `.claude/skills/slide-deck/` — builds the visual carousel that ships with a post; renders via `visuals/`.
 - `visuals/` — the slide design system: HTML/CSS templates, vendored fonts, and the headless-Chrome renderer.
 - `.claude/skills/daily-post/` — the Manager: runs the agents in order, owns the job ticket, delivers the draft.
