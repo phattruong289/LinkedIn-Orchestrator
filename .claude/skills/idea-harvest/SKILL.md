@@ -57,16 +57,44 @@ ask for confirmation, don't second-guess it, just proceed straight to Step 1.
    (`collection://94187f4f-93aa-44c7-bbec-81c092b53fda`): Ownability 30 + Evidence 25 + Audience relevance 20 +
    Hook strength 15 + Freshness 10. Apply all six auto-cut triggers. Record the per-dimension breakdown.
 
-5. **Write rows into the Idea Bank**, one per candidate:
+5. **Repeat-check every candidate — against Post Log AND the rest of the bank — BEFORE writing a single row.**
+   This is the most important step, and it's here on purpose: **the bank is where distinctness gets established,
+   not the daily run.** The failure this prevents is real and expensive — ideas get harvested, sit in the bank, and
+   then a daily run scores and repeat-checks them only to find every one collides, so it hits a wall having burned
+   time and tokens on a corpus that was never usable. Do the checking at the source instead.
+
+   Query Post Log once (last ~60 days, **include draft/test rows**, read `Core Argument` + `Key Facts Cited`) and
+   read the current Idea Bank once (fresh/parked). Reuse both across all candidates — one query each. Then, per
+   candidate, two comparisons:
+   - **vs Post Log** — the same argument-and-facts test the Strategist runs at daily ideation: same core argument
+     **and** same key facts/case-study as a Post Log row = a born-duplicate. If the colliding post is already
+     *published*, `cut` the candidate and name the collision. If it collides only with a *recent draft* (last ~30
+     days) but is otherwise strong, bank it `parked` with the collision noted in `Cut Reason`/`Evidence On Hand`
+     ("blocked vs <post> until it ages out of the 30-day window"), **not** `fresh` — so nobody reaches for it too
+     soon.
+   - **vs the existing bank + the other candidates in this same harvest** — if two ideas share one core thesis,
+     keep the single best-sourced one and don't create the duplicate. The measurement cluster is the cautionary
+     tale: it once held three separate rows for one postable argument, which is exactly the clutter this dedup
+     removes. Consolidate here, at harvest — not months later during a cleanup.
+
+   **This does not replace the daily-run repeat-check.** Post Log changes between banking and use, so a banked idea
+   can still collide with something shipped in the meantime — the Strategist and Producer-QA still re-verify against
+   the *current* Post Log. What this removes is the waste: the bank no longer fills with ideas that were never going
+   to survive. Distinctness is established here and only re-verified downstream.
+
+6. **Write rows into the Idea Bank**, one per surviving candidate:
    - `Status`: **≥90 → `fresh`** · **70-89 → `parked`** · **<70 → `cut`** (still write cut ideas, with a
-     `Cut Reason` — a cut idea whose blocker later clears is reusable; a discarded one is lost work)
+     `Cut Reason` — a cut idea whose blocker later clears is reusable; a discarded one is lost work). A candidate
+     that failed the Post-Log repeat-check above is `cut` (published collision) or `parked`-with-a-block-note
+     (recent-draft collision) regardless of its rubric score.
    - Fill `Pillar`, `Source Lane`, `Score`, `Score Breakdown`, `Hook Draft`, `Core Argument`,
      `Evidence On Hand`, `Date Added`
    - Never write an idea that names a competitor or an uncleared client — cut it at this step with the reason
      recorded, rather than letting it reach the daily pipeline
 
-6. **Report:** bank level before → after, the pillar gap and how this harvest addressed it, per-lane yield, the
-   score distribution, anything auto-cut and why, and — if the bank is still under 15 — say so plainly rather than
+7. **Report:** bank level before → after, the pillar gap and how this harvest addressed it, per-lane yield, the
+   score distribution, **how many candidates the repeat-check dropped or parked-with-a-block (and against which
+   posts/bank rows)**, anything auto-cut and why, and — if the bank is still under 15 — say so plainly rather than
    padding with weak ideas to hit a number.
 
 ## What not to do
